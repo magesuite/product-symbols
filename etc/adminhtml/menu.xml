@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+        <add
+                id="MageSuite_ProductSymbols::symbols_menu"
+                title="Product Symbols"
+                module="MageSuite_ProductSymbols"
+                sortOrder="40"
+                parent="Magento_Catalog::inventory"
+                action="customization/grid/index"
+                resource="Magento_Backend::content" />
+    </menu>
+</config>

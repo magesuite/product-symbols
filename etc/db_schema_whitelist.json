@@ -1,0 +1,9 @@
+{
+    "symbols_group": {
+        "column": {
+            "entity_id": true,
+            "group_name": true,
+            "group_code": true
+        }
+    }
+}

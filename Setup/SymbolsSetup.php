@@ -1,0 +1,54 @@
+<?php
+
+namespace MageSuite\ProductSymbols\Setup;
+
+class SymbolsSetup extends \Magento\Eav\Setup\EavSetup
+{
+    public function getDefaultEntities() {
+        $symbolsEntity = \MageSuite\ProductSymbols\Model\Symbols::ENTITY;
+
+        $entities = [
+            $symbolsEntity => [
+                'entity_model' => 'MageSuite\ProductSymbols\Model\ResourceModel\Symbols',
+                'attribute_model' => 'Magento\Catalog\Model\ResourceModel\Eav\Attribute',
+                'table' => $symbolsEntity . '_entity',
+                'entity_attribute_collection' => 'Magento\Eav\Model\ResourceModel\Entity\Attribute\Collection',
+                'attributes' => [
+                    'symbol_name' => [
+                        'type' => 'varchar',
+                        'label' => 'Symbol Name',
+                        'input' => 'text',
+                        'frontend_class' => 'validate-length maximum-length-255',
+                        'sort_order' => 1,
+                        'global' => \Magento\Eav\Model\Entity\Attribute\ScopedAttributeInterface::SCOPE_STORE,
+                    ],
+                    'symbol_icon' => [
+                        'type' => 'varchar',
+                        'label' => 'Symbol Icon',
+                        'input' => 'text',
+                        'required' => false,
+                        'sort_order' => 2,
+                        'global' => \Magento\Eav\Model\Entity\Attribute\ScopedAttributeInterface::SCOPE_STORE,
+                    ],
+                    'symbol_icon_url' => [
+                        'type' => 'varchar',
+                        'label' => 'Symbol Icon Url',
+                        'input' => 'text',
+                        'required' => false,
+                        'sort_order' => 2,
+                        'global' => \Magento\Eav\Model\Entity\Attribute\ScopedAttributeInterface::SCOPE_STORE,
+                    ],
+                    'symbol_short_description' => [
+                        'type' => 'text',
+                        'label' => 'Short Description',
+                        'input' => 'textarea',
+                        'required' => false,
+                        'sort_order' => 3,
+                        'global' => \Magento\Eav\Model\Entity\Attribute\ScopedAttributeInterface::SCOPE_STORE,
+                    ]
+                ]
+            ]
+        ];
+        return $entities;
+    }
+}

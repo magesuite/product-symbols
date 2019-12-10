@@ -1,0 +1,22 @@
+<?php
+
+namespace MageSuite\ProductSymbols\Block\Adminhtml\Symbols\Grid\Renderer;
+
+class SymbolShortDescription extends \MageSuite\ProductSymbols\Block\Adminhtml\Symbols\Grid\Renderer\AbstractColumnRenderer
+{
+    /**
+     * @param $columnId
+     * @param $entityId
+     * @return mixed|string
+     */
+    public function getColumnValue($columnId, $entityId)
+    {
+        $symbolData = $this->getSymbolData($entityId);
+
+        if(!$symbolData->getEntityId()){
+            return '';
+        }
+
+        return $symbolData->getSymbolShortDescription();
+    }
+}
