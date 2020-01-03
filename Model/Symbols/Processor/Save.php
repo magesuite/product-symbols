@@ -37,8 +37,6 @@ class Save
     }
 
     public function processSave($params) {
-        $originalParams = $params;
-
         $isNew = (!isset($params['entity_id'])) || (isset($params['entity_id']) && $params['entity_id'] == "") ? true : false;
 
         if ($isNew) {

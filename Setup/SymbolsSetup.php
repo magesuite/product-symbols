@@ -35,7 +35,7 @@ class SymbolsSetup extends \Magento\Eav\Setup\EavSetup
                         'label' => 'Symbol Icon Url',
                         'input' => 'text',
                         'required' => false,
-                        'sort_order' => 2,
+                        'sort_order' => 3,
                         'global' => \Magento\Eav\Model\Entity\Attribute\ScopedAttributeInterface::SCOPE_STORE,
                     ],
                     'symbol_short_description' => [
@@ -43,8 +43,18 @@ class SymbolsSetup extends \Magento\Eav\Setup\EavSetup
                         'label' => 'Short Description',
                         'input' => 'textarea',
                         'required' => false,
-                        'sort_order' => 3,
+                        'sort_order' => 4,
                         'global' => \Magento\Eav\Model\Entity\Attribute\ScopedAttributeInterface::SCOPE_STORE,
+                    ],
+                    'symbol_groups' => [
+                        'type' => 'varchar',
+                        'label' => 'Symbol Groups',
+                        'input' => 'multiselect',
+                        'required' => false,
+                        'sort_order' => 5,
+                        'global' => \Magento\Eav\Model\Entity\Attribute\ScopedAttributeInterface::SCOPE_STORE,
+                        'backend' => \Magento\Eav\Model\Entity\Attribute\Backend\ArrayBackend::class,
+                        'source_model' => \MageSuite\ProductSymbols\Model\Source\GroupsList::class
                     ]
                 ]
             ]

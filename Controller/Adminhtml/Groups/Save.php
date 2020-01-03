@@ -1,6 +1,6 @@
 <?php
 
-namespace MageSuite\ProductSymbols\Controller\Adminhtml\Symbols;
+namespace MageSuite\ProductSymbols\Controller\Adminhtml\Groups;
 
 class Save extends \Magento\Framework\App\Action\Action
 {
@@ -10,7 +10,7 @@ class Save extends \Magento\Framework\App\Action\Action
     protected $resultPage = false;
 
     /**
-     * @var \MageSuite\ProductSymbols\Model\Symbols\Processor\SaveFactory
+     * @var \MageSuite\ProductSymbols\Model\Groups\Processor\SaveFactory
      */
     protected $saveFactory;
 
@@ -23,7 +23,7 @@ class Save extends \Magento\Framework\App\Action\Action
     public function __construct(
         \Magento\Backend\App\Action\Context $context,
         \Magento\Framework\View\Result\PageFactory $pageFactory,
-        \MageSuite\ProductSymbols\Model\Symbols\Processor\SaveFactory $saveFactory,
+        \MageSuite\ProductSymbols\Model\Groups\Processor\SaveFactory $saveFactory,
         \Magento\Framework\DataObjectFactory $dataObjectFactory
     )
     {
@@ -40,24 +40,18 @@ class Save extends \Magento\Framework\App\Action\Action
     public function execute()
     {
         $params = $this->_request->getParams();
-        $storeId = isset($params['store_id']) ? $params['store_id'] : 0;
-        $routeParams = [
-            'store' => $storeId
-        ];
+        $routeParams = null;
         try {
-            $params['is_api'] = false;
-
-            $paramsObject = $this->dataObjectFactory->create();
-            $paramsObject->setData($params);
-            $symbol = $this->saveFactory->create()->processSave($paramsObject);
-            $this->messageManager->addSuccessMessage('Symbol has been saved');
-            $routeParams['id'] = $symbol->getEntityId();
-        } catch (\Exception $e)
-        {
+            $group = $this->saveFactory->create()->processSave($params);
+            $this->messageManager->addSuccessMessage('Symbols group has been saved');
+            $routeParams = [
+                'id' => $group->getEntityId()
+            ];
+        } catch (\Exception $e) {
             $this->messageManager->addErrorMessage($e->getMessage());
         }
         $resultRedirect = $this->resultRedirectFactory->create();
-        $url = $this->_url->getUrl('symbols/symbols/edit', $routeParams);
+        $url = $this->_url->getUrl('symbols/groups/edit', $routeParams);
         $resultRedirect->setPath($url);
 
         return $resultRedirect;

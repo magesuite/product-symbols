@@ -91,6 +91,7 @@ class SymbolsDataProvider extends \Magento\Ui\DataProvider\AbstractDataProvider
                 'symbol_name' => false,
                 'symbol_icon' => false,
                 'symbol_short_description' => false,
+                'symbol_groups' => false,
             ];
         } else {
             foreach ($symbol->getData() as $attrName => $value) {
@@ -109,6 +110,7 @@ class SymbolsDataProvider extends \Magento\Ui\DataProvider\AbstractDataProvider
                 'store_id' => $symbol->getStoreId(),
                 'symbol_name' => $symbol->getSymbolName(),
                 'symbol_short_description' => $symbol->getSymbolShortDescription(),
+                'symbol_groups' => $symbol->getSymbolGroups(),
                 'use_config' => $useConfig
             ]
         ];
@@ -136,7 +138,8 @@ class SymbolsDataProvider extends \Magento\Ui\DataProvider\AbstractDataProvider
         $groupsToFields = [
             'symbol_name_group' => 'use_config.symbol_name',
             'symbol_icon_group' => 'use_config.symbol_icon',
-            'symbol_short_description_group' => 'use_config.symbol_short_description'
+            'symbol_short_description_group' => 'use_config.symbol_short_description',
+            'symbol_groups_group' => 'use_config.symbol_groups'
         ];
 
         if(!isset($params['store']) OR (isset($params['store']) and $params['store'] == '0')) {

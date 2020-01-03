@@ -1,6 +1,6 @@
 <?php
 
-namespace MageSuite\ProductSymbols\Block\Adminhtml\Symbols\Edit;
+namespace MageSuite\ProductSymbols\Block\Adminhtml\Groups\Edit;
 
 use Magento\Framework\View\Element\UiComponent\Control\ButtonProviderInterface;
 use Magento\Cms\Block\Adminhtml\Block\Edit\GenericButton;
@@ -27,6 +27,6 @@ class BackButton extends GenericButton implements ButtonProviderInterface
      */
     public function getBackUrl()
     {
-        return $this->getUrl('*/grid/symbols');
+        return $this->getUrl('*/grid/groups');
     }
 }

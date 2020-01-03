@@ -49,6 +49,17 @@ interface SymbolsInterface
     public function setSymbolShortDescription($symbolShortDescription);
 
     /**
+     * @return mixed
+     */
+    public function getSymbolGroups();
+
+    /**
+     * @param $symbolGroups
+     * @return mixed
+     */
+    public function setSymbolGroups($symbolGroups);
+
+    /**
      * @return string
      */
     public function getSymbolIconUrl();

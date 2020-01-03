@@ -2,7 +2,7 @@
 
 namespace MageSuite\ProductSymbols\Controller\Adminhtml\Grid;
 
-class Index extends \Magento\Framework\App\Action\Action
+class Groups extends \Magento\Framework\App\Action\Action
 {
 
 
@@ -25,11 +25,11 @@ class Index extends \Magento\Framework\App\Action\Action
     public function execute()
     {
         $resultPage = $this->getResultPage();
-        $resultPage->setActiveMenu('MageSuite_ProductSymbols::symbols_menu');
-        $resultPage->getConfig()->getTitle()->prepend((__('Symbols')));
+        $resultPage->setActiveMenu('MageSuite_ProductSymbols::groups_menu');
+        $resultPage->getConfig()->getTitle()->prepend((__('Symbol groups')));
 
-        $resultPage->addBreadcrumb(__('Symbols'), __('Symbols'));
-        $resultPage->addBreadcrumb(__('Symbols'), __('Symbols'));
+        $resultPage->addBreadcrumb(__('Symbol groups'), __('Symbol groups'));
+        $resultPage->addBreadcrumb(__('Symbol groups'), __('Symbol groups'));
 
         return $resultPage;
     }

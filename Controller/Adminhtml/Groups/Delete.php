@@ -1,6 +1,6 @@
 <?php
 
-namespace MageSuite\ProductSymbols\Controller\Adminhtml\Symbols;
+namespace MageSuite\ProductSymbols\Controller\Adminhtml\Groups;
 
 class Delete extends \Magento\Framework\App\Action\Action
 {
@@ -23,15 +23,15 @@ class Delete extends \Magento\Framework\App\Action\Action
     protected $resultRedirect;
 
     /**
-     * @var \MageSuite\ProductSymbols\Api\SymbolsRepositoryInterface
+     * @var \MageSuite\ProductSymbols\Api\GroupsRepositoryInterface
      */
-    protected $symbolsRepository;
+    protected $groupsRepository;
 
 
     public function __construct(
         \Magento\Framework\App\Action\Context $context,
         \Magento\Framework\View\Result\PageFactory $pageFactory,
-        \MageSuite\ProductSymbols\Api\SymbolsRepositoryInterface $symbolsRepository,
+        \MageSuite\ProductSymbols\Api\GroupsRepositoryInterface $groupsRepository,
         \Magento\Eav\Model\Config $eavConfig,
         \Magento\Framework\Controller\ResultFactory $resultRedirect
     )
@@ -39,7 +39,7 @@ class Delete extends \Magento\Framework\App\Action\Action
         $this->pageFactory = $pageFactory;
         $this->eavConfig = $eavConfig;
         $this->resultRedirect = $resultRedirect;
-        $this->symbolsRepository = $symbolsRepository;
+        $this->groupsRepository = $groupsRepository;
 
         parent::__construct($context);
     }
@@ -52,17 +52,17 @@ class Delete extends \Magento\Framework\App\Action\Action
         try {
             $params = $this->_request->getParams();
 
-            $symbol = $this->symbolsRepository->getById($params['id']);
+            $group = $this->groupsRepository->getById($params['id']);
 
-            $this->symbolsRepository->delete($symbol);
+            $this->groupsRepository->delete($group);
 
-            $this->messageManager->addSuccessMessage('Symbol has been deleted');
+            $this->messageManager->addSuccessMessage('Group has been deleted');
         } catch (\Exception $e) {
             $this->messageManager->addErrorMessage($e->getMessage());
         }
         $resultRedirect = $this->resultRedirectFactory->create();
 
-        $url = $this->_url->getUrl('symbols/grid/symbols');
+        $url = $this->_url->getUrl('symbols/grid/groups');
 
         $resultRedirect->setPath($url);
 

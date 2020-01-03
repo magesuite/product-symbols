@@ -15,6 +15,7 @@ class SymbolsRepository implements \MageSuite\ProductSymbols\Api\SymbolsReposito
         'symbol_icon',
         'symbol_icon_url',
         'symbol_short_description',
+        'symbol_groups',
     ];
     /**
      * @var ResourceModel\Symbols
@@ -102,9 +103,11 @@ class SymbolsRepository implements \MageSuite\ProductSymbols\Api\SymbolsReposito
                 if (false !== $attributeIndex) {
                     unset($attributesToRemove[$attributeIndex]);
                 }
+
                 if (!$attr) {
                     continue;
                 }
+
                 $this->symbolResource->updateAttribute($symbol, $attr, $value, $symbol->getStoreId());
             }
             $this->symbolResource->removeAttribute($symbol, $attributesToRemove);

@@ -36,13 +36,6 @@ class InstallSchema implements \Magento\Framework\Setup\InstallSchemaInterface
                     'Symbol Short Description'
                 )
                 ->addColumn(
-                    'symbol_group',
-                    \Magento\Framework\DB\Ddl\Table::TYPE_TEXT,
-                    64,
-                    [],
-                    'Symbol Group'
-                )
-                ->addColumn(
                     'symbol_icon',
                     \Magento\Framework\DB\Ddl\Table::TYPE_TEXT,
                     64,
@@ -53,8 +46,14 @@ class InstallSchema implements \Magento\Framework\Setup\InstallSchemaInterface
                     \Magento\Framework\DB\Ddl\Table::TYPE_TEXT,
                     64,
                     [],
-                    'Symbol Icon'
-                )->setComment(
+                    'Symbol Icon')
+                ->addColumn(
+                    'symbol_groups',
+                    \Magento\Framework\DB\Ddl\Table::TYPE_TEXT,
+                    255,
+                    [],
+                    'Symbol Groups')
+                ->setComment(
                     'Symbols Entity'
                 );
             $setup->getConnection()->createTable($table);

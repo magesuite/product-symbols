@@ -8,7 +8,15 @@
                 module="MageSuite_ProductSymbols"
                 sortOrder="40"
                 parent="Magento_Catalog::inventory"
-                action="customization/grid/index"
+                action="symbols/grid/symbols"
+                resource="Magento_Backend::content" />
+        <add
+                id="MageSuite_ProductSymbols::groups_menu"
+                title="Product Symbol Groups"
+                module="MageSuite_ProductSymbols"
+                sortOrder="50"
+                parent="Magento_Catalog::inventory"
+                action="symbols/grid/groups"
                 resource="Magento_Backend::content" />
     </menu>
 </config>

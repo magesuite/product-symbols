@@ -7,4 +7,8 @@
     <preference for="MageSuite\ProductSymbols\Api\Data\SymbolsImagesInterface"
                 type="MageSuite\ProductSymbols\Model\SymbolsImages" />
 
+    <preference for="MageSuite\ProductSymbols\Api\GroupsRepositoryInterface"
+                type="MageSuite\ProductSymbols\Model\GroupsRepository" />
+    <preference for="MageSuite\ProductSymbols\Api\Data\GroupsInterface"
+                type="MageSuite\ProductSymbols\Model\Groups" />
 </config>

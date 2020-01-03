@@ -13,23 +13,23 @@ class SymbolsList extends \Magento\Eav\Model\Entity\Attribute\Source\AbstractSou
 
     protected $storeManager;
     /**
-     * @var \Magento\Framework\App\CacheInterface
+     * @var \MageSuite\ProductSymbols\Api\GroupsRepositoryInterface
      */
-    private $cache;
+    protected $groupsRepository;
 
     public function __construct(
         \MageSuite\ProductSymbols\Model\ResourceModel\Symbols\CollectionFactory $collectionFactory,
         \MageSuite\ProductSymbols\Model\SymbolsFactory $model,
         \MageSuite\ProductSymbols\Api\SymbolsRepositoryInterface $symbolsRepository,
         \Magento\Store\Model\StoreManagerInterface $storeManager,
-        \Magento\Framework\App\CacheInterface $cache
+        \MageSuite\ProductSymbols\Api\GroupsRepositoryInterface $groupsRepository
     )
     {
         $this->collectionFactory = $collectionFactory;
         $this->symbolsRepository = $symbolsRepository;
         $this->storeManager = $storeManager;
         $this->model = $model;
-        $this->cache = $cache;
+        $this->groupsRepository = $groupsRepository;
     }
 
     /**
@@ -50,13 +50,8 @@ class SymbolsList extends \Magento\Eav\Model\Entity\Attribute\Source\AbstractSou
 
     private function getSymbolsFromStore($storeId)
     {
-        $cacheKey = sprintf(self::CACHE_TAG, $storeId);
-
-        $options = json_decode($this->cache->load($cacheKey), true);
-
-        if (is_array($options) and !empty($options)) {
-            return $options;
-        }
+        $attributeCode = $this->getAttribute()->getAttributeCode();
+        $group = $this->groupsRepository->getByCode($attributeCode);
 
         $symbolsCollection = $this->collectionFactory->create();
         $symbolsCollection->setStoreId($storeId);
@@ -65,14 +60,21 @@ class SymbolsList extends \Magento\Eav\Model\Entity\Attribute\Source\AbstractSou
 
         foreach ($symbolsCollection as $symbol) {
             $symbol = $this->symbolsRepository->getById($symbol->getEntityId(), $storeId);
+            $symbolGroups = explode(',', $symbol->getSymbolGroups());
+
+            if(empty($group)){
+                return $options;
+            }
+
+            if(!in_array($group->getEntityId(), $symbolGroups)){
+                continue;
+            }
 
             $options[] = [
                 'label' => $symbol->getSymbolName(),
                 'value' => $symbol->getEntityId()
             ];
         }
-
-        $this->cache->save(json_encode($options), $cacheKey);
 
         return $options;
     }

@@ -130,6 +130,25 @@ class Symbols extends \Magento\Catalog\Model\AbstractModel implements \MageSuite
     {
         return $this->setData('symbol_short_description', $symbolShortDescription);
     }
+
+    /**
+     * @return mixed
+     */
+    public function getSymbolGroups()
+    {
+        return $this->getData('symbol_groups');
+    }
+
+    /**
+     * @param $symbolGroups
+     * @return mixed
+     */
+    public function setSymbolGroups($symbolGroups)
+    {
+        return $this->setData('symbol_groups', $symbolGroups);
+    }
+
+
     /**
      * @param $image
      * @return string
