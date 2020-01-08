@@ -11,4 +11,10 @@
                 type="MageSuite\ProductSymbols\Model\GroupsRepository" />
     <preference for="MageSuite\ProductSymbols\Api\Data\GroupsInterface"
                 type="MageSuite\ProductSymbols\Model\Groups" />
+
+    <type name="MageSuite\ProductSymbols\Block\Symbols\Group">
+        <arguments>
+            <argument name="viewModel" xsi:type="string">MageSuite\ProductSymbols\ViewModel\Symbols\Group</argument>
+        </arguments>
+    </type>
 </config>

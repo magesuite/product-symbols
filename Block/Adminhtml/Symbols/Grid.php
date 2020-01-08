@@ -13,7 +13,7 @@ class Grid extends \Magento\Backend\Block\Widget\Grid\Container
     {
         $this->_controller = 'adminhtml_symbols';
         $this->_blockGroup = 'MageSuite_ProductSymbols';
-        $this->_headerText = __('Posts');
+        $this->_headerText = __('Symbols');
         $this->_addButtonLabel = __('Create New Symbol');
         parent::_construct();
     }

@@ -126,7 +126,7 @@ class SymbolsRepository implements \MageSuite\ProductSymbols\Api\SymbolsReposito
     public function delete(\MageSuite\ProductSymbols\Api\Data\SymbolsInterface $symbol)
     {
         $symbolFactory = $this->symbolFactory->create();
-        $symbolFactory->setId($symbol->getEntityId());
+        $symbolFactory->setData($symbol->getData());
 
         try {
             $this->symbolResource->delete($symbolFactory);

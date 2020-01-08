@@ -1,0 +1,17 @@
+<?php
+/** @var \MageSuite\ProductSymbols\ViewModel\Symbols\Group $viewModel */
+$viewModel = $block->getViewModel();
+
+$groupSymbols = $viewModel->getGroupSymbols();
+;?>
+<ul class="cs-product-details__care">
+    <?php foreach($groupSymbols as $group):?>
+        <h3 class="cs-product-details-main__headline-title"><?php echo $group['group_name'];?></h3>
+        <?php foreach($group['symbols'] as $symbol):?>
+            <li>
+                <image width="53" height="42" src="<?php echo $symbol->getSymbolIconUrl();?>"/>
+                <span><?php echo $symbol->getSymbolName();?></span>
+            </li>
+        <?php endforeach;?>
+    <?php endforeach;?>
+</ul>
