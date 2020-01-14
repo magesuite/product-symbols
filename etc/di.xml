@@ -1,20 +1,20 @@
 <?xml version="1.0"?>
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
-    <preference for="MageSuite\ProductSymbols\Api\SymbolsRepositoryInterface"
-                type="MageSuite\ProductSymbols\Model\SymbolsRepository" />
-    <preference for="MageSuite\ProductSymbols\Api\Data\SymbolsInterface"
-                type="MageSuite\ProductSymbols\Model\Symbols" />
-    <preference for="MageSuite\ProductSymbols\Api\Data\SymbolsImagesInterface"
-                type="MageSuite\ProductSymbols\Model\SymbolsImages" />
+    <preference for="MageSuite\ProductSymbols\Api\SymbolRepositoryInterface"
+                type="MageSuite\ProductSymbols\Model\SymbolRepository" />
+    <preference for="MageSuite\ProductSymbols\Api\Data\SymbolInterface"
+                type="MageSuite\ProductSymbols\Model\Symbol" />
+    <preference for="MageSuite\ProductSymbols\Api\Data\SymbolImagesInterface"
+                type="MageSuite\ProductSymbols\Model\SymbolImages" />
 
-    <preference for="MageSuite\ProductSymbols\Api\GroupsRepositoryInterface"
-                type="MageSuite\ProductSymbols\Model\GroupsRepository" />
-    <preference for="MageSuite\ProductSymbols\Api\Data\GroupsInterface"
-                type="MageSuite\ProductSymbols\Model\Groups" />
+    <preference for="MageSuite\ProductSymbols\Api\GroupRepositoryInterface"
+                type="MageSuite\ProductSymbols\Model\GroupRepository" />
+    <preference for="MageSuite\ProductSymbols\Api\Data\GroupInterface"
+                type="MageSuite\ProductSymbols\Model\Group" />
 
-    <type name="MageSuite\ProductSymbols\Block\Symbols\Group">
+    <type name="MageSuite\ProductSymbols\Block\Symbol\Group">
         <arguments>
-            <argument name="viewModel" xsi:type="string">MageSuite\ProductSymbols\ViewModel\Symbols\Group</argument>
+            <argument name="viewModel" xsi:type="string">MageSuite\ProductSymbols\ViewModel\Symbol\Group</argument>
         </arguments>
     </type>
 </config>

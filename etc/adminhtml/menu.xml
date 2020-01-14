@@ -3,20 +3,20 @@
         xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
     <menu>
         <add
-                id="MageSuite_ProductSymbols::symbols_menu"
+                id="MageSuite_ProductSymbols::symbol_menu"
                 title="Product Symbols"
                 module="MageSuite_ProductSymbols"
                 sortOrder="40"
                 parent="Magento_Catalog::inventory"
-                action="symbols/grid/symbols"
+                action="symbol/grid/symbol"
                 resource="Magento_Backend::content" />
         <add
-                id="MageSuite_ProductSymbols::groups_menu"
+                id="MageSuite_ProductSymbols::group_menu"
                 title="Product Symbol Groups"
                 module="MageSuite_ProductSymbols"
                 sortOrder="50"
                 parent="Magento_Catalog::inventory"
-                action="symbols/grid/groups"
+                action="symbol/grid/group"
                 resource="Magento_Backend::content" />
     </menu>
 </config>

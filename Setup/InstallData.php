@@ -18,20 +18,20 @@ class InstallData implements \Magento\Framework\Setup\InstallDataInterface
      */
     protected $eavSetup;
     /**
-     * @var SymbolsSetupFactory
+     * @var SymbolSetupFactory
      */
-    protected $symbolsSetupFactory;
+    protected $symbolSetupFactory;
 
     public function __construct(
         \Magento\Eav\Setup\EavSetupFactory $eavSetupFactory,
         \Magento\Framework\Setup\ModuleDataSetupInterface $moduleDataSetupInterface,
-        \MageSuite\ProductSymbols\Setup\SymbolsSetupFactory $symbolsSetupFactory
+        \MageSuite\ProductSymbols\Setup\SymbolSetupFactory $symbolSetupFactory
     )
     {
         $this->eavSetupFactory = $eavSetupFactory;
         $this->moduleDataSetupInterface = $moduleDataSetupInterface;
         $this->eavSetup = $this->eavSetupFactory->create(['setup' => $this->moduleDataSetupInterface]);
-        $this->symbolsSetupFactory = $symbolsSetupFactory;
+        $this->symbolSetupFactory = $symbolSetupFactory;
     }
 
     public function install(
@@ -40,7 +40,7 @@ class InstallData implements \Magento\Framework\Setup\InstallDataInterface
     ) {
         $setup->startSetup();
 
-        $symbolsSetup = $this->symbolsSetupFactory->create(['setup' => $setup]);
+        $symbolsSetup = $this->symbolSetupFactory->create(['setup' => $setup]);
         $symbolsSetup->installEntities();
 
 
@@ -64,7 +64,7 @@ class InstallData implements \Magento\Framework\Setup\InstallDataInterface
                     'input' => 'multiselect',
                     'backend' => 'Magento\Eav\Model\Entity\Attribute\Backend\ArrayBackend',
                     'frontend' => '',
-                    'source' => 'MageSuite\ProductSymbols\Model\Source\SymbolsList',
+                    'source' => 'MageSuite\ProductSymbols\Model\Source\SymbolList',
                     'visible' => 1,
                     'required' => 0,
                     'user_defined' => 1,
@@ -87,7 +87,7 @@ class InstallData implements \Magento\Framework\Setup\InstallDataInterface
                     'used_in_product_listing' => 1,
                     'used_for_sort_by' => 1,
                     'system' => 0,
-                    'source_model' => \MageSuite\ProductSymbols\Model\Source\SymbolsList::class
+                    'source_model' => \MageSuite\ProductSymbols\Model\Source\SymbolList::class
                 ]
             );
         }

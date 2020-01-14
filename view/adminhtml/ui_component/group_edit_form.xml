@@ -12,20 +12,20 @@
         </item>
         <item name="template" xsi:type="string">templates/form/collapsible</item>
         <item name="buttons" xsi:type="array">
-            <item name="back" xsi:type="string">MageSuite\ProductSymbols\Block\Adminhtml\Groups\Edit\BackButton</item>
-            <item name="delete" xsi:type="string">MageSuite\ProductSymbols\Block\Adminhtml\Groups\Edit\DeleteButton</item>
-            <item name="save" xsi:type="string">MageSuite\ProductSymbols\Block\Adminhtml\Groups\Edit\SaveButton</item>
+            <item name="back" xsi:type="string">MageSuite\ProductSymbols\Block\Adminhtml\Group\Edit\BackButton</item>
+            <item name="delete" xsi:type="string">MageSuite\ProductSymbols\Block\Adminhtml\Group\Edit\DeleteButton</item>
+            <item name="save" xsi:type="string">MageSuite\ProductSymbols\Block\Adminhtml\Group\Edit\SaveButton</item>
         </item>
     </argument>
     <dataSource name="group_form_data_source">
         <argument name="dataProvider" xsi:type="configurableObject">
-            <argument name="class" xsi:type="string">MageSuite\ProductSymbols\Model\Groups\GroupsDataProvider</argument>
+            <argument name="class" xsi:type="string">MageSuite\ProductSymbols\Model\Group\GroupDataProvider</argument>
             <argument name="name" xsi:type="string">group_form_data_source</argument>
             <argument name="primaryFieldName" xsi:type="string">entity_id</argument>
             <argument name="requestFieldName" xsi:type="string">id</argument>
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
-                    <item name="submit_url" xsi:type="url" path="*/groups/save"/>
+                    <item name="submit_url" xsi:type="url" path="*/group/save"/>
                 </item>
             </argument>
         </argument>
