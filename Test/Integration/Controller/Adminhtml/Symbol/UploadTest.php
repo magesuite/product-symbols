@@ -65,8 +65,8 @@ class UploadTest extends \Magento\TestFramework\TestCase\AbstractBackendControll
         $this->assertFalse($response);
     }
 
-    public static function moveSymbolImageToTmp() {
+    public static function moveSymbolImageToTmp()
+    {
         include __DIR__.'/../../../_files/symbol_image.php';
     }
 }
-

@@ -126,4 +126,3 @@ class SaveTest extends \Magento\TestFramework\TestCase\AbstractBackendController
         include __DIR__.'/../../../_files/symbols.php';
     }
 }
-

@@ -13,7 +13,7 @@ class SymbolName extends \MageSuite\ProductSymbols\Block\Adminhtml\Symbol\Grid\R
     {
         $symbolData = $this->getSymbolData($entityId);
 
-        if(!$symbolData->getEntityId()){
+        if (!$symbolData->getEntityId()) {
             return '';
         }
 

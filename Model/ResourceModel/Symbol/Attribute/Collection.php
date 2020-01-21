@@ -20,8 +20,7 @@ class Collection extends \Magento\Eav\Model\ResourceModel\Attribute\Collection
         \Magento\Store\Model\StoreManagerInterface $storeManager,
         $connection = null,
         \Magento\Framework\Model\ResourceModel\Db\AbstractDb $resource = null
-    )
-    {
+    ) {
         parent::__construct(
             $entityFactory,
             $logger,
@@ -30,7 +29,8 @@ class Collection extends \Magento\Eav\Model\ResourceModel\Attribute\Collection
             $eavConfig,
             $storeManager,
             $connection,
-            $resource)
+            $resource
+        )
         ;
     }
 

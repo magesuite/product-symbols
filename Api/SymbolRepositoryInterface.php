@@ -46,5 +46,4 @@ interface SymbolRepositoryInterface
      * @return bool
      */
     public function deleteById($id);
-
 }

@@ -47,8 +47,7 @@ class Upload
         \Magento\Framework\Api\ImageContentValidatorInterface $imageContentValidator,
         \Psr\Log\LoggerInterface $logger,
         \Magento\Framework\Api\Uploader $uploader
-    )
-    {
+    ) {
         $this->directoryList = $directoryList;
         $this->filesystem = $filesystem;
         $this->storeManager = $storeManager;
@@ -60,7 +59,7 @@ class Upload
 
     public function processUpload($imageData = null)
     {
-        if($imageData) {
+        if ($imageData) {
             $fileAttributes = $this->prepareUploadBase64Encoded($imageData);
         } else {
             $fileAttributes = $this->prepareUploadImage();
@@ -75,7 +74,7 @@ class Upload
                 ->getAbsolutePath('symbol/');
             $result = $this->uploader->save($destinationFolder, $fileAttributes['name']);
 
-            if($imageData){
+            if ($imageData) {
                 return $this->uploader->getUploadedFileName();
             } else {
                 $imagePath = $this->uploader->getUploadedFileName();
@@ -104,7 +103,7 @@ class Upload
 
     public function prepareUploadImage()
     {
-        if(!isset($_FILES) && !$_FILES['symbol_icon']['name']) {
+        if (!isset($_FILES) && !$_FILES['symbol_icon']['name']) {
             $result = ['error' => __('Image file has been not uploaded'), 'errorcode' => __('Image file has been not uploaded')];
             return $result;
         }

@@ -22,14 +22,12 @@ class Save
      */
     protected $dataObjectFactory;
 
-
     public function __construct(
         \MageSuite\ProductSymbols\Model\GroupFactory $groupFactory,
         \MageSuite\ProductSymbols\Api\GroupRepositoryInterface $groupRepository,
         \Magento\Framework\Event\Manager $eventManager,
         \Magento\Framework\DataObjectFactory $dataObjectFactory
-    )
-    {
+    ) {
         $this->eventManager = $eventManager;
         $this->dataObjectFactory = $dataObjectFactory;
         $this->groupFactory = $groupFactory;

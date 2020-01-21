@@ -16,15 +16,14 @@ class Edit extends \Magento\Framework\App\Action\Action
     /**
      * @var \MageSuite\ProductSymbols\Api\SymbolRepositoryInterface
      */
-    private $symbolRepository;
+    protected $symbolRepository;
 
     public function __construct(
         \Magento\Framework\App\Action\Context $context,
         \Magento\Framework\View\Result\PageFactory $pageFactory,
         \MageSuite\ProductSymbols\Api\SymbolRepositoryInterface $symbolRepository,
         \Magento\Framework\Registry $registry
-    )
-    {
+    ) {
         $this->pageFactory = $pageFactory;
         $this->registry = $registry;
         $this->symbolRepository = $symbolRepository;
@@ -42,7 +41,6 @@ class Edit extends \Magento\Framework\App\Action\Action
         $resultPage = $this->getResultPage();
         $resultPage->setActiveMenu('MageSuite_ProductSymbols::symbol_menu');
         $isNew = (isset($params['id'])) ? false : true;
-
 
         if ($isNew) {
             $resultPage->getConfig()->getTitle()->prepend((__('New Symbol')));
@@ -69,14 +67,15 @@ class Edit extends \Magento\Framework\App\Action\Action
         return $this->resultPage;
     }
 
-    protected function getCurrentSymbol($params) {
+    protected function getCurrentSymbol($params)
+    {
         $id = $params['id'] ?? 0;
 
-        if(!is_numeric($id) or $id <= 0) {
+        if (!is_numeric($id) || $id <= 0) {
             return null;
         }
 
-        if(isset($params['store'])){
+        if (isset($params['store'])) {
             $storeId = $params['store'];
         } else {
             $storeId = 0;
@@ -84,5 +83,4 @@ class Edit extends \Magento\Framework\App\Action\Action
 
         return $this->symbolRepository->getById($id, $storeId);
     }
-
 }

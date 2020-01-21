@@ -18,8 +18,7 @@ class GroupList implements \Magento\Framework\Data\OptionSourceInterface
     public function __construct(
         \MageSuite\ProductSymbols\Model\ResourceModel\Group\CollectionFactory $collectionFactory,
         \MageSuite\ProductSymbols\Api\GroupRepositoryInterface $groupRepository
-    )
-    {
+    ) {
         $this->collectionFactory = $collectionFactory;
         $this->groupsRepository = $groupRepository;
     }

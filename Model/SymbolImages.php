@@ -1,7 +1,7 @@
 <?php
 namespace MageSuite\ProductSymbols\Model;
 
-class SymbolImages extends \Magento\Catalog\Model\AbstractModel implements \MageSuite\ProductSymbols\Api\Data\SymbolImagesInterface
+class SymbolImage extends \Magento\Catalog\Model\AbstractModel implements \MageSuite\ProductSymbols\Api\Data\SymbolImageInterface
 {
 
     /**

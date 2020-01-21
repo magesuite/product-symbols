@@ -4,8 +4,6 @@ namespace MageSuite\ProductSymbols\Controller\Adminhtml\Grid;
 
 class Group extends \Magento\Framework\App\Action\Action
 {
-
-
     /**
      * @var \Magento\Framework\View\Result\PageFactory
      */
@@ -16,8 +14,7 @@ class Group extends \Magento\Framework\App\Action\Action
     public function __construct(
         \Magento\Framework\App\Action\Context $context,
         \Magento\Framework\View\Result\PageFactory $pageFactory
-    )
-    {
+    ) {
         parent::__construct($context);
         $this->pageFactory = $pageFactory;
     }
@@ -46,5 +43,4 @@ class Group extends \Magento\Framework\App\Action\Action
         }
         return $this->resultPage;
     }
-
 }

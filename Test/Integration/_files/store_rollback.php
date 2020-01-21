@@ -14,4 +14,3 @@ $registry->unregister('isSecureArea');
 $registry->register('isSecureArea', false);
 
 $objectManager->get(\Magento\Store\Model\StoreManagerInterface::class)->reinitStores();
-

@@ -20,28 +20,28 @@ class SymbolRepository implements \MageSuite\ProductSymbols\Api\SymbolRepository
     /**
      * @var ResourceModel\Symbol
      */
-    private $symbolResource;
+    protected $symbolResource;
     /**
      * @var SymbolFactory
      */
-    private $symbolFactory;
+    protected $symbolFactory;
     /**
      * @var ResourceModel\Symbol\CollectionFactory
      */
-    private $collectionFactory;
+    protected $collectionFactory;
     /**
      * @var \Magento\Store\Model\StoreManagerInterface
      */
-    private $storeManager;
+    protected $storeManager;
     /**
      * @var Symbol\Processor\SaveFactory
      */
-    private $saveFactory;
+    protected $saveFactory;
 
     /**
      * @var Symbol\Processor\UploadFactory
      */
-    private $uploadFactory;
+    protected $uploadFactory;
 
 
     public function __construct(
@@ -51,8 +51,7 @@ class SymbolRepository implements \MageSuite\ProductSymbols\Api\SymbolRepository
         \Magento\Store\Model\StoreManagerInterface $storeManager,
         \MageSuite\ProductSymbols\Model\Symbol\Processor\SaveFactory $saveFactory,
         \MageSuite\ProductSymbols\Model\Symbol\Processor\UploadFactory $uploadFactory
-    )
-    {
+    ) {
 
         $this->symbolResource = $symbolResource;
         $this->symbolFactory = $symbolFactory;
@@ -140,12 +139,11 @@ class SymbolRepository implements \MageSuite\ProductSymbols\Api\SymbolRepository
                 $e
             );
         }
-
     }
 
     public function getAllSymbols($storeId = null)
     {
-        if($storeId == null) {
+        if ($storeId == null) {
             $storeId = $this->storeManager->getStore()->getId();
         }
         
@@ -167,7 +165,7 @@ class SymbolRepository implements \MageSuite\ProductSymbols\Api\SymbolRepository
             $symbol['is_api'] = true;
             $uploader = $this->uploadFactory->create();
 
-            if($symbol->getSymbolIconEncodedData()) {
+            if ($symbol->getSymbolIconEncodedData()) {
                 $symbol->setSymbolIcon($uploader->processUpload($symbol->getSymbolIconEncodedData()));
             }
 

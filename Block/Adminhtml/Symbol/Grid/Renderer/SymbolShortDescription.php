@@ -13,7 +13,7 @@ class SymbolShortDescription extends \MageSuite\ProductSymbols\Block\Adminhtml\S
     {
         $symbolData = $this->getSymbolData($entityId);
 
-        if(!$symbolData->getEntityId()){
+        if (!$symbolData->getEntityId()) {
             return '';
         }
 

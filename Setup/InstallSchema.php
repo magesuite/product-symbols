@@ -7,20 +7,19 @@ class InstallSchema implements \Magento\Framework\Setup\InstallSchemaInterface
     public function install(
         \Magento\Framework\Setup\SchemaSetupInterface $setup,
         \Magento\Framework\Setup\ModuleContextInterface $context
-    )
-    {
+    ) {
         $setup->startSetup();
 
         if (!$setup->getConnection()->isTableExists($setup->getTable('symbols_entity'))) {
             $table = $setup->getConnection()->newTable(
                 $setup->getTable('symbols_entity')
-                )->addColumn(
-                    'entity_id',
-                    \Magento\Framework\DB\Ddl\Table::TYPE_INTEGER,
-                    null,
-                    ['identity' => true, 'unsigned' => true, 'nullable' => false, 'primary' => true],
-                    'Entity ID'
-                )
+            )->addColumn(
+                'entity_id',
+                \Magento\Framework\DB\Ddl\Table::TYPE_INTEGER,
+                null,
+                ['identity' => true, 'unsigned' => true, 'nullable' => false, 'primary' => true],
+                'Entity ID'
+            )
                 ->addColumn(
                     'symbol_name',
                     \Magento\Framework\DB\Ddl\Table::TYPE_TEXT,
@@ -40,19 +39,22 @@ class InstallSchema implements \Magento\Framework\Setup\InstallSchemaInterface
                     \Magento\Framework\DB\Ddl\Table::TYPE_TEXT,
                     64,
                     [],
-                    'Symbol Icon')
+                    'Symbol Icon'
+                )
                 ->addColumn(
                     'symbol_icon_url',
                     \Magento\Framework\DB\Ddl\Table::TYPE_TEXT,
                     64,
                     [],
-                    'Symbol Icon')
+                    'Symbol Icon'
+                )
                 ->addColumn(
                     'symbol_groups',
                     \Magento\Framework\DB\Ddl\Table::TYPE_TEXT,
                     255,
                     [],
-                    'Symbol Groups')
+                    'Symbol Groups'
+                )
                 ->setComment(
                     'Symbols Entity'
                 );

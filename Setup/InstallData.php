@@ -26,8 +26,7 @@ class InstallData implements \Magento\Framework\Setup\InstallDataInterface
         \Magento\Eav\Setup\EavSetupFactory $eavSetupFactory,
         \Magento\Framework\Setup\ModuleDataSetupInterface $moduleDataSetupInterface,
         \MageSuite\ProductSymbols\Setup\SymbolSetupFactory $symbolSetupFactory
-    )
-    {
+    ) {
         $this->eavSetupFactory = $eavSetupFactory;
         $this->moduleDataSetupInterface = $moduleDataSetupInterface;
         $this->eavSetup = $this->eavSetupFactory->create(['setup' => $this->moduleDataSetupInterface]);
@@ -42,7 +41,6 @@ class InstallData implements \Magento\Framework\Setup\InstallDataInterface
 
         $symbolsSetup = $this->symbolSetupFactory->create(['setup' => $setup]);
         $symbolsSetup->installEntities();
-
 
         $eavSetup = $this->eavSetupFactory->create(['setup' => $setup]);
 
@@ -62,9 +60,9 @@ class InstallData implements \Magento\Framework\Setup\InstallDataInterface
                     'group' => 'General',
                     'type' => 'varchar',
                     'input' => 'multiselect',
-                    'backend' => 'Magento\Eav\Model\Entity\Attribute\Backend\ArrayBackend',
+                    'backend' => \Magento\Eav\Model\Entity\Attribute\Backend\ArrayBackend::class,
                     'frontend' => '',
-                    'source' => 'MageSuite\ProductSymbols\Model\Source\SymbolList',
+                    'source' => \MageSuite\ProductSymbols\Model\Source\SymbolList::class,
                     'visible' => 1,
                     'required' => 0,
                     'user_defined' => 1,

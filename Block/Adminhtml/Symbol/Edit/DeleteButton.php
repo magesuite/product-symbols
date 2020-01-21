@@ -18,17 +18,15 @@ class DeleteButton extends \Magento\Cms\Block\Adminhtml\Block\Edit\GenericButton
         return $data;
     }
 
-
     public function getDeleteUrl()
     {
         return $this->getUrl('*/symbol/delete', ['id' => $this->getSymbolId()]);
     }
 
-
     public function getSymbolId()
     {
         $params = $this->context->getRequest()->getParams();
-        if(!isset($params['id'])){
+        if (!isset($params['id'])) {
             return null;
         }
 

@@ -53,7 +53,6 @@ class SaveTest extends \Magento\TestFramework\TestCase\AbstractBackendController
         $group->setGroupName('group 1');
         $group->setGroupCode('group_1');
 
-
         $group = $this->groupRepositoryInterface->save($group);
 
         $editData = [
@@ -71,4 +70,3 @@ class SaveTest extends \Magento\TestFramework\TestCase\AbstractBackendController
         $this->assertEquals('group_1', $group->getGroupCode());
     }
 }
-

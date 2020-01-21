@@ -15,16 +15,14 @@ abstract class AbstractColumnRenderer extends \Magento\Backend\Block\Widget\Grid
     /**
      * @var array
      */
-    static $groupData = [];
-
+    protected $groupData = [];
 
     public function __construct(
         \Magento\Backend\Block\Context $context,
         \MageSuite\ProductSymbols\Api\GroupRepositoryInterface $groupRepository,
         \Magento\Framework\Filesystem $filesystem,
         array $data = []
-    )
-    {
+    ) {
         parent::__construct($context, $data);
         $this->groupRepository = $groupRepository;
         $this->filesystem = $filesystem;
@@ -41,11 +39,11 @@ abstract class AbstractColumnRenderer extends \Magento\Backend\Block\Widget\Grid
 
     public function getGroupData($entityId)
     {
-        if(!isset(self::$groupData[$entityId])) {
-            self::$groupData[$entityId] = $this->groupRepository->getById($entityId);
+        if (!isset($this->groupData[$entityId])) {
+            $this->groupData[$entityId] = $this->groupRepository->getById($entityId);
         }
 
-        return self::$groupData[$entityId];
+        return $this->groupData[$entityId];
     }
 
     abstract public function getColumnValue($columnId, $entityId);

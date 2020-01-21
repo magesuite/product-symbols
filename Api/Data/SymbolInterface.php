@@ -82,14 +82,13 @@ interface SymbolInterface
     public function setSymbolIconUrl($symbolIconUrl);
     
     /**
-     * @return \MageSuite\ProductSymbols\Api\Data\SymbolImagesInterface
+     * @return \MageSuite\ProductSymbols\Api\Data\SymbolImageInterface
      */
     public function getSymbolIconEncodedData();
 
     /**
-     * @param @param \MageSuite\ProductSymbols\Api\Data\SymbolImagesInterface $symbolIcon
+     * @param @param \MageSuite\ProductSymbols\Api\Data\SymbolImageInterface $symbolIcon
      * @return mixed
      */
     public function setSymbolIconEncodedData($symbolIcon);
-    
 }

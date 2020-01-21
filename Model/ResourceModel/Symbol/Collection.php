@@ -12,8 +12,8 @@ class Collection extends \Magento\Catalog\Model\ResourceModel\Collection\Abstrac
     protected function _construct()
     {
         $this->_init(
-            'MageSuite\ProductSymbols\Model\Symbol',
-            'MageSuite\ProductSymbols\Model\ResourceModel\Symbol'
+            \MageSuite\ProductSymbols\Model\Symbol::class,
+            \MageSuite\ProductSymbols\Model\ResourceModel\Symbol::class
         );
     }
 }

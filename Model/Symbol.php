@@ -51,8 +51,7 @@ class Symbol extends \Magento\Catalog\Model\AbstractModel implements \MageSuite\
         \Magento\Framework\Model\ResourceModel\AbstractResource $resource = null,
         \Magento\Framework\Data\Collection\AbstractDb $resourceCollection = null,
         array $data = []
-    )
-    {
+    ) {
         parent::__construct($context, $registry, $extensionFactory, $customAttributeFactory, $storeManager, $resource, $resourceCollection, $data);
     }
 
@@ -197,7 +196,7 @@ class Symbol extends \Magento\Catalog\Model\AbstractModel implements \MageSuite\
     }
 
     /**
-     * @return \MageSuite\ProductSymbols\Api\Data\SymbolImagesInterface
+     * @return \MageSuite\ProductSymbols\Api\Data\SymbolImageInterface
      */
     public function getSymbolIconEncodedData()
     {
@@ -205,12 +204,11 @@ class Symbol extends \Magento\Catalog\Model\AbstractModel implements \MageSuite\
     }
 
     /**
-     * @param @param \MageSuite\ProductSymbols\Api\Data\SymbolImagesInterface $symbolIcon
+     * @param @param \MageSuite\ProductSymbols\Api\Data\SymbolImageInterface $symbolIcon
      * @return mixed
      */
     public function setSymbolIconEncodedData($symbolIcon)
     {
         return $this->setData('symbol_icon_encoded_data', $symbolIcon);
     }
-
 }

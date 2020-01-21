@@ -9,7 +9,6 @@ class Group extends \Magento\Framework\DataObject implements \Magento\Framework\
      */
     protected $registry;
 
-
     protected $product = null;
     /**
      * @var \MageSuite\ProductSymbols\Model\ResourceModel\Group\CollectionFactory
@@ -24,15 +23,13 @@ class Group extends \Magento\Framework\DataObject implements \Magento\Framework\
      */
     protected $storeManager;
 
-
     public function __construct(
         \Magento\Framework\Registry $registry,
         \MageSuite\ProductSymbols\Model\ResourceModel\Group\CollectionFactory $groupCollectionFactory,
         \MageSuite\ProductSymbols\Model\ResourceModel\Symbol\CollectionFactory $symbolCollectionFactory,
         \Magento\Store\Model\StoreManagerInterface $storeManager,
         array $data = []
-    )
-    {
+    ) {
         parent::__construct($data);
         $this->registry = $registry;
         $this->groupCollectionFactory = $groupCollectionFactory;
@@ -57,13 +54,13 @@ class Group extends \Magento\Framework\DataObject implements \Magento\Framework\
     {
         $groupCollection = $this->groupCollectionFactory->create();
 
-        if(!empty($this->getIncludedGroups())){
+        if (!empty($this->getIncludedGroups())) {
             $includedGroups = explode(',', $this->getIncludedGroups());
 
             $groupCollection->addFieldToFilter('group_code', ['in' => $includedGroups]);
         }
 
-        if(!empty($this->getExcludedGroups())){
+        if (!empty($this->getExcludedGroups())) {
             $excludedGroups = explode(',', $this->getExcludedGroups());
 
             $groupCollection->addFieldToFilter('group_code', ['nin' => $excludedGroups]);
@@ -93,7 +90,7 @@ class Group extends \Magento\Framework\DataObject implements \Magento\Framework\
                 'group_name' => $group->getGroupName()
             ];
 
-            foreach ($symbolsCollection as $symbol){
+            foreach ($symbolsCollection as $symbol) {
                 $groupFullData[$group->getGroupCode()]['symbols'][] = $symbol;
             }
         }

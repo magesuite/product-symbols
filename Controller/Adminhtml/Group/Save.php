@@ -17,16 +17,14 @@ class Save extends \Magento\Framework\App\Action\Action
     /**
      * @var \Magento\Framework\DataObjectFactory
      */
-    private $dataObjectFactory;
-
+    protected $dataObjectFactory;
 
     public function __construct(
         \Magento\Backend\App\Action\Context $context,
         \Magento\Framework\View\Result\PageFactory $pageFactory,
         \MageSuite\ProductSymbols\Model\Group\Processor\SaveFactory $saveFactory,
         \Magento\Framework\DataObjectFactory $dataObjectFactory
-    )
-    {
+    ) {
         $this->pageFactory = $pageFactory;
         $this->saveFactory = $saveFactory;
 

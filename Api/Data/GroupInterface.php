@@ -36,5 +36,4 @@ interface GroupInterface
      * @return void
      */
     public function setGroupCode($groupCode);
-    
 }

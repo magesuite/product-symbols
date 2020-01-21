@@ -34,7 +34,6 @@ class GroupDataProvider extends \Magento\Ui\DataProvider\AbstractDataProvider
         array $data = []
     ) {
 
-
         $this->collection = $symbolCollectionFactory->create();
         $this->request = $request;
         $this->registry = $registry;
@@ -95,7 +94,7 @@ class GroupDataProvider extends \Magento\Ui\DataProvider\AbstractDataProvider
         $meta = parent::getMeta();
         $params = $this->request->getParams();
 
-        if(isset($params['id'])) {
+        if (isset($params['id'])) {
             $meta['group_details']['children']['group_code_group']['children']['group_code']['arguments']['data']['config']['disabled'] = true;
             $meta['group_details']['children']['group_code_group']['children']['group_code']['arguments']['data']['config']['notice'] = __('This field can be modified only during group creation');
         }

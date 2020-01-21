@@ -86,7 +86,7 @@ class SymbolDataProvider extends \Magento\Ui\DataProvider\AbstractDataProvider
         $useConfig = [];
         $symbolResource = $symbol->getResource();
 
-        if($symbol->getStoreId() === \Magento\Store\Model\Store::DEFAULT_STORE_ID) {
+        if ($symbol->getStoreId() === \Magento\Store\Model\Store::DEFAULT_STORE_ID) {
             $useConfig = [
                 'symbol_name' => false,
                 'symbol_icon' => false,
@@ -115,7 +115,7 @@ class SymbolDataProvider extends \Magento\Ui\DataProvider\AbstractDataProvider
             ]
         ];
 
-        if($symbol->getSymbolIcon()){
+        if ($symbol->getSymbolIcon()) {
             $name = $symbol->getSymbolIcon();
             $url = $symbol->getSymbolIconUrl();
             $size = file_exists('media/symbols/' . $name) ? filesize('media/symbols/' . $name) : 0;
@@ -142,8 +142,8 @@ class SymbolDataProvider extends \Magento\Ui\DataProvider\AbstractDataProvider
             'symbol_groups_group' => 'use_config.symbol_groups'
         ];
 
-        if(!isset($params['store']) OR (isset($params['store']) and $params['store'] == '0')) {
-            foreach($groupsToFields as $group => $field) {
+        if (!isset($params['store']) or (isset($params['store']) and $params['store'] == '0')) {
+            foreach ($groupsToFields as $group => $field) {
                 $meta['symbol_details']['children'][$group]['children'][$field]['arguments']['data']['config']['visible'] = false;
                 $meta['symbol_details']['children'][$group]['children'][$field]['arguments']['data']['config']['default'] = false;
             }

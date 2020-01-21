@@ -12,8 +12,7 @@ class Newgroup extends \Magento\Framework\App\Action\Action
     public function __construct(
         \Magento\Framework\App\Action\Context $context,
         \Magento\Backend\Model\View\Result\ForwardFactory $resultForwardFactory
-    )
-    {
+    ) {
         $this->resultForwardFactory = $resultForwardFactory;
         parent::__construct($context);
     }

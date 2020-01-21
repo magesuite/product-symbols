@@ -32,7 +32,6 @@ class SymbolTest extends \PHPUnit\Framework\TestCase
         $this->symbolFactory = $this->objectManager->create(\MageSuite\ProductSymbols\Model\SymbolFactory::class);
 
         $this->store = \Magento\TestFramework\Helper\Bootstrap::getObjectManager()->create('Magento\Store\Model\Store');
-
     }
 
     /**
@@ -160,14 +159,14 @@ class SymbolTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals($editData['store_id'], $editedSymbol->getStoreId());
         $this->assertEquals($editData['symbol_icon'], $editedSymbol->getSymbolIcon());
         $this->assertEquals($editData['symbol_short_description'], $editedSymbol->getSymbolShortDescription());
-
     }
 
     /**
      * @magentoDbIsolation enabled
      * @magentoDataFixture loadSymbols
      */
-    public function testDeleteSymbolFromDb(){
+    public function testDeleteSymbolFromDb()
+    {
 
         $savedSymbol = $this->symbolRepositoryInterface->getById(600);
 
@@ -176,7 +175,8 @@ class SymbolTest extends \PHPUnit\Framework\TestCase
         $this->assertTrue($result);
     }
 
-    public static function loadSymbols() {
+    public static function loadSymbols()
+    {
         include __DIR__.'/../_files/symbols.php';
     }
 }

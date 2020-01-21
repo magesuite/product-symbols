@@ -18,14 +18,12 @@ class Edit extends \Magento\Framework\App\Action\Action
      */
     protected $groupRepository;
 
-
     public function __construct(
         \Magento\Framework\App\Action\Context $context,
         \Magento\Framework\View\Result\PageFactory $pageFactory,
         \MageSuite\ProductSymbols\Api\GroupRepositoryInterface $groupRepository,
         \Magento\Framework\Registry $registry
-    )
-    {
+    ) {
         $this->pageFactory = $pageFactory;
         $this->registry = $registry;
 
@@ -43,7 +41,6 @@ class Edit extends \Magento\Framework\App\Action\Action
         $resultPage = $this->getResultPage();
         $resultPage->setActiveMenu('MageSuite_ProductSymbols::group_menu');
         $isNew = (isset($params['id'])) ? false : true;
-
 
         if ($isNew) {
             $resultPage->getConfig()->getTitle()->prepend((__('New Symbols Group')));
@@ -74,11 +71,10 @@ class Edit extends \Magento\Framework\App\Action\Action
     {
         $id = $params['id'] ?? 0;
 
-        if(!is_numeric($id) or $id <= 0) {
+        if (!is_numeric($id) || $id <= 0) {
             return null;
         }
 
         return $this->groupRepository->getById($id);
     }
-
 }

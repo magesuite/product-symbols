@@ -31,13 +31,12 @@ class Group extends \Magento\Framework\View\Element\Template
         $this->viewModel = $viewModel;
     }
 
-
     public function getViewModel()
     {
         $viewModel = $this->viewModel;
         $data = $this->getData();
 
-        if(isset($data['view_model'])){
+        if (isset($data['view_model'])) {
             $viewModel = $data['view_model'];
         }
 

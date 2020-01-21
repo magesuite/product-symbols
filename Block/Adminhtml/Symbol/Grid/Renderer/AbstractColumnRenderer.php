@@ -28,8 +28,7 @@ abstract class AbstractColumnRenderer extends \Magento\Backend\Block\Widget\Grid
         \MageSuite\ProductSymbols\Api\SymbolRepositoryInterface $symbolRepository,
         \Magento\Framework\Filesystem $filesystem,
         array $data = []
-    )
-    {
+    ) {
         parent::__construct($context, $data);
         $this->symbolRepository = $symbolRepository;
         $this->filesystem = $filesystem;
@@ -46,7 +45,7 @@ abstract class AbstractColumnRenderer extends \Magento\Backend\Block\Widget\Grid
 
     public function getSymbolData($entityId)
     {
-        if(!isset(self::$symbolData[$entityId])) {
+        if (!isset(self::$symbolData[$entityId])) {
             self::$symbolData[$entityId] = $this->symbolRepository->getById($entityId);
         }
 

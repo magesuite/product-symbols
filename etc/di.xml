@@ -4,8 +4,8 @@
                 type="MageSuite\ProductSymbols\Model\SymbolRepository" />
     <preference for="MageSuite\ProductSymbols\Api\Data\SymbolInterface"
                 type="MageSuite\ProductSymbols\Model\Symbol" />
-    <preference for="MageSuite\ProductSymbols\Api\Data\SymbolImagesInterface"
-                type="MageSuite\ProductSymbols\Model\SymbolImages" />
+    <preference for="MageSuite\ProductSymbols\Api\Data\SymbolImageInterface"
+                type="MageSuite\ProductSymbols\Model\SymbolImage" />
 
     <preference for="MageSuite\ProductSymbols\Api\GroupRepositoryInterface"
                 type="MageSuite\ProductSymbols\Model\GroupRepository" />

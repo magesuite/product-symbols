@@ -51,8 +51,7 @@ class Group extends \Magento\Catalog\Model\AbstractModel implements \MageSuite\P
         \Magento\Framework\Model\ResourceModel\AbstractResource $resource = null,
         \Magento\Framework\Data\Collection\AbstractDb $resourceCollection = null,
         array $data = []
-    )
-    {
+    ) {
         parent::__construct($context, $registry, $extensionFactory, $customAttributeFactory, $storeManager, $resource, $resourceCollection, $data);
     }
 

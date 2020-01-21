@@ -17,16 +17,14 @@ class Save extends \Magento\Framework\App\Action\Action
     /**
      * @var \Magento\Framework\DataObjectFactory
      */
-    private $dataObjectFactory;
-
+    protected $dataObjectFactory;
 
     public function __construct(
         \Magento\Backend\App\Action\Context $context,
         \Magento\Framework\View\Result\PageFactory $pageFactory,
         \MageSuite\ProductSymbols\Model\Symbol\Processor\SaveFactory $saveFactory,
         \Magento\Framework\DataObjectFactory $dataObjectFactory
-    )
-    {
+    ) {
         $this->pageFactory = $pageFactory;
         $this->saveFactory = $saveFactory;
 
@@ -52,8 +50,7 @@ class Save extends \Magento\Framework\App\Action\Action
             $symbol = $this->saveFactory->create()->processSave($paramsObject);
             $this->messageManager->addSuccessMessage('Symbol has been saved');
             $routeParams['id'] = $symbol->getEntityId();
-        } catch (\Exception $e)
-        {
+        } catch (\Exception $e) {
             $this->messageManager->addErrorMessage($e->getMessage());
         }
         $resultRedirect = $this->resultRedirectFactory->create();

@@ -18,17 +18,15 @@ class DeleteButton extends \Magento\Cms\Block\Adminhtml\Block\Edit\GenericButton
         return $data;
     }
 
-
     public function getDeleteUrl()
     {
         return $this->getUrl('*/group/delete', ['id' => $this->getGroupId()]);
     }
 
-
     public function getGroupId()
     {
         $params = $this->context->getRequest()->getParams();
-        if(!isset($params['id'])){
+        if (!isset($params['id'])) {
             return null;
         }
 

@@ -13,7 +13,7 @@ class GroupName extends \MageSuite\ProductSymbols\Block\Adminhtml\Group\Grid\Ren
     {
         $symbolData = $this->getGroupData($entityId);
 
-        if(!$symbolData->getEntityId()){
+        if (!$symbolData->getEntityId()) {
             return '';
         }
 

@@ -27,8 +27,7 @@ class GroupRepository implements \MageSuite\ProductSymbols\Api\GroupRepositoryIn
         \MageSuite\ProductSymbols\Model\ResourceModel\Group\CollectionFactory $collectionFactory,
         \MageSuite\ProductSymbols\Model\Group\Processor\SaveFactory $saveFactory,
         \Magento\Eav\Setup\EavSetupFactory $eavSetupFactory
-    )
-    {
+    ) {
         $this->groupResource = $groupResource;
         $this->collectionFactory = $collectionFactory;
         $this->saveFactory = $saveFactory;
@@ -37,22 +36,21 @@ class GroupRepository implements \MageSuite\ProductSymbols\Api\GroupRepositoryIn
 
     public function getById($id)
     {
-        $tagsCollection = $this->collectionFactory->create();
+        $groupCollection = $this->collectionFactory->create();
 
-        $tagsCollection->getSelect()
+        $groupCollection->getSelect()
             ->where('entity_id =?', $id);
 
-        if($tagsCollection->getSize()){
-            return $tagsCollection->getFirstItem();
+        if ($groupCollection->getSize()) {
+            return $groupCollection->getFirstItem();
         }
 
         return null;
     }
 
-
     public function save(\MageSuite\ProductSymbols\Api\Data\GroupInterface $group)
     {
-        if(!$group->getEntityId() && $this->getByCode($group->getGroupCode())){
+        if (!$group->getEntityId() && $this->getByCode($group->getGroupCode())) {
             throw new \Magento\Framework\Exception\AlreadyExistsException(new \Magento\Framework\Phrase('Group with the same code already exist.'));
         }
         $this->groupResource->save($group);
@@ -75,7 +73,7 @@ class GroupRepository implements \MageSuite\ProductSymbols\Api\GroupRepositoryIn
         $groupCollection->getSelect()
             ->where('group_code =?', $groupCode);
 
-        if($groupCollection->getSize()){
+        if ($groupCollection->getSize()) {
             return $groupCollection->getFirstItem();
         }
 

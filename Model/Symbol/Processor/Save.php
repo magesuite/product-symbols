@@ -27,8 +27,7 @@ class Save
         \MageSuite\ProductSymbols\Api\SymbolRepositoryInterface $symbolRepository,
         \Magento\Framework\Event\Manager $eventManager,
         \Magento\Framework\DataObjectFactory $dataObjectFactory
-    )
-    {
+    ) {
 
         $this->eventManager = $eventManager;
         $this->dataObjectFactory = $dataObjectFactory;
@@ -36,17 +35,18 @@ class Save
         $this->symbolRepository = $symbolRepository;
     }
 
-    public function processSave($params) {
+    public function processSave($params)
+    {
         $isNew = (!isset($params['entity_id'])) || (isset($params['entity_id']) && $params['entity_id'] == "") ? true : false;
 
         if ($isNew) {
-            if(!isset($params['store_id'])){
+            if (!isset($params['store_id'])) {
                 $params['store_id'] = self::DEFAULT_STORE_ID;
             }
             $symbol = $this->symbolFactory->create();
             $symbol->setData($params->getData());
         } else {
-            if(!$params['is_api']) {
+            if (!$params['is_api']) {
                 $matchedParams = $this->matchParams($params);
 
                 $params = $matchedParams;
@@ -57,14 +57,14 @@ class Save
         }
         $imagePath = false;
 
-        if(isset($params['symbol_icon'])) {
+        if (isset($params['symbol_icon'])) {
             if (is_array($params['symbol_icon'])) {
                 $imagePath = $params['symbol_icon'][0]['name'];
             } else {
                 $imagePath = $params['symbol_icon'];
             }
         }
-        if($imagePath){
+        if ($imagePath) {
             $symbol->setSymbolIcon($imagePath);
         } elseif ($symbol->getStoreId() == self::DEFAULT_STORE_ID) {
             $symbol->setSymbolIcon('');
@@ -79,7 +79,7 @@ class Save
     {
         $matchedFields = [];
         foreach ($config as $field => $value) {
-            if($value == 'false'){
+            if ($value == 'false') {
                 $matchedFields[] = $field;
             }
         }
@@ -93,11 +93,11 @@ class Save
         $matchedParams = [];
 
         foreach ($changedFields as $field) {
-            if(!isset($params[$field])) {
+            if (!isset($params[$field])) {
                 continue;
             }
 
-            if($field == 'symbol_icon'){
+            if ($field == 'symbol_icon') {
                 $matchedParams[$field] = $params['symbol_icon'][0]['name'];
                 continue;
             }

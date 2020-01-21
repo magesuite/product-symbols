@@ -30,8 +30,7 @@ class SymbolList extends \Magento\Eav\Model\Entity\Attribute\Source\AbstractSour
         \MageSuite\ProductSymbols\Api\SymbolRepositoryInterface $symbolRepository,
         \Magento\Store\Model\StoreManagerInterface $storeManager,
         \MageSuite\ProductSymbols\Api\GroupRepositoryInterface $groupRepository
-    )
-    {
+    ) {
         $this->collectionFactory = $collectionFactory;
         $this->symbolRepository = $symbolRepository;
         $this->storeManager = $storeManager;
@@ -69,11 +68,11 @@ class SymbolList extends \Magento\Eav\Model\Entity\Attribute\Source\AbstractSour
             $symbol = $this->symbolRepository->getById($symbol->getEntityId(), $storeId);
             $symbolGroups = explode(',', $symbol->getSymbolGroups());
 
-            if(empty($group)){
+            if (empty($group)) {
                 return $options;
             }
 
-            if(!in_array($group->getEntityId(), $symbolGroups)){
+            if (!in_array($group->getEntityId(), $symbolGroups)) {
                 continue;
             }
 

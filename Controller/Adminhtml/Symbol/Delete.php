@@ -27,15 +27,13 @@ class Delete extends \Magento\Framework\App\Action\Action
      */
     protected $symbolRepository;
 
-
     public function __construct(
         \Magento\Framework\App\Action\Context $context,
         \Magento\Framework\View\Result\PageFactory $pageFactory,
         \MageSuite\ProductSymbols\Api\SymbolRepositoryInterface $symbolRepository,
         \Magento\Eav\Model\Config $eavConfig,
         \Magento\Framework\Controller\ResultFactory $resultRedirect
-    )
-    {
+    ) {
         $this->pageFactory = $pageFactory;
         $this->eavConfig = $eavConfig;
         $this->resultRedirect = $resultRedirect;
