@@ -4,13 +4,10 @@ namespace MageSuite\ProductSymbols\Controller\Adminhtml\Symbol;
 
 class Delete extends \Magento\Framework\App\Action\Action
 {
-    /** @var \Magento\Framework\View\Result\PageFactory */
-    protected $pageFactory;
-
     /**
-     * @var bool
+     * @var \Magento\Framework\View\Result\PageFactory
      */
-    protected $resultPage = false;
+    protected $pageFactory;
 
     /**
      * @var \Magento\Eav\Model\Config
@@ -42,9 +39,6 @@ class Delete extends \Magento\Framework\App\Action\Action
         parent::__construct($context);
     }
 
-    /**
-     * @return \Magento\Framework\Controller\Result\Redirect
-     */
     public function execute()
     {
         try {
@@ -67,9 +61,6 @@ class Delete extends \Magento\Framework\App\Action\Action
         return $resultRedirect;
     }
 
-    /**
-     * @return bool
-     */
     protected function _isAllowed()
     {
         return true;

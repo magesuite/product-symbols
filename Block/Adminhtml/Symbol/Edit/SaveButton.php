@@ -3,9 +3,7 @@ namespace MageSuite\ProductSymbols\Block\Adminhtml\Symbol\Edit;
 
 class SaveButton extends \Magento\Cms\Block\Adminhtml\Block\Edit\GenericButton implements \Magento\Framework\View\Element\UiComponent\Control\ButtonProviderInterface
 {
-    /**
-     * @return array
-     */
+
     public function getButtonData()
     {
         return [

@@ -5,18 +5,22 @@ namespace MageSuite\ProductSymbols\Model;
 class GroupRepository implements \MageSuite\ProductSymbols\Api\GroupRepositoryInterface
 {
     const DEFAULT_STORE_ID = 0;
+
     /**
      * @var ResourceModel\Group
      */
     protected $groupResource;
+
     /**
      * @var ResourceModel\Group\CollectionFactory
      */
     protected $collectionFactory;
+
     /**
      * @var Group\Processor\SaveFactory
      */
     protected $saveFactory;
+
     /**
      * @var \Magento\Eav\Setup\EavSetupFactory
      */
@@ -80,9 +84,6 @@ class GroupRepository implements \MageSuite\ProductSymbols\Api\GroupRepositoryIn
         return null;
     }
 
-    /**
-     * @param \MageSuite\ProductSymbols\Api\Data\GroupInterface $group
-     */
     protected function createGroupAttribute($group)
     {
         $eavSetup = $this->eavSetupFactory->create();
@@ -124,9 +125,6 @@ class GroupRepository implements \MageSuite\ProductSymbols\Api\GroupRepositoryIn
         );
     }
 
-    /**
-     * @param \MageSuite\ProductSymbols\Api\Data\GroupInterface $group
-     */
     protected function removeGroupAttribute($group)
     {
         $eavSetup = $this->eavSetupFactory->create();

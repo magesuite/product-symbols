@@ -19,15 +19,16 @@ class SymbolDataProvider extends \Magento\Ui\DataProvider\AbstractDataProvider
      * @var \Magento\Framework\Registry
      */
     protected $registry;
+
     /**
      * @var \MageSuite\ProductSymbols\Api\SymbolRepositoryInterface
      */
-    private $symbolRepository;
+    protected $symbolRepository;
+
     /**
      * @var \MageSuite\ProductSymbols\Api\Data\SymbolInterfaceFactory
      */
-    private $symbolFactory;
-
+    protected $symbolFactory;
 
     public function __construct(
         $name,
@@ -41,8 +42,6 @@ class SymbolDataProvider extends \Magento\Ui\DataProvider\AbstractDataProvider
         array $meta = [],
         array $data = []
     ) {
-
-
         $this->collection = $symbolCollectionFactory->create();
         $this->request = $request;
         $this->registry = $registry;
@@ -69,11 +68,6 @@ class SymbolDataProvider extends \Magento\Ui\DataProvider\AbstractDataProvider
         return $symbol;
     }
 
-    /**
-     * Get data
-     *
-     * @return array
-     */
     public function getData()
     {
         $result = [];
@@ -142,7 +136,7 @@ class SymbolDataProvider extends \Magento\Ui\DataProvider\AbstractDataProvider
             'symbol_groups_group' => 'use_config.symbol_groups'
         ];
 
-        if (!isset($params['store']) or (isset($params['store']) and $params['store'] == '0')) {
+        if (!isset($params['store']) || (isset($params['store']) && $params['store'] == '0')) {
             foreach ($groupsToFields as $group => $field) {
                 $meta['symbol_details']['children'][$group]['children'][$field]['arguments']['data']['config']['visible'] = false;
                 $meta['symbol_details']['children'][$group]['children'][$field]['arguments']['data']['config']['default'] = false;

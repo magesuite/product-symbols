@@ -17,6 +17,7 @@ class InstallData implements \Magento\Framework\Setup\InstallDataInterface
      * @var \Magento\Eav\Setup\EavSetup
      */
     protected $eavSetup;
+
     /**
      * @var SymbolSetupFactory
      */
@@ -83,7 +84,7 @@ class InstallData implements \Magento\Framework\Setup\InstallDataInterface
                     'is_html_allowed_on_front' => 0,
                     'is_visible_on_front' => 1,
                     'used_in_product_listing' => 1,
-                    'used_for_sort_by' => 1,
+                    'used_for_sort_by' => 0,
                     'system' => 0,
                     'source_model' => \MageSuite\ProductSymbols\Model\Source\SymbolList::class
                 ]

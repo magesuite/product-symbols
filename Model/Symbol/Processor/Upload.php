@@ -9,22 +9,27 @@ class Upload
         'image/gif' => 'gif',
         'image/png' => 'png',
     ];
+
     /**
      * @var \Magento\Framework\Api\ImageContentValidatorInterface
      */
     protected $imageContentValidator;
+
     /**
      * @var \Psr\Log\LoggerInterface
      */
     protected $logger;
+
     /**
      * @var \Magento\Framework\App\Filesystem\DirectoryList
      */
     protected $directoryList;
+
     /**
      * @var \Magento\Framework\Filesystem
      */
     protected $filesystem;
+
     /**
      * @var \Magento\Store\Model\StoreManagerInterface
      */
@@ -34,10 +39,11 @@ class Upload
      * @var \Magento\Framework\Api\Uploader
      */
     protected $uploader;
+
     /**
      * @var \MageSuite\ProductSymbols\Model\SymbolFactory
      */
-    private $symbol;
+    protected $symbol;
 
     public function __construct(
         \Magento\Framework\App\Filesystem\DirectoryList $directoryList,

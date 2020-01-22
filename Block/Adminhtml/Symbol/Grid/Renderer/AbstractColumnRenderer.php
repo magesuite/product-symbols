@@ -17,11 +17,7 @@ abstract class AbstractColumnRenderer extends \Magento\Backend\Block\Widget\Grid
      */
     protected $filesystem;
 
-    /**
-     * @var array
-     */
-    static $symbolData = [];
-
+    protected $symbolData = [];
 
     public function __construct(
         \Magento\Backend\Block\Context $context,
@@ -45,11 +41,11 @@ abstract class AbstractColumnRenderer extends \Magento\Backend\Block\Widget\Grid
 
     public function getSymbolData($entityId)
     {
-        if (!isset(self::$symbolData[$entityId])) {
-            self::$symbolData[$entityId] = $this->symbolRepository->getById($entityId);
+        if (!isset($this->symbolData[$entityId])) {
+            $this->symbolData[$entityId] = $this->symbolRepository->getById($entityId);
         }
 
-        return self::$symbolData[$entityId];
+        return $this->symbolData[$entityId];
     }
 
     abstract public function getColumnValue($columnId, $entityId);

@@ -49,11 +49,6 @@ class Symbol extends \Magento\Catalog\Model\ResourceModel\AbstractResource
         return $this;
     }
 
-    /**
-     * Returns default Store ID
-     *
-     * @return int
-     */
     public function getDefaultStoreId()
     {
         if ($this->storeId == null) {
@@ -69,15 +64,6 @@ class Symbol extends \Magento\Catalog\Model\ResourceModel\AbstractResource
         }
     }
 
-    /**
-     * Update attribute value for specific store
-     *
-     * @param \Magento\Catalog\Model\AbstractModel $object
-     * @param object $attribute
-     * @param mixed $value
-     * @param int $storeId
-     * @return $this
-     */
     protected function _updateAttributeForStore($object, $attribute, $value, $storeId)
     {
         $connection = $this->getConnection();

@@ -3,9 +3,7 @@ namespace MageSuite\ProductSymbols\Block\Adminhtml\Symbol\Edit;
 
 class BackButton extends \Magento\Cms\Block\Adminhtml\Block\Edit\GenericButton implements \Magento\Framework\View\Element\UiComponent\Control\ButtonProviderInterface
 {
-    /**
-     * @return array
-     */
+
     public function getButtonData()
     {
         return [
@@ -16,11 +14,6 @@ class BackButton extends \Magento\Cms\Block\Adminhtml\Block\Edit\GenericButton i
         ];
     }
 
-    /**
-     * Get URL for back (reset) button
-     *
-     * @return string
-     */
     public function getBackUrl()
     {
         return $this->getUrl('*/grid/symbol');

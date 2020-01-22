@@ -6,7 +6,14 @@ class SymbolList extends \Magento\Eav\Model\Entity\Attribute\Source\AbstractSour
 {
     const CACHE_TAG = 'symbol_options_store_%s';
 
+    /**
+     * @var \MageSuite\ProductSymbols\Model\ResourceModel\Symbol\CollectionFactory
+     */
     protected $collectionFactory;
+
+    /**
+     * @var \MageSuite\ProductSymbols\Model\SymbolFactory
+     */
     protected $model;
 
     /**
@@ -31,18 +38,14 @@ class SymbolList extends \Magento\Eav\Model\Entity\Attribute\Source\AbstractSour
         \Magento\Store\Model\StoreManagerInterface $storeManager,
         \MageSuite\ProductSymbols\Api\GroupRepositoryInterface $groupRepository
     ) {
+
         $this->collectionFactory = $collectionFactory;
+        $this->model = $model;
         $this->symbolRepository = $symbolRepository;
         $this->storeManager = $storeManager;
-        $this->model = $model;
         $this->groupRepository = $groupRepository;
     }
 
-    /**
-     * Options getter
-     *
-     * @return array
-     */
     public function getAllOptions()
     {
         $storeId = $this->getAttribute()->getStoreId();

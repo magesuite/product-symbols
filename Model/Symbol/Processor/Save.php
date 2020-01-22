@@ -9,18 +9,21 @@ class Save
      * @var \Magento\Framework\Event\Manager
      */
     protected $eventManager;
+
     /**
      * @var \Magento\Framework\DataObjectFactory
      */
-    private $dataObjectFactory;
+    protected $dataObjectFactory;
+
     /**
      * @var \MageSuite\ProductSymbols\Model\SymbolFactory
      */
-    private $symbolFactory;
+    protected $symbolFactory;
+
     /**
      * @var \MageSuite\ProductSymbols\Api\SymbolRepositoryInterface
      */
-    private $symbolRepository;
+    protected $symbolRepository;
 
     public function __construct(
         \MageSuite\ProductSymbols\Model\SymbolFactory $symbolFactory,

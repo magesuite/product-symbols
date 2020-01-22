@@ -12,10 +12,12 @@ class GroupDataProvider extends \Magento\Ui\DataProvider\AbstractDataProvider
      * @var \Magento\Framework\Registry
      */
     protected $registry;
+
     /**
      * @var \MageSuite\ProductSymbols\Api\GroupRepositoryInterface
      */
     protected $groupRepository;
+
     /**
      * @var \MageSuite\ProductSymbols\Api\Data\GroupInterfaceFactory
      */
@@ -60,11 +62,6 @@ class GroupDataProvider extends \Magento\Ui\DataProvider\AbstractDataProvider
         return $group;
     }
 
-    /**
-     * Get data
-     *
-     * @return array
-     */
     public function getData()
     {
         $result = [];

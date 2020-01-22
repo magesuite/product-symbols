@@ -4,15 +4,18 @@ namespace MageSuite\ProductSymbols\Controller\Adminhtml\Symbol;
 
 class Edit extends \Magento\Framework\App\Action\Action
 {
-    /** @var \Magento\Framework\View\Result\PageFactory */
-    protected $pageFactory;
+    protected $resultPage = null;
 
-    protected $resultPage = false;
+    /**
+     * @var \Magento\Framework\View\Result\PageFactory
+     */
+    protected $pageFactory;
 
     /**
      * @var \Magento\Framework\Registry
      */
     protected $registry;
+
     /**
      * @var \MageSuite\ProductSymbols\Api\SymbolRepositoryInterface
      */

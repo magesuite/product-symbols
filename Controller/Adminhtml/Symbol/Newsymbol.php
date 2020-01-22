@@ -4,10 +4,10 @@ namespace MageSuite\ProductSymbols\Controller\Adminhtml\Symbol;
 
 class Newsymbol extends \Magento\Framework\App\Action\Action
 {
-    /** @var \Magento\Framework\View\Result\PageFactory */
+    /**
+     * @var \Magento\Framework\View\Result\PageFactory
+     */
     protected $resultForwardFactory;
-
-    protected $resultPage = false;
 
     public function __construct(
         \Magento\Framework\App\Action\Context $context,

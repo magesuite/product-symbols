@@ -21,18 +21,22 @@ class SymbolRepository implements \MageSuite\ProductSymbols\Api\SymbolRepository
      * @var ResourceModel\Symbol
      */
     protected $symbolResource;
+
     /**
      * @var SymbolFactory
      */
     protected $symbolFactory;
+
     /**
      * @var ResourceModel\Symbol\CollectionFactory
      */
     protected $collectionFactory;
+
     /**
      * @var \Magento\Store\Model\StoreManagerInterface
      */
     protected $storeManager;
+
     /**
      * @var Symbol\Processor\SaveFactory
      */
@@ -43,7 +47,6 @@ class SymbolRepository implements \MageSuite\ProductSymbols\Api\SymbolRepository
      */
     protected $uploadFactory;
 
-
     public function __construct(
         \MageSuite\ProductSymbols\Model\ResourceModel\Symbol $symbolResource,
         SymbolFactory $symbolFactory,
@@ -52,7 +55,6 @@ class SymbolRepository implements \MageSuite\ProductSymbols\Api\SymbolRepository
         \MageSuite\ProductSymbols\Model\Symbol\Processor\SaveFactory $saveFactory,
         \MageSuite\ProductSymbols\Model\Symbol\Processor\UploadFactory $uploadFactory
     ) {
-
         $this->symbolResource = $symbolResource;
         $this->symbolFactory = $symbolFactory;
         $this->collectionFactory = $collectionFactory;
@@ -85,7 +87,6 @@ class SymbolRepository implements \MageSuite\ProductSymbols\Api\SymbolRepository
 
         return $symbol;
     }
-
 
     public function save(\MageSuite\ProductSymbols\Api\Data\SymbolInterface $symbol)
     {

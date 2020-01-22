@@ -4,10 +4,6 @@ namespace MageSuite\ProductSymbols\Controller\Adminhtml\Symbol;
 
 class Save extends \Magento\Framework\App\Action\Action
 {
-    /**
-     * @var bool
-     */
-    protected $resultPage = false;
 
     /**
      * @var \MageSuite\ProductSymbols\Model\Symbol\Processor\SaveFactory
@@ -32,9 +28,6 @@ class Save extends \Magento\Framework\App\Action\Action
         $this->dataObjectFactory = $dataObjectFactory;
     }
 
-    /**
-     * @return \Magento\Framework\Controller\Result\Redirect
-     */
     public function execute()
     {
         $params = $this->_request->getParams();
@@ -60,9 +53,6 @@ class Save extends \Magento\Framework\App\Action\Action
         return $resultRedirect;
     }
 
-    /**
-     * @return bool
-     */
     protected function _isAllowed()
     {
         return true;

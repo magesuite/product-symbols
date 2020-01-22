@@ -11,53 +11,16 @@ class Group extends \Magento\Catalog\Model\AbstractModel implements \MageSuite\P
     const CACHE_TAG = 'groups';
 
     const STORE_ID = 'store_id';
-    /**
-     * Prefix of model events names
-     *
-     * @var string
-     */
-    protected $_eventPrefix = 'groups';
-    /**
-     * Parameter name in event
-     *
-     * @var string
-     */
-    protected $_eventObject = 'groups';
-    /**
-     * Model cache tag for clear cache in after save and after delete
-     *
-     * @var string
-     */
-    protected $_cacheTag = self::CACHE_TAG;
-    /**
-     * URL Model instance
-     *
-     * @var \Magento\Framework\UrlInterface
-     */
-    protected $_url;
-    /**
-     * Core data
-     *
-     * @var \Magento\Framework\Filter\FilterManager
-     */
-    protected $filter;
 
-    public function __construct(
-        \Magento\Framework\Model\Context $context,
-        \Magento\Framework\Registry $registry,
-        \Magento\Framework\Api\ExtensionAttributesFactory $extensionFactory,
-        \Magento\Framework\Api\AttributeValueFactory $customAttributeFactory,
-        \Magento\Store\Model\StoreManagerInterface $storeManager,
-        \Magento\Framework\Model\ResourceModel\AbstractResource $resource = null,
-        \Magento\Framework\Data\Collection\AbstractDb $resourceCollection = null,
-        array $data = []
-    ) {
-        parent::__construct($context, $registry, $extensionFactory, $customAttributeFactory, $storeManager, $resource, $resourceCollection, $data);
-    }
+    protected $_eventPrefix = 'groups';
+
+    protected $_eventObject = 'groups';
+
+    protected $_cacheTag = self::CACHE_TAG;
 
     protected function _construct()
     {
-        $this->_init('MageSuite\ProductSymbols\Model\ResourceModel\Group');
+        $this->_init(\MageSuite\ProductSymbols\Model\ResourceModel\Group::class);
     }
 
     /**

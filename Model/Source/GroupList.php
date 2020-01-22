@@ -5,6 +5,7 @@ namespace MageSuite\ProductSymbols\Model\Source;
 class GroupList implements \Magento\Framework\Data\OptionSourceInterface
 {
     const CACHE_TAG = 'symbol_options_store_%s';
+
     /**
      * @var \MageSuite\ProductSymbols\Model\ResourceModel\Group\CollectionFactory
      */
@@ -23,11 +24,6 @@ class GroupList implements \Magento\Framework\Data\OptionSourceInterface
         $this->groupsRepository = $groupRepository;
     }
 
-    /**
-     * Options getter
-     *
-     * @return array
-     */
     public function toOptionArray()
     {
         return $this->getAllGroups();

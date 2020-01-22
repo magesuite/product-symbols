@@ -4,20 +4,23 @@ namespace MageSuite\ProductSymbols\ViewModel\Symbol;
 
 class Group extends \Magento\Framework\DataObject implements \Magento\Framework\View\Element\Block\ArgumentInterface
 {
+    protected $product = null;
+
     /**
      * @var \Magento\Framework\Registry
      */
     protected $registry;
 
-    protected $product = null;
     /**
      * @var \MageSuite\ProductSymbols\Model\ResourceModel\Group\CollectionFactory
      */
     protected $groupCollectionFactory;
+
     /**
      * @var \MageSuite\ProductSymbols\Model\ResourceModel\Symbol\CollectionFactory
      */
     protected $symbolCollectionFactory;
+
     /**
      * @var \Magento\Store\Model\StoreManagerInterface
      */

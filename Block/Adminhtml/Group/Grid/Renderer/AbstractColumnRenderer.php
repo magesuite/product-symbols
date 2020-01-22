@@ -12,9 +12,6 @@ abstract class AbstractColumnRenderer extends \Magento\Backend\Block\Widget\Grid
      */
     protected $filesystem;
 
-    /**
-     * @var array
-     */
     protected $groupData = [];
 
     public function __construct(

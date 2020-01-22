@@ -4,11 +4,7 @@ namespace MageSuite\ProductSymbols\Block\Adminhtml\Symbol;
 
 class Grid extends \Magento\Backend\Block\Widget\Grid\Container
 {
-    /**
-     * constructor
-     *
-     * @return void
-     */
+
     protected function _construct()
     {
         $this->_controller = 'adminhtml_symbol';
@@ -18,9 +14,6 @@ class Grid extends \Magento\Backend\Block\Widget\Grid\Container
         parent::_construct();
     }
 
-    /**
-     * @return string
-     */
     public function getCreateUrl()
     {
         return $this->getUrl('*/symbol/newsymbol');

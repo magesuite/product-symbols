@@ -4,11 +4,6 @@ namespace MageSuite\ProductSymbols\Model\ResourceModel\Symbol\Attribute;
 
 class Collection extends \Magento\Eav\Model\ResourceModel\Attribute\Collection
 {
-    /**
-     * Default attribute entity type code
-     *
-     * @var string
-     */
     protected $_entityTypeCode = 'symbols';
 
     public function __construct(
@@ -34,11 +29,6 @@ class Collection extends \Magento\Eav\Model\ResourceModel\Attribute\Collection
         ;
     }
 
-    /**
-     * Default attribute entity type code
-     *
-     * @return string
-     */
     protected function _getEntityTypeCode()
     {
         return $this->_entityTypeCode;
