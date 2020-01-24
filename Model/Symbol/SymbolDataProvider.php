@@ -112,7 +112,7 @@ class SymbolDataProvider extends \Magento\Ui\DataProvider\AbstractDataProvider
         if ($symbol->getSymbolIcon()) {
             $name = $symbol->getSymbolIcon();
             $url = $symbol->getSymbolIconUrl();
-            $size = file_exists('media/symbols/' . $name) ? filesize('media/symbols/' . $name) : 0;
+            $size = file_exists('media/symbol/' . $name) ? filesize('media/symbol/' . $name) : 0;
             $result[$symbol->getEntityId()]['symbol_icon'] = [
                 0 => [
                     'url' => $url,

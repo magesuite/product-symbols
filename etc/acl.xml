@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Acl/etc/acl.xsd">
+    <acl>
+        <resources>
+            <resource id="Magento_Backend::admin">
+                <resource id="MageSuite_ProductSymbols::config" title="MageSuite Product Symbols" sortOrder="1000">
+                    <resource id="MageSuite_ProductSymbols::symbol" title="Symbol">
+                        <resource id="MageSuite_ProductSymbols::symbol_edit" title="Edit"/>
+                        <resource id="MageSuite_ProductSymbols::symbol_save" title="Save"/>
+                        <resource id="MageSuite_ProductSymbols::symbol_delete" title="Delete"/>
+                    </resource>
+                    <resource id="MageSuite_ProductSymbols::group" title="Group">
+                        <resource id="MageSuite_ProductSymbols::group_edit" title="Edit"/>
+                        <resource id="MageSuite_ProductSymbols::group_save" title="Save"/>
+                        <resource id="MageSuite_ProductSymbols::group_delete" title="Delete"/>
+                    </resource>
+                </resource>
+            </resource>
+        </resources>
+    </acl>
+</config>

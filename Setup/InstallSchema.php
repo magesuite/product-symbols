@@ -10,9 +10,9 @@ class InstallSchema implements \Magento\Framework\Setup\InstallSchemaInterface
     ) {
         $setup->startSetup();
 
-        if (!$setup->getConnection()->isTableExists($setup->getTable('symbols_entity'))) {
+        if (!$setup->getConnection()->isTableExists($setup->getTable('product_symbol_entity'))) {
             $table = $setup->getConnection()->newTable(
-                $setup->getTable('symbols_entity')
+                $setup->getTable('product_symbol_entity')
             )->addColumn(
                 'entity_id',
                 \Magento\Framework\DB\Ddl\Table::TYPE_INTEGER,
@@ -64,7 +64,7 @@ class InstallSchema implements \Magento\Framework\Setup\InstallSchemaInterface
              * Create table 'eav_entity_int'
              */
             $table = $setup->getConnection()->newTable(
-                $setup->getTable('symbols_entity_int')
+                $setup->getTable('product_symbol_entity_int')
             )->addColumn(
                 'value_id',
                 \Magento\Framework\DB\Ddl\Table::TYPE_INTEGER,
@@ -97,7 +97,7 @@ class InstallSchema implements \Magento\Framework\Setup\InstallSchemaInterface
                 'Attribute Value'
             )->addIndex(
                 $setup->getIdxName(
-                    'symbols_entity_int',
+                    'product_symbol_entity_int',
                     ['entity_id', 'attribute_id', 'store_id'],
                     \Magento\Framework\DB\Adapter\AdapterInterface::INDEX_TYPE_UNIQUE
                 ),
@@ -105,29 +105,29 @@ class InstallSchema implements \Magento\Framework\Setup\InstallSchemaInterface
                 ['type' => \Magento\Framework\DB\Adapter\AdapterInterface::INDEX_TYPE_UNIQUE]
             )
                 ->addIndex(
-                    $setup->getIdxName('symbols_entity_int', ['attribute_id']),
+                    $setup->getIdxName('product_symbol_entity_int', ['attribute_id']),
                     ['attribute_id']
                 )
                 ->addIndex(
-                    $setup->getIdxName('symbols_entity_int', ['store_id']),
+                    $setup->getIdxName('product_symbol_entity_int', ['store_id']),
                     ['store_id']
                 )
                 ->addForeignKey(
-                    $setup->getFkName('symbols_entity_int', 'attribute_id', 'eav_attribute', 'attribute_id'),
+                    $setup->getFkName('product_symbol_entity_int', 'attribute_id', 'eav_attribute', 'attribute_id'),
                     'attribute_id',
                     $setup->getTable('eav_attribute'),
                     'attribute_id',
                     \Magento\Framework\DB\Ddl\Table::ACTION_CASCADE
                 )
                 ->addForeignKey(
-                    $setup->getFkName('symbols_entity_int', 'entity_id', 'symbols_entity', 'entity_id'),
+                    $setup->getFkName('product_symbol_entity_int', 'entity_id', 'product_symbol_entity', 'entity_id'),
                     'entity_id',
-                    $setup->getTable('symbols_entity'),
+                    $setup->getTable('product_symbol_entity'),
                     'entity_id',
                     \Magento\Framework\DB\Ddl\Table::ACTION_CASCADE
                 )
                 ->addForeignKey(
-                    $setup->getFkName('symbols_entity_int', 'store_id', 'store', 'store_id'),
+                    $setup->getFkName('product_symbol_entity_int', 'store_id', 'store', 'store_id'),
                     'store_id',
                     $setup->getTable('store'),
                     'store_id',
@@ -142,7 +142,7 @@ class InstallSchema implements \Magento\Framework\Setup\InstallSchemaInterface
              * Create table 'eav_entity_text'
              */
             $table = $setup->getConnection()->newTable(
-                $setup->getTable('symbols_entity_text')
+                $setup->getTable('product_symbol_entity_text')
             )->addColumn(
                 'value_id',
                 \Magento\Framework\DB\Ddl\Table::TYPE_INTEGER,
@@ -175,7 +175,7 @@ class InstallSchema implements \Magento\Framework\Setup\InstallSchemaInterface
                 'Attribute Value'
             )->addIndex(
                 $setup->getIdxName(
-                    'symbols_entity_text',
+                    'product_symbol_entity_text',
                     ['entity_id', 'attribute_id', 'store_id'],
                     \Magento\Framework\DB\Adapter\AdapterInterface::INDEX_TYPE_UNIQUE
                 ),
@@ -183,16 +183,16 @@ class InstallSchema implements \Magento\Framework\Setup\InstallSchemaInterface
                 ['type' => \Magento\Framework\DB\Adapter\AdapterInterface::INDEX_TYPE_UNIQUE]
             )
                 ->addIndex(
-                    $setup->getIdxName('symbols_entity_text', ['attribute_id']),
+                    $setup->getIdxName('product_symbol_entity_text', ['attribute_id']),
                     ['attribute_id']
                 )
                 ->addIndex(
-                    $setup->getIdxName('symbols_entity_text', ['store_id']),
+                    $setup->getIdxName('product_symbol_entity_text', ['store_id']),
                     ['store_id']
                 )
                 ->addForeignKey(
                     $setup->getFkName(
-                        'symbols_entity_text',
+                        'product_symbol_entity_text',
                         'attribute_id',
                         'eav_attribute',
                         'attribute_id'
@@ -204,18 +204,18 @@ class InstallSchema implements \Magento\Framework\Setup\InstallSchemaInterface
                 )
                 ->addForeignKey(
                     $setup->getFkName(
-                        'symbols_entity_text',
+                        'product_symbol_entity_text',
                         'entity_id',
-                        'symbols_entity',
+                        'product_symbol_entity',
                         'entity_id'
                     ),
                     'entity_id',
-                    $setup->getTable('symbols_entity'),
+                    $setup->getTable('product_symbol_entity'),
                     'entity_id',
                     \Magento\Framework\DB\Ddl\Table::ACTION_CASCADE
                 )
                 ->addForeignKey(
-                    $setup->getFkName('symbols_entity_text', 'store_id', 'store', 'store_id'),
+                    $setup->getFkName('product_symbol_entity_text', 'store_id', 'store', 'store_id'),
                     'store_id',
                     $setup->getTable('store'),
                     'store_id',
@@ -229,7 +229,7 @@ class InstallSchema implements \Magento\Framework\Setup\InstallSchemaInterface
              * Create table 'eav_entity_varchar'
              */
             $table = $setup->getConnection()->newTable(
-                $setup->getTable('symbols_entity_varchar')
+                $setup->getTable('product_symbol_entity_varchar')
             )->addColumn(
                 'value_id',
                 \Magento\Framework\DB\Ddl\Table::TYPE_INTEGER,
@@ -262,7 +262,7 @@ class InstallSchema implements \Magento\Framework\Setup\InstallSchemaInterface
                 'Attribute Value'
             )->addIndex(
                 $setup->getIdxName(
-                    'symbols_entity_varchar',
+                    'product_symbol_entity_varchar',
                     ['entity_id', 'attribute_id', 'store_id'],
                     \Magento\Framework\DB\Adapter\AdapterInterface::INDEX_TYPE_UNIQUE
                 ),
@@ -270,16 +270,16 @@ class InstallSchema implements \Magento\Framework\Setup\InstallSchemaInterface
                 ['type' => \Magento\Framework\DB\Adapter\AdapterInterface::INDEX_TYPE_UNIQUE]
             )
                 ->addIndex(
-                    $setup->getIdxName('symbols_entity_varchar', ['attribute_id']),
+                    $setup->getIdxName('product_symbol_entity_varchar', ['attribute_id']),
                     ['attribute_id']
                 )
                 ->addIndex(
-                    $setup->getIdxName('symbols_entity_varchar', ['store_id']),
+                    $setup->getIdxName('product_symbol_entity_varchar', ['store_id']),
                     ['store_id']
                 )
                 ->addForeignKey(
                     $setup->getFkName(
-                        'symbols_entity_varchar',
+                        'product_symbol_entity_varchar',
                         'attribute_id',
                         'eav_attribute',
                         'attribute_id'
@@ -291,18 +291,18 @@ class InstallSchema implements \Magento\Framework\Setup\InstallSchemaInterface
                 )
                 ->addForeignKey(
                     $setup->getFkName(
-                        'symbols_entity_varchar',
+                        'product_symbol_entity_varchar',
                         'entity_id',
-                        'symbols_entity',
+                        'product_symbol_entity',
                         'entity_id'
                     ),
                     'entity_id',
-                    $setup->getTable('symbols_entity'),
+                    $setup->getTable('product_symbol_entity'),
                     'entity_id',
                     \Magento\Framework\DB\Ddl\Table::ACTION_CASCADE
                 )
                 ->addForeignKey(
-                    $setup->getFkName('symbols_entity_varchar', 'store_id', 'store', 'store_id'),
+                    $setup->getFkName('product_symbol_entity_varchar', 'store_id', 'store', 'store_id'),
                     'store_id',
                     $setup->getTable('store'),
                     'store_id',

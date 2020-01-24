@@ -2,8 +2,10 @@
 
 namespace MageSuite\ProductSymbols\Controller\Adminhtml\Symbol;
 
-class Edit extends \Magento\Framework\App\Action\Action
+class Edit extends \Magento\Backend\App\Action
 {
+    const ADMIN_RESOURCE = 'MageSuite_ProductSymbols::symbol_edit';
+
     protected $resultPage = null;
 
     /**
@@ -22,7 +24,7 @@ class Edit extends \Magento\Framework\App\Action\Action
     protected $symbolRepository;
 
     public function __construct(
-        \Magento\Framework\App\Action\Context $context,
+        \Magento\Backend\App\Action\Context $context,
         \Magento\Framework\View\Result\PageFactory $pageFactory,
         \MageSuite\ProductSymbols\Api\SymbolRepositoryInterface $symbolRepository,
         \Magento\Framework\Registry $registry
@@ -47,18 +49,18 @@ class Edit extends \Magento\Framework\App\Action\Action
 
         if ($isNew) {
             $resultPage->getConfig()->getTitle()->prepend((__('New Symbol')));
+            $resultPage->addBreadcrumb(__('New Symbol'), __('New Symbol'));
         } else {
             $resultPage->getConfig()->getTitle()->prepend((__('Edit Symbol')));
+            $resultPage->addBreadcrumb(__('Edit Symbol'), __('Edit Symbol'));
         }
-
-        $resultPage->addBreadcrumb(__('Symbol'), __('Symbol'));
 
         return $resultPage;
     }
 
     protected function _isAllowed()
     {
-        return true;
+        return $this->_authorization->isAllowed(self::ADMIN_RESOURCE);
     }
 
     public function getResultPage()

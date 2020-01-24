@@ -2,8 +2,10 @@
 
 namespace MageSuite\ProductSymbols\Controller\Adminhtml\Symbol;
 
-class Upload extends \Magento\Framework\App\Action\Action
+class Upload extends \Magento\Backend\App\Action
 {
+    const ADMIN_RESOURCE = 'MageSuite_ProductSymbols::symbol_edit';
+
     /**
      * @var \MageSuite\ProductSymbols\Model\Symbol\Processor\UploadFactory
      */
@@ -29,6 +31,6 @@ class Upload extends \Magento\Framework\App\Action\Action
 
     protected function _isAllowed()
     {
-        return true;
+        return $this->_authorization->isAllowed(self::ADMIN_RESOURCE);
     }
 }

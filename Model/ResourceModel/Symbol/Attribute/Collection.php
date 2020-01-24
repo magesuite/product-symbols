@@ -4,7 +4,7 @@ namespace MageSuite\ProductSymbols\Model\ResourceModel\Symbol\Attribute;
 
 class Collection extends \Magento\Eav\Model\ResourceModel\Attribute\Collection
 {
-    protected $_entityTypeCode = 'symbols';
+    protected $_entityTypeCode = 'symbol';
 
     public function __construct(
         \Magento\Framework\Data\Collection\EntityFactory $entityFactory,
@@ -36,6 +36,6 @@ class Collection extends \Magento\Eav\Model\ResourceModel\Attribute\Collection
 
     protected function _getEavWebsiteTable()
     {
-        return $this->getTable('symbols_eav_attribute_website');
+        return $this->getTable('symbol_eav_attribute_website');
     }
 }

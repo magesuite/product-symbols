@@ -5,22 +5,22 @@ namespace MageSuite\ProductSymbols\Model;
 class Symbol extends \Magento\Catalog\Model\AbstractModel implements \MageSuite\ProductSymbols\Api\Data\SymbolInterface
 {
 
-    const SYMBOL_URL = 'symbols';
-    const SYMBOL_ATTRIBUTE_CODE = 'symbols';
-    const ENTITY = 'symbols';
-    const CACHE_TAG = 'symbols';
+    const SYMBOL_URL = 'product_symbol';
+    const SYMBOL_ATTRIBUTE_CODE = 'product_symbol';
+    const ENTITY = 'product_symbol';
+    const CACHE_TAG = 'product_symbol';
 
     const STORE_ID = 'store_id';
 
-    protected $_eventPrefix = 'symbols';
+    protected $_eventPrefix = 'product_symbol';
 
-    protected $_eventObject = 'symbols';
+    protected $_eventObject = 'product_symbol';
 
     protected $_cacheTag = self::CACHE_TAG;
 
     protected function _construct()
     {
-        $this->_init('MageSuite\ProductSymbols\Model\ResourceModel\Symbol');
+        $this->_init(\MageSuite\ProductSymbols\Model\ResourceModel\Symbol::class);
     }
 
     /**

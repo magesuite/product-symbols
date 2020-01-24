@@ -2,8 +2,9 @@
 
 namespace MageSuite\ProductSymbols\Controller\Adminhtml\Group;
 
-class Delete extends \Magento\Framework\App\Action\Action
+class Delete extends \Magento\Backend\App\Action
 {
+    const ADMIN_RESOURCE = 'MageSuite_ProductSymbols::group_delete';
     /**
      * @var \Magento\Framework\View\Result\PageFactory
      */
@@ -25,7 +26,7 @@ class Delete extends \Magento\Framework\App\Action\Action
     protected $groupRepository;
 
     public function __construct(
-        \Magento\Framework\App\Action\Context $context,
+        \Magento\Backend\App\Action\Context $context,
         \Magento\Framework\View\Result\PageFactory $pageFactory,
         \MageSuite\ProductSymbols\Api\GroupRepositoryInterface $groupRepository,
         \Magento\Eav\Model\Config $eavConfig,
@@ -63,6 +64,6 @@ class Delete extends \Magento\Framework\App\Action\Action
 
     protected function _isAllowed()
     {
-        return true;
+        return $this->_authorization->isAllowed(self::ADMIN_RESOURCE);
     }
 }

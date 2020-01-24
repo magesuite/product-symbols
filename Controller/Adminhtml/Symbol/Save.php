@@ -2,8 +2,9 @@
 
 namespace MageSuite\ProductSymbols\Controller\Adminhtml\Symbol;
 
-class Save extends \Magento\Framework\App\Action\Action
+class Save extends \Magento\Backend\App\Action
 {
+    const ADMIN_RESOURCE = 'MageSuite_ProductSymbols::symbol_save';
 
     /**
      * @var \MageSuite\ProductSymbols\Model\Symbol\Processor\SaveFactory
@@ -55,6 +56,6 @@ class Save extends \Magento\Framework\App\Action\Action
 
     protected function _isAllowed()
     {
-        return true;
+        return $this->_authorization->isAllowed(self::ADMIN_RESOURCE);
     }
 }

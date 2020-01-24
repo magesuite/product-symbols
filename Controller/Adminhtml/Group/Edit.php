@@ -2,8 +2,10 @@
 
 namespace MageSuite\ProductSymbols\Controller\Adminhtml\Group;
 
-class Edit extends \Magento\Framework\App\Action\Action
+class Edit extends \Magento\Backend\App\Action
 {
+    const ADMIN_RESOURCE = 'MageSuite_ProductSymbols::group_edit';
+
     protected $resultPage = null;
 
     /**
@@ -22,7 +24,7 @@ class Edit extends \Magento\Framework\App\Action\Action
     protected $groupRepository;
 
     public function __construct(
-        \Magento\Framework\App\Action\Context $context,
+        \Magento\Backend\App\Action\Context $context,
         \Magento\Framework\View\Result\PageFactory $pageFactory,
         \MageSuite\ProductSymbols\Api\GroupRepositoryInterface $groupRepository,
         \Magento\Framework\Registry $registry
@@ -47,19 +49,18 @@ class Edit extends \Magento\Framework\App\Action\Action
 
         if ($isNew) {
             $resultPage->getConfig()->getTitle()->prepend((__('New Symbols Group')));
+            $resultPage->addBreadcrumb(__('New Symbols Group'), __('New Symbols Group'));
         } else {
             $resultPage->getConfig()->getTitle()->prepend((__('Edit Symbols Group')));
+            $resultPage->addBreadcrumb(__('Edit Symbols Group'), __('Edit Symbols Group'));
         }
-
-        $resultPage->addBreadcrumb(__('New Symbols Group'), __('New Symbols Group'));
-        $resultPage->addBreadcrumb(__('New Symbols Group'), __('New Symbols Group'));
 
         return $resultPage;
     }
 
     protected function _isAllowed()
     {
-        return true;
+        return $this->_authorization->isAllowed(self::ADMIN_RESOURCE);
     }
 
     public function getResultPage()

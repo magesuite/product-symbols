@@ -9,7 +9,7 @@ class Group extends \Magento\Framework\App\Action\Action
      */
     protected $pageFactory;
 
-    protected $resultPage = false;
+    protected $resultPage = null;
 
     public function __construct(
         \Magento\Framework\App\Action\Context $context,
@@ -25,7 +25,6 @@ class Group extends \Magento\Framework\App\Action\Action
         $resultPage->setActiveMenu('MageSuite_ProductSymbols::group_menu');
         $resultPage->getConfig()->getTitle()->prepend((__('Symbol groups')));
 
-        $resultPage->addBreadcrumb(__('Symbol group'), __('Symbol group'));
         $resultPage->addBreadcrumb(__('Symbol group'), __('Symbol group'));
 
         return $resultPage;

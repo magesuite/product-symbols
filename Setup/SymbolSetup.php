@@ -6,13 +6,13 @@ class SymbolSetup extends \Magento\Eav\Setup\EavSetup
 {
     public function getDefaultEntities()
     {
-        $symbolsEntity = \MageSuite\ProductSymbols\Model\Symbol::ENTITY;
+        $symbolEntity = \MageSuite\ProductSymbols\Model\Symbol::ENTITY;
 
         $entities = [
-            $symbolsEntity => [
+            $symbolEntity => [
                 'entity_model' => \MageSuite\ProductSymbols\Model\ResourceModel\Symbol::class,
                 'attribute_model' => \Magento\Catalog\Model\ResourceModel\Eav\Attribute::class,
-                'table' => $symbolsEntity . '_entity',
+                'table' => $symbolEntity . '_entity',
                 'entity_attribute_collection' => \Magento\Eav\Model\ResourceModel\Entity\Attribute\Collection::class,
                 'attributes' => [
                     'symbol_name' => [

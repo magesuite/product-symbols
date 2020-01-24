@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
-    <table name="symbols_group" resource="default" engine="innodb">
+    <table name="symbol_group" resource="default" engine="innodb">
         <column xsi:type="int" name="entity_id" nullable="false" comment="Entity ID" unsigned="true" identity="true"/>
         <column xsi:type="text" name="group_name" nullable="false" comment="Group Name"/>
         <column xsi:type="text" name="group_code" nullable="false" comment="Group Code"/>

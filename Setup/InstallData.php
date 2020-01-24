@@ -40,15 +40,15 @@ class InstallData implements \Magento\Framework\Setup\InstallDataInterface
     ) {
         $setup->startSetup();
 
-        $symbolsSetup = $this->symbolSetupFactory->create(['setup' => $setup]);
-        $symbolsSetup->installEntities();
+        $symbolSetup = $this->symbolSetupFactory->create(['setup' => $setup]);
+        $symbolSetup->installEntities();
 
         $eavSetup = $this->eavSetupFactory->create(['setup' => $setup]);
 
-        if (!$eavSetup->getAttributeId(\Magento\Catalog\Model\Product::ENTITY, 'symbols')) {
+        if (!$eavSetup->getAttributeId(\Magento\Catalog\Model\Product::ENTITY, 'symbol')) {
             $eavSetup->addAttribute(
                 \Magento\Catalog\Model\Product::ENTITY,
-                'symbols',
+                'symbol',
                 [
                     'label' => 'Symbols',
                     'class' => '',

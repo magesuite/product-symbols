@@ -2,15 +2,17 @@
 
 namespace MageSuite\ProductSymbols\Controller\Adminhtml\Group;
 
-class Newgroup extends \Magento\Framework\App\Action\Action
+class Newgroup extends \Magento\Backend\App\Action
 {
+    const ADMIN_RESOURCE = 'MageSuite_ProductSymbols::group_edit';
+
     /**
      * @var \Magento\Framework\View\Result\PageFactory
      */
     protected $resultForwardFactory;
 
     public function __construct(
-        \Magento\Framework\App\Action\Context $context,
+        \Magento\Backend\App\Action\Context $context,
         \Magento\Backend\Model\View\Result\ForwardFactory $resultForwardFactory
     ) {
         $this->resultForwardFactory = $resultForwardFactory;
@@ -25,6 +27,6 @@ class Newgroup extends \Magento\Framework\App\Action\Action
 
     protected function _isAllowed()
     {
-        return true;
+        return $this->_authorization->isAllowed(self::ADMIN_RESOURCE);
     }
 }

@@ -45,7 +45,7 @@ class SymbolTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals(1, $symbol->getStoreId());
         $this->assertEquals('test symbol 1', $symbol->getSymbolName());
         $this->assertEquals('this is test symbol 1', $symbol->getSymbolShortDescription());
-        $this->assertEquals('http://localhost/pub/media/symbols/testimage.png', $symbol->getSymbolIconUrl());
+        $this->assertEquals('http://localhost/pub/media/symbol/testimage.png', $symbol->getSymbolIconUrl());
         $this->assertEquals('100,200', $symbol->getSymbolGroups());
         $this->assertEquals('testimage.png', $symbol->getSymbolIcon());
 
@@ -53,7 +53,7 @@ class SymbolTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals(0, $symbol->getStoreId());
         $this->assertEquals('test symbol 2', $symbol->getSymbolName());
         $this->assertEquals('this is test symbol 2', $symbol->getSymbolShortDescription());
-        $this->assertEquals('http://localhost/pub/media/symbols/testimage.png', $symbol->getSymbolIconUrl());
+        $this->assertEquals('http://localhost/pub/media/symbol/testimage.png', $symbol->getSymbolIconUrl());
         $this->assertEquals('100,200', $symbol->getSymbolGroups());
         $this->assertEquals('testimage.png', $symbol->getSymbolIcon());
 
@@ -62,7 +62,7 @@ class SymbolTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals(0, $symbol->getStoreId());
         $this->assertEquals('test symbol 3', $symbol->getSymbolName());
         $this->assertEquals('this is test symbol 3', $symbol->getSymbolShortDescription());
-        $this->assertEquals('http://localhost/pub/media/symbols/testimage.png', $symbol->getSymbolIconUrl());
+        $this->assertEquals('http://localhost/pub/media/symbol/testimage.png', $symbol->getSymbolIconUrl());
         $this->assertEquals('200', $symbol->getSymbolGroups());
         $this->assertEquals('testimage.png', $symbol->getSymbolIcon());
 
@@ -73,7 +73,7 @@ class SymbolTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals($store->getId(), $symbol->getStoreId());
         $this->assertEquals('test symbol 4', $symbol->getSymbolName());
         $this->assertEquals('this is test symbol 4', $symbol->getSymbolShortDescription());
-        $this->assertEquals('http://localhost/pub/media/symbols/testimage.png', $symbol->getSymbolIconUrl());
+        $this->assertEquals('http://localhost/pub/media/symbol/testimage.png', $symbol->getSymbolIconUrl());
         $this->assertEquals('200,300', $symbol->getSymbolGroups());
         $this->assertEquals('testimage.png', $symbol->getSymbolIcon());
 
@@ -81,7 +81,7 @@ class SymbolTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals($store->getId(), $symbol->getStoreId());
         $this->assertEquals('test symbol 5', $symbol->getSymbolName());
         $this->assertEquals('this is test symbol 5', $symbol->getSymbolShortDescription());
-        $this->assertEquals('http://localhost/pub/media/symbols/testimage.png', $symbol->getSymbolIconUrl());
+        $this->assertEquals('http://localhost/pub/media/symbol/testimage.png', $symbol->getSymbolIconUrl());
         $this->assertEquals('100,300', $symbol->getSymbolGroups());
         $this->assertEquals('testimage.png', $symbol->getSymbolIcon());
     }

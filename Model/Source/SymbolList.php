@@ -64,6 +64,7 @@ class SymbolList extends \Magento\Eav\Model\Entity\Attribute\Source\AbstractSour
 
         $symbolsCollection = $this->collectionFactory->create();
         $symbolsCollection->setStoreId($storeId);
+        $symbolsCollection->addAttributeToSelect('*');
 
         $options = [];
 

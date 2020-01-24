@@ -9,7 +9,7 @@ class Symbol extends \Magento\Framework\App\Action\Action
      */
     protected $pageFactory;
 
-    protected $resultPage = false;
+    protected $resultPage = null;
 
     public function __construct(
         \Magento\Framework\App\Action\Context $context,
@@ -25,7 +25,6 @@ class Symbol extends \Magento\Framework\App\Action\Action
         $resultPage->setActiveMenu('MageSuite_ProductSymbols::symbol_menu');
         $resultPage->getConfig()->getTitle()->prepend((__('Symbol')));
 
-        $resultPage->addBreadcrumb(__('Symbol'), __('Symbol'));
         $resultPage->addBreadcrumb(__('Symbol'), __('Symbol'));
 
         return $resultPage;
