@@ -17,10 +17,10 @@
             <item name="save" xsi:type="string">MageSuite\ProductSymbols\Block\Adminhtml\Symbol\Edit\SaveButton</item>
         </item>
     </argument>
-    <dataSource name="symbols_form_data_source">
+    <dataSource name="symbol_form_data_source">
         <argument name="dataProvider" xsi:type="configurableObject">
             <argument name="class" xsi:type="string">MageSuite\ProductSymbols\Model\Symbol\SymbolDataProvider</argument>
-            <argument name="name" xsi:type="string">symbols_form_data_source</argument>
+            <argument name="name" xsi:type="string">symbol_form_data_source</argument>
             <argument name="primaryFieldName" xsi:type="string">entity_id</argument>
             <argument name="requestFieldName" xsi:type="string">id</argument>
             <argument name="data" xsi:type="array">

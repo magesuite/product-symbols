@@ -12,7 +12,7 @@ class SymbolIcon extends \MageSuite\ProductSymbols\Block\Adminhtml\Symbol\Grid\R
             return '';
         }
 
-        $iconPath = $this->filesystem->getDirectoryRead(\Magento\Framework\App\Filesystem\DirectoryList::MEDIA)->getAbsolutePath() . 'symbols/' . $symbolData->getSymbolIcon();
+        $iconPath = $this->filesystem->getDirectoryRead(\Magento\Framework\App\Filesystem\DirectoryList::MEDIA)->getAbsolutePath() . 'symbol/' . $symbolData->getSymbolIcon();
 
         if (!file_exists($iconPath)) {
             return '';

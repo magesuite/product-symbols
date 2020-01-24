@@ -9,7 +9,7 @@ $groupSymbols = $viewModel->getGroupSymbols();
         <h3 class="cs-product-details-main__headline-title"><?php echo $group['group_name'];?></h3>
         <?php foreach ($group['symbols'] as $symbol) :?>
             <li>
-                <image src="<?php echo $symbol->getSymbolIconUrl();?>"/>
+                <image width="40" height="40" src="<?php echo $symbol->getSymbolIconUrl();?>"/>
                 <span><?php echo $symbol->getSymbolName();?></span>
             </li>
         <?php endforeach;?>

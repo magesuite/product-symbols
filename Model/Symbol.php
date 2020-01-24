@@ -20,7 +20,7 @@ class Symbol extends \Magento\Catalog\Model\AbstractModel implements \MageSuite\
 
     protected function _construct()
     {
-        $this->_init(\MageSuite\ProductSymbols\Model\ResourceModel\Symbol::class);
+        $this->_init('MageSuite\ProductSymbols\Model\ResourceModel\Symbol');
     }
 
     /**
@@ -145,7 +145,7 @@ class Symbol extends \Magento\Catalog\Model\AbstractModel implements \MageSuite\
                 ->getStore()
                 ->getBaseUrl(
                     \Magento\Framework\UrlInterface::URL_TYPE_MEDIA
-                ) . 'symbols/' . $icon;
+                ) . 'symbol/' . $icon;
     }
 
     /**

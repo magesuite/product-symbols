@@ -52,7 +52,6 @@ class Edit extends \Magento\Framework\App\Action\Action
         }
 
         $resultPage->addBreadcrumb(__('Symbol'), __('Symbol'));
-        $resultPage->addBreadcrumb(__('Symbol'), __('Symbol'));
 
         return $resultPage;
     }

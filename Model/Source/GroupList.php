@@ -21,7 +21,7 @@ class GroupList implements \Magento\Framework\Data\OptionSourceInterface
         \MageSuite\ProductSymbols\Api\GroupRepositoryInterface $groupRepository
     ) {
         $this->collectionFactory = $collectionFactory;
-        $this->groupsRepository = $groupRepository;
+        $this->groupRepository = $groupRepository;
     }
 
     public function toOptionArray()
