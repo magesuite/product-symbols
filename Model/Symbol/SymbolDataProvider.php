@@ -89,7 +89,7 @@ class SymbolDataProvider extends \Magento\Ui\DataProvider\AbstractDataProvider
             ];
         } else {
             foreach ($symbol->getData() as $attrName => $value) {
-                if ($attrName == 'entity_id' || $attrName == 'store_id') {
+                if ($attrName == 'entity_id' || $attrName == 'store_id' || $attrName == 'created_at' || $attrName == 'updated_at') {
                     continue;
                 }
 

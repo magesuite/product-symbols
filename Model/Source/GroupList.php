@@ -34,8 +34,6 @@ class GroupList implements \Magento\Framework\Data\OptionSourceInterface
         $groupCollection = $this->collectionFactory->create();
         $options = [];
         foreach ($groupCollection as $group) {
-            $group = $this->groupRepository->getById($group->getEntityId());
-
             $options[] = [
                 'label' => $group->getGroupName(),
                 'value' => $group->getEntityId()

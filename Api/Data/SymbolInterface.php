@@ -16,6 +16,28 @@ interface SymbolInterface
     public function setEntityId($entityId);
 
     /**
+     * @return int|string|null
+     */
+    public function getCreatedAt();
+
+    /**
+     * @param int|string|null $createdAt
+     * @return void
+     */
+    public function setCreatedAt($createdAt);
+
+    /**
+     * @return int|string|null
+     */
+    public function getUpdatedAt();
+
+    /**
+     * @param int|string|null $updatedAt
+     * @return void
+     */
+    public function setUpdatedAt($updatedAt);
+
+    /**
      * @return int
      */
     public function getStoreId();

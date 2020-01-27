@@ -8,15 +8,6 @@ class SymbolRepository implements \MageSuite\ProductSymbols\Api\SymbolRepository
 
     protected $instances = [];
 
-    protected $symbolAttributes = [
-        'entity_id',
-        'store_id',
-        'symbol_name',
-        'symbol_icon',
-        'symbol_icon_url',
-        'symbol_short_description',
-        'symbol_groups',
-    ];
     /**
      * @var ResourceModel\Symbol
      */
@@ -65,17 +56,11 @@ class SymbolRepository implements \MageSuite\ProductSymbols\Api\SymbolRepository
 
     public function getById($id, $storeId = null)
     {
-
         $symbol = $this->symbolFactory->create();
+
         if (null !== $storeId) {
             $symbol->setData('store_id', $storeId);
         }
-
-        /**
-         * Symbol is loaded twice, first for requested store id, second for default store view.
-         * This is done to get proper data if params for store id is empty or not fulfilled.
-         * If symbol is not additionally loaded for default store view data is not taken correctly.
-         */
         $symbol->getResource()->setDefaultStoreId($storeId);
         $symbol->load($id);
         $symbol->getResource()->setDefaultStoreId(self::DEFAULT_STORE_ID);
@@ -91,26 +76,7 @@ class SymbolRepository implements \MageSuite\ProductSymbols\Api\SymbolRepository
     public function save(\MageSuite\ProductSymbols\Api\Data\SymbolInterface $symbol)
     {
         try {
-            $isExists = ($this->getById($symbol['entity_id'])) ? true : false;
-            if (!$isExists) {
-                $this->symbolResource->save($symbol);
-            }
-            
-            $attributesToRemove = $this->symbolAttributes;
-            foreach ($symbol->getData() as $key => $value) {
-                $attr = $this->symbolResource->getAttribute($key);
-                $attributeIndex = array_search($key, $attributesToRemove);
-                if (false !== $attributeIndex) {
-                    unset($attributesToRemove[$attributeIndex]);
-                }
-
-                if (!$attr) {
-                    continue;
-                }
-
-                $this->symbolResource->updateAttribute($symbol, $attr, $value, $symbol->getStoreId());
-            }
-            $this->symbolResource->removeAttribute($symbol, $attributesToRemove);
+            $this->symbolResource->save($symbol);
         } catch (\Exception $e) {
             throw new \Magento\Framework\Exception\CouldNotSaveException(
                 __(

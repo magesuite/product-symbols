@@ -33,11 +33,48 @@ class Symbol extends \Magento\Catalog\Model\AbstractModel implements \MageSuite\
 
     /**
      * @param int|string|null $entityId
+     *
      * @return $this
      */
     public function setEntityId($entityId)
     {
         return $this->setData('entity_id', $entityId);
+    }
+
+    /**
+     * @return int|string|null
+     */
+    public function getCreatedAt()
+    {
+        return $this->getData('created_at');
+    }
+
+    /**
+     * @param int|string|null $createdAt
+     *
+     * @return $this
+     */
+    public function setCreatedAt($createdAt)
+    {
+        return $this->setData('created_at', $createdAt);
+    }
+
+    /**
+     * @return int|string|null
+     */
+    public function getUpdatedAt()
+    {
+        return $this->getData('updated_at');
+    }
+
+    /**
+     * @param int|string|null $updatedAt
+     *
+     * @return $this
+     */
+    public function setUpdatedAt($updatedAt)
+    {
+        return $this->setData('updated_at', $updatedAt);
     }
 
     /**
@@ -50,6 +87,7 @@ class Symbol extends \Magento\Catalog\Model\AbstractModel implements \MageSuite\
 
     /**
      * @param int $storeId
+     *
      * @return $this
      */
     public function setStoreId($storeId)
@@ -67,6 +105,7 @@ class Symbol extends \Magento\Catalog\Model\AbstractModel implements \MageSuite\
 
     /**
      * @param string $symbolName
+     *
      * @return $this
      */
     public function setSymbolName($symbolName)
@@ -84,6 +123,7 @@ class Symbol extends \Magento\Catalog\Model\AbstractModel implements \MageSuite\
 
     /**
      * @param $symbolIcon
+     *
      * @return mixed
      */
     public function setSymbolIcon($symbolIcon)
@@ -101,6 +141,7 @@ class Symbol extends \Magento\Catalog\Model\AbstractModel implements \MageSuite\
 
     /**
      * @param $symbolShortDescription
+     *
      * @return mixed
      */
     public function setSymbolShortDescription($symbolShortDescription)
@@ -118,6 +159,7 @@ class Symbol extends \Magento\Catalog\Model\AbstractModel implements \MageSuite\
 
     /**
      * @param $symbolGroups
+     *
      * @return mixed
      */
     public function setSymbolGroups($symbolGroups)
@@ -150,6 +192,7 @@ class Symbol extends \Magento\Catalog\Model\AbstractModel implements \MageSuite\
 
     /**
      * @param $symbolIconUrl
+     *
      * @return mixed
      */
     public function setSymbolIconUrl($symbolIconUrl)
@@ -167,6 +210,7 @@ class Symbol extends \Magento\Catalog\Model\AbstractModel implements \MageSuite\
 
     /**
      * @param @param \MageSuite\ProductSymbols\Api\Data\SymbolImageInterface $symbolIcon
+     *
      * @return mixed
      */
     public function setSymbolIconEncodedData($symbolIcon)

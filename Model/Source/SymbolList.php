@@ -69,7 +69,6 @@ class SymbolList extends \Magento\Eav\Model\Entity\Attribute\Source\AbstractSour
         $options = [];
 
         foreach ($symbolsCollection as $symbol) {
-            $symbol = $this->symbolRepository->getById($symbol->getEntityId(), $storeId);
             $symbolGroups = explode(',', $symbol->getSymbolGroups());
 
             if (empty($group)) {

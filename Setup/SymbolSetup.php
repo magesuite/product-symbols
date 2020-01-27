@@ -11,9 +11,7 @@ class SymbolSetup extends \Magento\Eav\Setup\EavSetup
         $entities = [
             $symbolEntity => [
                 'entity_model' => \MageSuite\ProductSymbols\Model\ResourceModel\Symbol::class,
-                'attribute_model' => \Magento\Catalog\Model\ResourceModel\Eav\Attribute::class,
                 'table' => $symbolEntity . '_entity',
-                'entity_attribute_collection' => \Magento\Eav\Model\ResourceModel\Entity\Attribute\Collection::class,
                 'attributes' => [
                     'symbol_name' => [
                         'type' => 'varchar',

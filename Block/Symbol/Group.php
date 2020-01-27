@@ -3,6 +3,8 @@ namespace MageSuite\ProductSymbols\Block\Symbol;
 
 class Group extends \Magento\Framework\View\Element\Template
 {
+    const BASE_VIEW_MODEL = \MageSuite\ProductSymbols\ViewModel\Symbol\Group::class;
+
     protected $_template = 'MageSuite_ProductSymbols::symbols/group.phtml';
     /**
      * @var \Magento\Framework\View\Element\Template\Context
@@ -12,28 +14,23 @@ class Group extends \Magento\Framework\View\Element\Template
      * @var \Magento\Framework\ObjectManagerInterface
      */
     protected $objectManager;
-    /**
-     * @var \MageSuite\ProductSymbols\ViewModel\Symbol\Group
-     */
-    protected $viewModel;
 
     protected $viewModelInstance;
 
     public function __construct(
         \Magento\Framework\View\Element\Template\Context $context,
         \Magento\Framework\ObjectManagerInterface $objectManager,
-        string $viewModel = null,
         array $data = []
     ) {
         parent::__construct($context, $data);
         $this->context = $context;
         $this->objectManager = $objectManager;
-        $this->viewModel = $viewModel;
     }
 
     public function getViewModel()
     {
-        $viewModel = $this->viewModel;
+        $viewModel = self::BASE_VIEW_MODEL;
+
         $data = $this->getData();
 
         if (isset($data['view_model'])) {
