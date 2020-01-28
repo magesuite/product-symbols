@@ -5,6 +5,13 @@ class SymbolDataProvider extends \Magento\Ui\DataProvider\AbstractDataProvider
 {
     const DEFAULT_STORE_ID = 0;
 
+    const HIDDEN_ATTRIBUTES = [
+        'entity_id',
+        'store_id',
+        'created_at',
+        'updated_at'
+    ];
+
     /**
      * @var \Magento\Framework\App\RequestInterface
      */
@@ -89,7 +96,7 @@ class SymbolDataProvider extends \Magento\Ui\DataProvider\AbstractDataProvider
             ];
         } else {
             foreach ($symbol->getData() as $attrName => $value) {
-                if ($attrName == 'entity_id' || $attrName == 'store_id' || $attrName == 'created_at' || $attrName == 'updated_at') {
+                if (in_array($attrName, self::HIDDEN_ATTRIBUTES)) {
                     continue;
                 }
 
@@ -136,7 +143,7 @@ class SymbolDataProvider extends \Magento\Ui\DataProvider\AbstractDataProvider
             'symbol_groups_group' => 'use_config.symbol_groups'
         ];
 
-        if (!isset($params['store']) || (isset($params['store']) && $params['store'] == '0')) {
+        if (!isset($params['store']) || (isset($params['store']) && $this->checkIsDefaultScope($params['store']))) {
             foreach ($groupsToFields as $group => $field) {
                 $meta['symbol_details']['children'][$group]['children'][$field]['arguments']['data']['config']['visible'] = false;
                 $meta['symbol_details']['children'][$group]['children'][$field]['arguments']['data']['config']['default'] = false;
@@ -144,5 +151,10 @@ class SymbolDataProvider extends \Magento\Ui\DataProvider\AbstractDataProvider
         }
 
         return $meta;
+    }
+
+    protected function checkIsDefaultScope($storeId)
+    {
+        return $storeId == self::DEFAULT_STORE_ID;
     }
 }

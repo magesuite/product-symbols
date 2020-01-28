@@ -12,6 +12,11 @@
     <preference for="MageSuite\ProductSymbols\Api\Data\GroupInterface"
                 type="MageSuite\ProductSymbols\Model\Group" />
 
+    <preference for="MageSuite\ProductSymbols\Api\GroupToSymbolRelationRepositoryInterface"
+                type="MageSuite\ProductSymbols\Model\GroupToSymbolRelationRepository" />
+    <preference for="MageSuite\ProductSymbols\Api\Data\GroupToSymbolRelationInterface"
+                type="MageSuite\ProductSymbols\Model\GroupToSymbolRelation" />
+
     <type name="MageSuite\ProductSymbols\Block\Symbol\Group">
         <arguments>
             <argument name="viewModel" xsi:type="string">MageSuite\ProductSymbols\ViewModel\Symbol\Group</argument>

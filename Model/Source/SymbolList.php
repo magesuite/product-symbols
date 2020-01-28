@@ -30,13 +30,18 @@ class SymbolList extends \Magento\Eav\Model\Entity\Attribute\Source\AbstractSour
      * @var \MageSuite\ProductSymbols\Api\GroupRepositoryInterface
      */
     protected $groupRepository;
+    /**
+     * @var \MageSuite\ProductSymbols\Model\GroupToSymbolRelationRepository
+     */
+    protected $groupToSymbolRelationRepository;
 
     public function __construct(
         \MageSuite\ProductSymbols\Model\ResourceModel\Symbol\CollectionFactory $collectionFactory,
         \MageSuite\ProductSymbols\Model\SymbolFactory $model,
         \MageSuite\ProductSymbols\Api\SymbolRepositoryInterface $symbolRepository,
         \Magento\Store\Model\StoreManagerInterface $storeManager,
-        \MageSuite\ProductSymbols\Api\GroupRepositoryInterface $groupRepository
+        \MageSuite\ProductSymbols\Api\GroupRepositoryInterface $groupRepository,
+        \MageSuite\ProductSymbols\Model\GroupToSymbolRelationRepository $groupToSymbolRelationRepository
     ) {
 
         $this->collectionFactory = $collectionFactory;
@@ -44,6 +49,7 @@ class SymbolList extends \Magento\Eav\Model\Entity\Attribute\Source\AbstractSour
         $this->symbolRepository = $symbolRepository;
         $this->storeManager = $storeManager;
         $this->groupRepository = $groupRepository;
+        $this->groupToSymbolRelationRepository = $groupToSymbolRelationRepository;
     }
 
     public function getAllOptions()
@@ -62,23 +68,16 @@ class SymbolList extends \Magento\Eav\Model\Entity\Attribute\Source\AbstractSour
         $attributeCode = $this->getAttribute()->getAttributeCode();
         $group = $this->groupRepository->getByCode($attributeCode);
 
+        $symbolIds = $this->groupToSymbolRelationRepository->getAllByGroupId($group->getEntityId());
+
         $symbolsCollection = $this->collectionFactory->create();
-        $symbolsCollection->setStoreId($storeId);
-        $symbolsCollection->addAttributeToSelect('*');
+        $symbolsCollection->setStoreId($storeId)
+            ->addAttributeToSelect('*')
+            ->addFieldToFilter('entity_id', ['in' => $symbolIds]);
 
         $options = [];
 
         foreach ($symbolsCollection as $symbol) {
-            $symbolGroups = explode(',', $symbol->getSymbolGroups());
-
-            if (empty($group)) {
-                return $options;
-            }
-
-            if (!in_array($group->getEntityId(), $symbolGroups)) {
-                continue;
-            }
-
             $options[] = [
                 'label' => $symbol->getSymbolName(),
                 'value' => $symbol->getEntityId()

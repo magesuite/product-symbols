@@ -78,5 +78,15 @@
             "PRD_SYMBOL_ENTT_VCHR_ENTT_ID_PRD_SYMBOL_ENTT_ENTT_ID": true,
             "PRODUCT_SYMBOL_ENTITY_VARCHAR_STORE_ID_STORE_STORE_ID": true
         }
+    },
+    "product_group_to_symbol_relation": {
+        "column": {
+            "entity_id": true,
+            "group_id": true,
+            "symbol_id": true
+        },
+        "constraint": {
+            "PRIMARY": true
+        }
     }
 }

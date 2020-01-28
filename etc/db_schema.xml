@@ -83,4 +83,12 @@
             <column name="store_id"/>
         </index>
     </table>
+    <table name="product_group_to_symbol_relation" resource="default" engine="innodb">
+        <column xsi:type="int" name="entity_id" padding="10" unsigned="true" nullable="false" identity="true" comment="Entity ID"/>
+        <column xsi:type="smallint" name="group_id" padding="5" unsigned="true" nullable="false" default="0" comment="Group ID"/>
+        <column xsi:type="smallint" name="symbol_id" padding="5" unsigned="true" nullable="false" default="0" comment="Symbol ID"/>
+        <constraint xsi:type="primary" referenceId="IDX_PRIMARY">
+            <column name="entity_id"/>
+        </constraint>
+    </table>
 </schema>
