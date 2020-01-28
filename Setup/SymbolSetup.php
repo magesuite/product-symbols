@@ -54,7 +54,23 @@ class SymbolSetup extends \Magento\Eav\Setup\EavSetup
                         'global' => \Magento\Eav\Model\Entity\Attribute\ScopedAttributeInterface::SCOPE_STORE,
                         'backend' => \Magento\Eav\Model\Entity\Attribute\Backend\ArrayBackend::class,
                         'source_model' => \MageSuite\ProductSymbols\Model\Source\GroupList::class
-                    ]
+                    ],
+                    'created_at' => [
+                        'type' => 'static',
+                        'label' => 'Created At',
+                        'input' => 'text',
+                        'required' => false,
+                        'sort_order' => 6,
+                        'global' => \Magento\Eav\Model\Entity\Attribute\ScopedAttributeInterface::SCOPE_GLOBAL,
+                    ],
+                    'updated_at' => [
+                        'type' => 'static',
+                        'label' => 'Updated At',
+                        'input' => 'text',
+                        'required' => false,
+                        'sort_order' => 7,
+                        'global' => \Magento\Eav\Model\Entity\Attribute\ScopedAttributeInterface::SCOPE_GLOBAL,
+                    ],
                 ]
             ]
         ];
