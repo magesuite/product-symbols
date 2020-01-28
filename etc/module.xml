@@ -3,6 +3,7 @@
     <module name="MageSuite_ProductSymbols" setup_version="1.0.0" schema_version="1.0.0">
         <sequence>
             <module name="Magento_Catalog"/>
+            <module name="Magento_Eav"/>
         </sequence>
     </module>
 </config>

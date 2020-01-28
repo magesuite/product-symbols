@@ -245,7 +245,7 @@ class Symbol extends \Magento\Eav\Model\Entity\AbstractEntity
         $connection = $this->getConnection();
 
         $updateQuery = $this->buildUpdateQuery($symbolId, $groupAttributeIds);
-        
+
         $connection->query($updateQuery);
     }
 
