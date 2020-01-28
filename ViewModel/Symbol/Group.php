@@ -120,4 +120,15 @@ class Group extends \Magento\Framework\DataObject implements \Magento\Framework\
 
         return $symbolsCollection;
     }
+
+    public function getGroupCssClass()
+    {
+        $groupCssClass = $this->getCssClassIdentifier();
+
+        if (empty($groupCssClass)) {
+            return '';
+        }
+
+        return $groupCssClass;
+    }
 }
