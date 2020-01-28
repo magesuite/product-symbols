@@ -39,6 +39,10 @@ class Symbol extends \Magento\Eav\Model\Entity\AbstractEntity
      * @var \MageSuite\ProductSymbols\Api\Data\GroupToSymbolRelationInterfaceFactory
      */
     protected $groupToSymbolRelation;
+    /**
+     * @var \Magento\Eav\Model\ResourceModel\Entity\Attribute
+     */
+    protected $eavAttribute;
 
     public function __construct(
         \Magento\Eav\Model\Entity\Context $context,
@@ -48,6 +52,7 @@ class Symbol extends \Magento\Eav\Model\Entity\AbstractEntity
         \Magento\Store\Model\StoreManagerInterface $storeManager,
         \MageSuite\ProductSymbols\Api\GroupToSymbolRelationRepositoryInterface $groupToSymbolRelationRepository,
         \MageSuite\ProductSymbols\Api\Data\GroupToSymbolRelationInterfaceFactory $groupToSymbolRelation,
+        \Magento\Eav\Model\ResourceModel\Entity\Attribute $eavAttribute,
         $data = [],
         \Magento\Eav\Model\Entity\Attribute\UniqueValidationInterface $uniqueValidator = null
     ) {
@@ -58,6 +63,7 @@ class Symbol extends \Magento\Eav\Model\Entity\AbstractEntity
         $this->storeManager = $storeManager;
         $this->groupToSymbolRelationRepository = $groupToSymbolRelationRepository;
         $this->groupToSymbolRelation = $groupToSymbolRelation;
+        $this->eavAttribute = $eavAttribute;
     }
 
     public function getEntityType()
@@ -217,31 +223,43 @@ class Symbol extends \Magento\Eav\Model\Entity\AbstractEntity
 
     protected function _afterDelete(\Magento\Framework\DataObject $object)
     {
-        $groupIds = $this->groupToSymbolRelationRepository->getAllBySymbolId($object->getEntityId());
-        $groupCollection = $this->groupCollectionFactory->create();
-        $groupCollection->addFieldToFilter('entity_id', ['in' => $groupIds]);
+        $this->updateSymbolAttributeValues($object->getEntityId());
 
-        foreach ($groupCollection as $group) {
-            $productsCollection = $this->productCollectionFactory->create();
-            $productsCollection->addAttributeToFilter($group->getGroupCode(), ['finset' => $object->getEntityId()]);
-
-            foreach ($productsCollection as $product) {
-                $groupAttribute = $product->getData($group->getGroupCode());
-
-                $groupAttribute = explode(',', $groupAttribute);
-
-                $groupAttribute = array_diff($groupAttribute, [$object->getEntityId()]);
-
-                $this->productResourceAction->updateAttributes(
-                    [$product->getId()],
-                    [$group->getGroupCode() => implode(',', $groupAttribute)],
-                    \Magento\Store\Model\Store::DEFAULT_STORE_ID
-                );
-            }
-        }
         $this->groupToSymbolRelationRepository->deleteBySymbolId($object->getEntityId());
 
         return parent::_afterDelete($object);
+    }
+
+    protected function updateSymbolAttributeValues($symbolId)
+    {
+        $groupIds = $this->groupToSymbolRelationRepository->getAllBySymbolId($symbolId);
+        $groupCollection = $this->groupCollectionFactory->create();
+        $groupCollection->addFieldToFilter('entity_id', ['in' => $groupIds]);
+
+        $groupAttributeIds = [];
+        foreach ($groupCollection as $group) {
+            $attributeId = $this->eavAttribute->getIdByCode(\Magento\Catalog\Model\Product::ENTITY, $group->getGroupCode());
+            $groupAttributeIds[] = $attributeId;
+        }
+
+        $connection = $this->getConnection();
+
+        $updateQuery = $this->buildUpdateQuery($symbolId, $groupAttributeIds);
+        
+        $connection->query($updateQuery);
+    }
+
+    protected function buildUpdateQuery($id, $attributeIds)
+    {
+        $replaceCondition = sprintf("TRIM(BOTH ',' FROM REPLACE(REPLACE(CONCAT(',',REPLACE(value, ',', ',,'), ','),',%s,', ''), ',,', ','))", $id);
+
+        return sprintf(
+            "UPDATE %s SET value = %s WHERE FIND_IN_SET('%s', value) AND attribute_id IN (%s)",
+            $this->getConnection()->getTableName('catalog_product_entity_varchar'),
+            $replaceCondition,
+            $id,
+            implode(',', $attributeIds)
+        );
     }
 
     protected function _getLoadAttributesSelect($object, $table)
