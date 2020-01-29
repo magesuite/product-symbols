@@ -223,16 +223,16 @@ class Symbol extends \Magento\Eav\Model\Entity\AbstractEntity
 
     protected function _afterDelete(\Magento\Framework\DataObject $object)
     {
-        $this->updateSymbolAttributeValues($object->getEntityId());
+        $this->removeSymbolIdFromProductSymbolAttributeValues($object->getEntityId());
 
         $this->groupToSymbolRelationRepository->deleteBySymbolId($object->getEntityId());
 
         return parent::_afterDelete($object);
     }
 
-    protected function updateSymbolAttributeValues($symbolId)
+    protected function removeSymbolIdFromProductSymbolAttributeValues($symbolId)
     {
-        $groupIds = $this->groupToSymbolRelationRepository->getAllBySymbolId($symbolId);
+        $groupIds = $this->groupToSymbolRelationRepository->getGroupsBySymbolId($symbolId);
         $groupCollection = $this->groupCollectionFactory->create();
         $groupCollection->addFieldToFilter('entity_id', ['in' => $groupIds]);
 
@@ -244,21 +244,17 @@ class Symbol extends \Magento\Eav\Model\Entity\AbstractEntity
 
         $connection = $this->getConnection();
 
-        $updateQuery = $this->buildUpdateQuery($symbolId, $groupAttributeIds);
+        $replaceCondition = sprintf("TRIM(BOTH ',' FROM REPLACE(REPLACE(CONCAT(',',REPLACE(value, ',', ',,'), ','),',%s,', ''), ',,', ','))", $symbolId);
 
-        $connection->query($updateQuery);
-    }
-
-    protected function buildUpdateQuery($id, $attributeIds)
-    {
-        $replaceCondition = sprintf("TRIM(BOTH ',' FROM REPLACE(REPLACE(CONCAT(',',REPLACE(value, ',', ',,'), ','),',%s,', ''), ',,', ','))", $id);
-
-        return sprintf(
-            "UPDATE %s SET value = %s WHERE FIND_IN_SET('%s', value) AND attribute_id IN (%s)",
+        $connection->update(
             $this->getConnection()->getTableName('catalog_product_entity_varchar'),
-            $replaceCondition,
-            $id,
-            implode(',', $attributeIds)
+            [
+                'value' => new \Zend_Db_Expr($replaceCondition)
+            ],
+            [
+                $connection->prepareSqlCondition('value', ['finset' => $symbolId]),
+                $connection->prepareSqlCondition('attribute_id', ['in' => $groupAttributeIds])
+            ]
         );
     }
 

@@ -8,13 +8,13 @@ interface GroupToSymbolRelationRepositoryInterface
      * @return \MageSuite\ProductSymbols\Api\Data\GroupToSymbolRelationInterface
      * @throws \Magento\Framework\Exception\NoSuchEntityException
      */
-    public function getAllByGroupId($id);
+    public function getSymbolsByGroupId($id);
     /**
      * @param int $id
      * @return \MageSuite\ProductSymbols\Api\Data\GroupToSymbolRelationInterface
      * @throws \Magento\Framework\Exception\NoSuchEntityException
      */
-    public function getAllBySymbolId($id);
+    public function getGroupsBySymbolId($id);
 
     /**
      * @param \MageSuite\ProductSymbols\Api\Data\GroupToSymbolRelationInterface $relation

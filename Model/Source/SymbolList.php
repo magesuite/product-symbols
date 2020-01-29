@@ -68,7 +68,7 @@ class SymbolList extends \Magento\Eav\Model\Entity\Attribute\Source\AbstractSour
         $attributeCode = $this->getAttribute()->getAttributeCode();
         $group = $this->groupRepository->getByCode($attributeCode);
 
-        $symbolIds = $this->groupToSymbolRelationRepository->getAllByGroupId($group->getEntityId());
+        $symbolIds = $this->groupToSymbolRelationRepository->getSymbolsByGroupId($group->getEntityId());
 
         $symbolsCollection = $this->collectionFactory->create();
         $symbolsCollection->setStoreId($storeId)

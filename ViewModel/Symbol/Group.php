@@ -111,7 +111,7 @@ class Group extends \Magento\Framework\DataObject implements \Magento\Framework\
 
     public function getSymbolsByGroups($groupIds)
     {
-        $symbolIds = $this->groupToSymbolRelationRepository->getAllByGroupId($groupIds);
+        $symbolIds = $this->groupToSymbolRelationRepository->getSymbolsByGroupId($groupIds);
 
         $symbolsCollection = $this->symbolCollectionFactory->create();
         $symbolsCollection->setStoreId($this->storeManager->getStore()->getId());

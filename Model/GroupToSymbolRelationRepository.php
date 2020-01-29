@@ -21,7 +21,7 @@ class GroupToSymbolRelationRepository implements \MageSuite\ProductSymbols\Api\G
         $this->groupToSymbolRelationResource = $groupToSymbolRelationResource;
     }
 
-    public function getAllByGroupId($ids)
+    public function getSymbolsByGroupId($ids)
     {
         $collection = $this->groupToSymbolRelationCollectionFactory->create();
 
@@ -40,7 +40,7 @@ class GroupToSymbolRelationRepository implements \MageSuite\ProductSymbols\Api\G
         return null;
     }
 
-    public function getAllBySymbolId($ids)
+    public function getGroupsBySymbolId($ids)
     {
         $collection = $this->groupToSymbolRelationCollectionFactory->create();
 
@@ -78,9 +78,13 @@ class GroupToSymbolRelationRepository implements \MageSuite\ProductSymbols\Api\G
     public function deleteBySymbolId($id)
     {
         try {
-            $collection = $this->groupToSymbolRelationCollectionFactory->create();
-            $collection->addFieldToFilter('symbol_id', ['eq' => $id]);
-            $collection->walk('delete');
+            $connection = $this->groupToSymbolRelationResource->getConnection();
+            $connection->delete(
+                $connection->getTableName('product_group_to_symbol_relation'),
+                [
+                    $connection->prepareSqlCondition('symbol_id', ['eq' => $id])
+                ]
+            );
 
             return true;
         } catch (\Exception $e) {
