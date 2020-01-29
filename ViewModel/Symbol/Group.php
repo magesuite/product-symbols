@@ -64,15 +64,11 @@ class Group extends \Magento\Framework\DataObject implements \Magento\Framework\
         $groupCollection = $this->groupCollectionFactory->create();
 
         if (!empty($this->getIncludedGroups())) {
-            $includedGroups = explode(',', $this->getIncludedGroups());
-
-            $groupCollection->addFieldToFilter('group_code', ['in' => $includedGroups]);
+            $groupCollection->addFieldToFilter('group_code', ['in' => $this->getIncludedGroups()]);
         }
 
         if (!empty($this->getExcludedGroups())) {
-            $excludedGroups = explode(',', $this->getExcludedGroups());
-
-            $groupCollection->addFieldToFilter('group_code', ['nin' => $excludedGroups]);
+            $groupCollection->addFieldToFilter('group_code', ['nin' => $this->getExcludedGroups()]);
         }
 
         return $groupCollection;
