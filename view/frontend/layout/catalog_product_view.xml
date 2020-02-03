@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceBlock name="product.description.material-and-care">
+            <block class="MageSuite\ProductSymbols\Block\Symbol\Group" name="product.description.material-and-care.symbols" template="MageSuite_ProductSymbols::symbols/group.phtml">
+                <arguments>
+                    <argument name="view_model" xsi:type="string">MageSuite\ProductSymbols\ViewModel\Symbol\Group</argument>
+                    <argument name="css_class_identifier" xsi:type="string">care</argument>
+                    <argument name="included_groups" xsi:type="array">
+                        <item name="0" xsi:type="string">care_symbols</item>
+                    </argument>
+                </arguments>
+            </block>
+        </referenceBlock>
+        <referenceBlock name="product.description.extras">
+            <block class="MageSuite\ProductSymbols\Block\Symbol\Group" name="product.description.extras.symbols" template="MageSuite_ProductSymbols::symbols/group.phtml">
+                <arguments>
+                    <argument name="view_model" xsi:type="string">MageSuite\ProductSymbols\ViewModel\Symbol\Group</argument>
+                    <argument name="css_class_identifier" xsi:type="string">extras</argument>
+                    <argument name="included_groups" xsi:type="array">
+                        <item name="0" xsi:type="string">extras_symbols</item>
+                    </argument>
+                </arguments>
+            </block>
+        </referenceBlock>
+    </body>
+</page>
