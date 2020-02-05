@@ -44,7 +44,7 @@
         <column xsi:type="smallint" name="attribute_id" padding="5" unsigned="true" nullable="false" default="0" comment="Attribute ID"/>
         <column xsi:type="smallint" name="store_id" padding="5" unsigned="true" nullable="false" default="0" comment="Store ID"/>
         <column xsi:type="int" name="entity_id" padding="10" unsigned="true" nullable="false" default="0" comment="Entity ID"/>
-        <column xsi:type="text" name="value" unsigned="true" nullable="false" comment="Value"/>
+        <column xsi:type="text" name="value" nullable="false" comment="Value"/>
         <constraint xsi:type="primary" referenceId="IDX_PRIMARY">
             <column name="value_id"/>
         </constraint>
@@ -66,7 +66,7 @@
         <column xsi:type="smallint" name="attribute_id" padding="5" unsigned="true" nullable="false" default="0" comment="Attribute ID"/>
         <column xsi:type="smallint" name="store_id" padding="5" unsigned="true" nullable="false" default="0" comment="Store ID"/>
         <column xsi:type="int" name="entity_id" padding="10" unsigned="true" nullable="false" default="0" comment="Entity ID"/>
-        <column xsi:type="varchar" name="value" length="255" unsigned="true" nullable="false" comment="Value"/>
+        <column xsi:type="varchar" name="value" length="255" nullable="false" comment="Value"/>
         <constraint xsi:type="primary" referenceId="IDX_PRIMARY">
             <column name="value_id"/>
         </constraint>
