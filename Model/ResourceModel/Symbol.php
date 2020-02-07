@@ -183,9 +183,8 @@ class Symbol extends \Magento\Eav\Model\Entity\AbstractEntity
     {
         $currentTime = date('Y-m-d H:i:s');
         $symbol->setUpdatedAt($currentTime);
-        $isNew = empty($symbol['entity_id']) ? true : false;
 
-        if ($isNew) {
+        if ($symbol->getIsNew()) {
             $symbol->setCreatedAt($currentTime);
             return parent::save($symbol);
         }

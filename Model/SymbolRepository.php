@@ -76,6 +76,10 @@ class SymbolRepository implements \MageSuite\ProductSymbols\Api\SymbolRepository
     public function save(\MageSuite\ProductSymbols\Api\Data\SymbolInterface $symbol)
     {
         try {
+            $isNew = $this->getById($symbol->getEntityId()) ? false : true;
+
+            $symbol->setIsNew($isNew);
+
             $this->symbolResource->save($symbol);
         } catch (\Exception $e) {
             throw new \Magento\Framework\Exception\CouldNotSaveException(

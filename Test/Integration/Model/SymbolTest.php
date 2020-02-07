@@ -97,6 +97,7 @@ class SymbolTest extends \PHPUnit\Framework\TestCase
             'symbol_name' => 'edit symbol2',
             'symbol_icon' => 'edit_image.jpg',
             'symbol_short_description' => 'symbol short description 2',
+            'symbol_groups' => [100,200]
         ];
 
         $symbol = $this->symbolRepositoryInterface->getById(600, $editData['store_id']);
@@ -104,7 +105,8 @@ class SymbolTest extends \PHPUnit\Framework\TestCase
             ->setStoreId($editData['store_id'])
             ->setSymbolShortDescription($editData['symbol_short_description'])
             ->setSymbolIcon($editData['symbol_icon'])
-            ->setSymbolName($editData['symbol_name']);
+            ->setSymbolName($editData['symbol_name'])
+            ->setSymbolGroups($editData['symbol_groups']);
 
         $this->symbolRepositoryInterface->save($symbol);
         $editedSymbol = $this->symbolRepositoryInterface->getById(600, $editData['store_id']);
@@ -119,6 +121,7 @@ class SymbolTest extends \PHPUnit\Framework\TestCase
             'symbol_name' => 'edit symbol 700',
             'symbol_icon' => 'edit_image.jpg',
             'symbol_short_description' => 'symbol short description 700',
+            'symbol_groups' => [100,200]
         ];
 
         $symbol = $this->symbolRepositoryInterface->getById(700, $editData['store_id']);
@@ -126,7 +129,8 @@ class SymbolTest extends \PHPUnit\Framework\TestCase
             ->setStoreId($editData['store_id'])
             ->setSymbolShortDescription($editData['symbol_short_description'])
             ->setSymbolIcon($editData['symbol_icon'])
-            ->setSymbolName($editData['symbol_name']);
+            ->setSymbolName($editData['symbol_name'])
+            ->setSymbolGroups($editData['symbol_groups']);
 
         $this->symbolRepositoryInterface->save($symbol);
         $editedSymbol = $this->symbolRepositoryInterface->getById(700, $editData['store_id']);
@@ -143,6 +147,7 @@ class SymbolTest extends \PHPUnit\Framework\TestCase
             'symbol_name' => 'edit symbol 1000',
             'symbol_icon' => 'edit_image.jpg',
             'symbol_short_description' => 'symbol short description 1000',
+            'symbol_groups' => [100,200]
         ];
 
         $symbol = $this->symbolRepositoryInterface->getById(1000, $editData['store_id']);
@@ -150,7 +155,8 @@ class SymbolTest extends \PHPUnit\Framework\TestCase
             ->setStoreId($editData['store_id'])
             ->setSymbolShortDescription($editData['symbol_short_description'])
             ->setSymbolIcon($editData['symbol_icon'])
-            ->setSymbolName($editData['symbol_name']);
+            ->setSymbolName($editData['symbol_name'])
+            ->setSymbolGroups($editData['symbol_groups']);
 
         $this->symbolRepositoryInterface->save($symbol);
         $editedSymbol = $this->symbolRepositoryInterface->getById(1000, $editData['store_id']);
