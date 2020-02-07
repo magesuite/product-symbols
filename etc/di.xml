@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <preference for="MageSuite\ProductSymbols\Api\SymbolRepositoryInterface"
+                type="MageSuite\ProductSymbols\Model\SymbolRepository" />
+    <preference for="MageSuite\ProductSymbols\Api\Data\SymbolInterface"
+                type="MageSuite\ProductSymbols\Model\Symbol" />
+    <preference for="MageSuite\ProductSymbols\Api\Data\SymbolImageInterface"
+                type="MageSuite\ProductSymbols\Model\SymbolImage" />
+
+    <preference for="MageSuite\ProductSymbols\Api\GroupRepositoryInterface"
+                type="MageSuite\ProductSymbols\Model\GroupRepository" />
+    <preference for="MageSuite\ProductSymbols\Api\Data\GroupInterface"
+                type="MageSuite\ProductSymbols\Model\Group" />
+
+    <preference for="MageSuite\ProductSymbols\Api\GroupToSymbolRelationRepositoryInterface"
+                type="MageSuite\ProductSymbols\Model\GroupToSymbolRelationRepository" />
+    <preference for="MageSuite\ProductSymbols\Api\Data\GroupToSymbolRelationInterface"
+                type="MageSuite\ProductSymbols\Model\GroupToSymbolRelation" />
+
+    <type name="MageSuite\ProductSymbols\Block\Symbol\Group">
+        <arguments>
+            <argument name="viewModel" xsi:type="string">MageSuite\ProductSymbols\ViewModel\Symbol\Group</argument>
+        </arguments>
+    </type>
+</config>

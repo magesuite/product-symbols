@@ -1,0 +1,32 @@
+<?php
+    /** @var \MageSuite\ProductSymbols\ViewModel\Symbol\Group $viewModel */
+    $viewModel = $block->getViewModel();
+    $groupSymbols = $viewModel->getGroupSymbols();
+?>
+<?php if (!empty($groupSymbols)): ?>
+    <ul class="cs-product-details__<?= $viewModel->getGroupCssClass(); ?>">
+        <?php foreach ($groupSymbols as $group): ?>
+            <?php if (isset($group['symbols'])): ?>
+                <?php foreach ($group['symbols'] as $symbol): ?>
+                    <?php
+                        $image = $symbol->getSymbolIconUrl();
+                        $description = $symbol->getSymbolShortDescription();
+                    ?>
+                    <?php if ($image && $description): ?>
+                        <li>
+                            <?= $this->getLayout()
+                                    ->createBlock('MageSuite\ThemeHelpers\Block\Icon')
+                                    ->setIconUrl($image)
+                                    ->setAltText($symbol->getSymbolName())
+                                    ->setInlined(true)
+                                    ->setLazyLoaded(true)
+                                    ->toHtml();
+                            ?>
+                            <span><?= $description; ?></span>
+                        </li>
+                    <?php endif; ?>
+                <?php endforeach;?>
+            <?php endif; ?>
+        <?php endforeach;?>
+    </ul>
+<?php endif; ?>
