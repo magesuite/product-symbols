@@ -84,6 +84,17 @@ interface SymbolInterface
     /**
      * @return mixed
      */
+    public function getSymbolDescription();
+
+    /**
+     * @param string|null $symbolDescription
+     * @return mixed
+     */
+    public function setSymbolDescription($symbolDescription);
+
+    /**
+     * @return mixed
+     */
     public function getSymbolGroups();
 
     /**

@@ -152,6 +152,24 @@ class Symbol extends \Magento\Catalog\Model\AbstractModel implements \MageSuite\
     /**
      * @return mixed
      */
+    public function getSymbolDescription()
+    {
+        return $this->getData('symbol_description');
+    }
+
+    /**
+     * @param $symbolDescription
+     *
+     * @return mixed
+     */
+    public function setSymbolDescription($symbolDescription)
+    {
+        return $this->setData('symbol_description', $symbolDescription);
+    }
+
+    /**
+     * @return mixed
+     */
     public function getSymbolGroups()
     {
         return $this->getData('symbol_groups');

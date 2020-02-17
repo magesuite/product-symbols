@@ -92,6 +92,7 @@ class SymbolDataProvider extends \Magento\Ui\DataProvider\AbstractDataProvider
                 'symbol_name' => false,
                 'symbol_icon' => false,
                 'symbol_short_description' => false,
+                'symbol_description' => false,
                 'symbol_groups' => false,
             ];
         } else {
@@ -111,6 +112,7 @@ class SymbolDataProvider extends \Magento\Ui\DataProvider\AbstractDataProvider
                 'store_id' => $symbol->getStoreId(),
                 'symbol_name' => $symbol->getSymbolName(),
                 'symbol_short_description' => $symbol->getSymbolShortDescription(),
+                'symbol_description' => $symbol->getSymbolDescription(),
                 'symbol_groups' => $symbol->getSymbolGroups(),
                 'use_config' => $useConfig
             ]
@@ -140,6 +142,7 @@ class SymbolDataProvider extends \Magento\Ui\DataProvider\AbstractDataProvider
             'symbol_name_group' => 'use_config.symbol_name',
             'symbol_icon_group' => 'use_config.symbol_icon',
             'symbol_short_description_group' => 'use_config.symbol_short_description',
+            'symbol_description_group' => 'use_config.symbol_description',
             'symbol_groups_group' => 'use_config.symbol_groups'
         ];
 
