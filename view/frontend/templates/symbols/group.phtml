@@ -17,7 +17,7 @@
                             <?= $this->getLayout()
                                     ->createBlock('MageSuite\ThemeHelpers\Block\Icon')
                                     ->setIconUrl($image)
-                                    ->setAltText($symbol->getSymbolName())
+                                    ->setAltText($symbol->getSymbolDescription())
                                     ->setInlined(true)
                                     ->setLazyLoaded(true)
                                     ->toHtml();
