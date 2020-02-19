@@ -185,4 +185,9 @@ class SymbolTest extends \PHPUnit\Framework\TestCase
     {
         include __DIR__.'/../_files/symbols.php';
     }
+
+    public static function loadSymbolsRollback()
+    {
+        include __DIR__.'/../_files/symbols_rollback.php';
+    }
 }
