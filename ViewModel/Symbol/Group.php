@@ -89,10 +89,6 @@ class Group extends \Magento\Framework\DataObject implements \Magento\Framework\
 
             $groupSymbols = explode(',', $groupSymbols);
 
-            $groupFullData[$group->getGroupCode()] = [
-                'group_name' => $group->getGroupName()
-            ];
-
             foreach ($symbolsCollection as $symbol) {
                 if (!in_array($symbol->getEntityId(), $groupSymbols)) {
                     continue;
