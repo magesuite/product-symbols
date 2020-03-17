@@ -4,25 +4,27 @@
     $groupSymbols = $viewModel->getGroupSymbols();
 ?>
 <?php if (!empty($groupSymbols)): ?>
-    <ul class="cs-product-details__<?= $viewModel->getGroupCssClass(); ?>">
+    <ul class="cs-product-details__symbols cs-product-details__symbols--<?= $viewModel->getGroupCssClass(); ?>">
         <?php foreach ($groupSymbols as $group): ?>
             <?php if (isset($group['symbols'])): ?>
                 <?php foreach ($group['symbols'] as $symbol): ?>
                     <?php
                         $image = $symbol->getSymbolIconUrl();
-                        $description = $symbol->getSymbolShortDescription();
+                        $shortDescription = $symbol->getSymbolShortDescription();
+                        $description = $symbol->getSymbolDescription();
                     ?>
-                    <?php if ($image && $description): ?>
-                        <li>
-                            <?= $this->getLayout()
-                                    ->createBlock('MageSuite\ThemeHelpers\Block\Icon')
-                                    ->setIconUrl($image)
-                                    ->setAltText($symbol->getSymbolDescription())
-                                    ->setInlined(false)
-                                    ->setLazyLoaded(true)
-                                    ->toHtml();
-                            ?>
-                            <span><?= $description; ?></span>
+                    <?php if ($image && $shortDescription): ?>
+                        <li class="cs-product-details__symbol">
+                            <span class="cs-product-details__symbol-icon-wrapper"<?php if($description): ?> title="<?= $description ?>"<?php endif; ?>>
+                                <?= $this->getLayout()
+                                        ->createBlock('MageSuite\ThemeHelpers\Block\Icon')
+                                        ->setIconUrl($image)
+                                        ->setInlined(false)
+                                        ->setLazyLoaded(true)
+                                        ->toHtml();
+                                ?>
+                            </span>
+                            <span class="cs-product-details__symbol-label"><?= $shortDescription; ?></span>
                         </li>
                     <?php endif; ?>
                 <?php endforeach;?>
