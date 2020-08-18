@@ -29,6 +29,10 @@ class Group extends \Magento\Framework\DataObject implements \Magento\Framework\
      * @var \MageSuite\ProductSymbols\Model\GroupToSymbolRelationRepository
      */
     protected $groupToSymbolRelationRepository;
+    /**
+     * @var \Magento\Catalog\Api\ProductRepositoryInterface
+     */
+    protected $productRepository;
 
     public function __construct(
         \Magento\Framework\Registry $registry,
@@ -36,6 +40,7 @@ class Group extends \Magento\Framework\DataObject implements \Magento\Framework\
         \MageSuite\ProductSymbols\Model\ResourceModel\Symbol\CollectionFactory $symbolCollectionFactory,
         \Magento\Store\Model\StoreManagerInterface $storeManager,
         \MageSuite\ProductSymbols\Model\GroupToSymbolRelationRepository $groupToSymbolRelationRepository,
+        \Magento\Catalog\Api\ProductRepositoryInterface $productRepository,
         array $data = []
     ) {
         parent::__construct($data);
@@ -44,11 +49,19 @@ class Group extends \Magento\Framework\DataObject implements \Magento\Framework\
         $this->symbolCollectionFactory = $symbolCollectionFactory;
         $this->storeManager = $storeManager;
         $this->groupToSymbolRelationRepository = $groupToSymbolRelationRepository;
+        $this->productRepository = $productRepository;
     }
 
     public function getGroupSymbols()
     {
         return $this->mapSymbolsToGroup();
+    }
+
+    public function setProduct($product)
+    {
+        $this->product = $this->productRepository->getById($product->getId());
+
+        return $this;
     }
 
     public function getProduct()
