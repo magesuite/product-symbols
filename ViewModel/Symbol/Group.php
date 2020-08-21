@@ -51,6 +51,13 @@ class Group extends \Magento\Framework\DataObject implements \Magento\Framework\
         return $this->mapSymbolsToGroup();
     }
 
+    public function setProduct($product)
+    {
+        $this->product = $product;
+
+        return $this;
+    }
+
     public function getProduct()
     {
         if (!$this->product) {
