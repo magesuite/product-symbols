@@ -1,0 +1,41 @@
+Back,Back
+Delete,Delete
+"Are you sure you want to do this?","Are you sure you want to do this?"
+"Save Group","Save Group"
+Groups,Groups
+"Create New Group","Create New Group"
+"Save Symbol","Save Symbol"
+Symbols,Symbols
+"Create New Symbol","Create New Symbol"
+"Symbol groups","Symbol groups"
+"Symbol group","Symbol group"
+Symbol,Symbol
+"New Symbols Group","New Symbols Group"
+"Edit Symbols Group","Edit Symbols Group"
+"New Symbol","New Symbol"
+"Edit Symbol","Edit Symbol"
+"This field can be modified only during group creation","This field can be modified only during group creation"
+"Group with the same code already exist.","Group with the same code already exist."
+"Could not save relation: %1","Could not save relation: %1"
+"Could not delete relation: %1","Could not delete relation: %1"
+"File can not be saved to the destination folder.","File can not be saved to the destination folder."
+"Image file has been not uploaded","Image file has been not uploaded"
+"The image content is invalid. Verify the content and try again.","The image content is invalid. Verify the content and try again."
+"Cannot recognize image extension.","Cannot recognize image extension."
+"Could not save symbol: %1","Could not save symbol: %1"
+"Could not delete symbol: %1","Could not delete symbol: %1"
+"Could not save symbol.","Could not save symbol."
+ID,ID
+"Group Name","Group Name"
+"Group Code","Group Code"
+"Symbol Name","Symbol Name"
+"Symbol Icon","Symbol Icon"
+"Symbol Short Description","Symbol Short Description"
+"Symbols Group Information","Symbols Group Information"
+"Group Details","Group Details"
+"Symbol Information","Symbol Information"
+"Symbol Details","Symbol Details"
+"Use Default Value","Use Default Value"
+"Allowed file types: png, gif, jpg, jpeg, svg. Max file size 1MB.","Allowed file types: png, gif, jpg, jpeg, svg. Max file size 1MB."
+"Short Description","Short Description"
+Description,Description
