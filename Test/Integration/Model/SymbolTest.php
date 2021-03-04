@@ -25,7 +25,7 @@ class SymbolTest extends \PHPUnit\Framework\TestCase
 
     private $store;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->objectManager = \Magento\TestFramework\ObjectManager::getInstance();
         $this->symbolRepositoryInterface = $this->objectManager->create(\MageSuite\ProductSymbols\Api\SymbolRepositoryInterface::class);

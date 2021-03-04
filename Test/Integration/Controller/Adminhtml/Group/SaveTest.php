@@ -17,7 +17,7 @@ class SaveTest extends \Magento\TestFramework\TestCase\AbstractBackendController
      */
     protected $groupFactory;
 
-    protected function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
