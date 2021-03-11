@@ -11,19 +11,22 @@ class SymbolTest extends \PHPUnit\Framework\TestCase
     /**
      * @var \Magento\TestFramework\ObjectManager
      */
-    private $objectManager;
+    protected $objectManager;
 
     /**
      * @var \MageSuite\ProductSymbols\Api\SymbolRepositoryInterface
      */
-    private $symbolRepositoryInterface;
+    protected $symbolRepositoryInterface;
 
     /**
      * @var \MageSuite\ProductSymbols\Model\SymbolFactory
      */
-    private $symbolFactory;
+    protected $symbolFactory;
 
-    private $store;
+    /**
+     * @var \Magento\Store\Model\Store
+     */
+    protected $store;
 
     public function setUp(): void
     {
@@ -41,47 +44,49 @@ class SymbolTest extends \PHPUnit\Framework\TestCase
     public function testIsNewSymbolSavedCorrectlyToDb()
     {
         $symbol = $this->symbolRepositoryInterface->getById(600, 1);
-
+        $url = str_replace('pub/', '', $symbol->getSymbolIconUrl());
         $this->assertEquals(1, $symbol->getStoreId());
         $this->assertEquals('test symbol 1', $symbol->getSymbolName());
         $this->assertEquals('this is test symbol 1', $symbol->getSymbolShortDescription());
-        $this->assertEquals('http://localhost/pub/media/symbol/testimage.png', $symbol->getSymbolIconUrl());
+        $this->assertEquals('http://localhost/media/symbol/testimage.png', $url);
         $this->assertEquals('100,200', $symbol->getSymbolGroups());
         $this->assertEquals('testimage.png', $symbol->getSymbolIcon());
 
         $symbol = $this->symbolRepositoryInterface->getById(700, 0);
+        $url = str_replace('pub/', '', $symbol->getSymbolIconUrl());
         $this->assertEquals(0, $symbol->getStoreId());
         $this->assertEquals('test symbol 2', $symbol->getSymbolName());
         $this->assertEquals('this is test symbol 2', $symbol->getSymbolShortDescription());
-        $this->assertEquals('http://localhost/pub/media/symbol/testimage.png', $symbol->getSymbolIconUrl());
+        $this->assertEquals('http://localhost/media/symbol/testimage.png', $url);
         $this->assertEquals('100,200', $symbol->getSymbolGroups());
         $this->assertEquals('testimage.png', $symbol->getSymbolIcon());
 
         $symbol = $this->symbolRepositoryInterface->getById(800, 0);
-
+        $url = str_replace('pub/', '', $symbol->getSymbolIconUrl());
         $this->assertEquals(0, $symbol->getStoreId());
         $this->assertEquals('test symbol 3', $symbol->getSymbolName());
         $this->assertEquals('this is test symbol 3', $symbol->getSymbolShortDescription());
-        $this->assertEquals('http://localhost/pub/media/symbol/testimage.png', $symbol->getSymbolIconUrl());
+        $this->assertEquals('http://localhost/media/symbol/testimage.png', $url);
         $this->assertEquals('200', $symbol->getSymbolGroups());
         $this->assertEquals('testimage.png', $symbol->getSymbolIcon());
 
         $store = $this->store->load('test333', 'code');
 
         $symbol = $this->symbolRepositoryInterface->getById(1000, $store->getId());
-
+        $url = str_replace('pub/', '', $symbol->getSymbolIconUrl());
         $this->assertEquals($store->getId(), $symbol->getStoreId());
         $this->assertEquals('test symbol 4', $symbol->getSymbolName());
         $this->assertEquals('this is test symbol 4', $symbol->getSymbolShortDescription());
-        $this->assertEquals('http://localhost/pub/media/symbol/testimage.png', $symbol->getSymbolIconUrl());
+        $this->assertEquals('http://localhost/media/symbol/testimage.png', $url);
         $this->assertEquals('200,300', $symbol->getSymbolGroups());
         $this->assertEquals('testimage.png', $symbol->getSymbolIcon());
 
         $symbol = $this->symbolRepositoryInterface->getById(1100, $store->getId());
+        $url = str_replace('pub/', '', $symbol->getSymbolIconUrl());
         $this->assertEquals($store->getId(), $symbol->getStoreId());
         $this->assertEquals('test symbol 5', $symbol->getSymbolName());
         $this->assertEquals('this is test symbol 5', $symbol->getSymbolShortDescription());
-        $this->assertEquals('http://localhost/pub/media/symbol/testimage.png', $symbol->getSymbolIconUrl());
+        $this->assertEquals('http://localhost/media/symbol/testimage.png', $url);
         $this->assertEquals('100,300', $symbol->getSymbolGroups());
         $this->assertEquals('testimage.png', $symbol->getSymbolIcon());
     }
@@ -97,7 +102,7 @@ class SymbolTest extends \PHPUnit\Framework\TestCase
             'symbol_name' => 'edit symbol2',
             'symbol_icon' => 'edit_image.jpg',
             'symbol_short_description' => 'symbol short description 2',
-            'symbol_groups' => [100,200]
+            'symbol_groups' => [100, 200]
         ];
 
         $symbol = $this->symbolRepositoryInterface->getById(600, $editData['store_id']);
@@ -121,7 +126,7 @@ class SymbolTest extends \PHPUnit\Framework\TestCase
             'symbol_name' => 'edit symbol 700',
             'symbol_icon' => 'edit_image.jpg',
             'symbol_short_description' => 'symbol short description 700',
-            'symbol_groups' => [100,200]
+            'symbol_groups' => [100, 200]
         ];
 
         $symbol = $this->symbolRepositoryInterface->getById(700, $editData['store_id']);
@@ -147,7 +152,7 @@ class SymbolTest extends \PHPUnit\Framework\TestCase
             'symbol_name' => 'edit symbol 1000',
             'symbol_icon' => 'edit_image.jpg',
             'symbol_short_description' => 'symbol short description 1000',
-            'symbol_groups' => [100,200]
+            'symbol_groups' => [100, 200]
         ];
 
         $symbol = $this->symbolRepositoryInterface->getById(1000, $editData['store_id']);
@@ -173,7 +178,6 @@ class SymbolTest extends \PHPUnit\Framework\TestCase
      */
     public function testDeleteSymbolFromDb()
     {
-
         $savedSymbol = $this->symbolRepositoryInterface->getById(600);
 
         $result = $this->symbolRepositoryInterface->delete($savedSymbol);
@@ -183,11 +187,11 @@ class SymbolTest extends \PHPUnit\Framework\TestCase
 
     public static function loadSymbols()
     {
-        include __DIR__.'/../_files/symbols.php';
+        include __DIR__ . '/../_files/symbols.php';
     }
 
     public static function loadSymbolsRollback()
     {
-        include __DIR__.'/../_files/symbols_rollback.php';
+        include __DIR__ . '/../_files/symbols_rollback.php';
     }
 }
