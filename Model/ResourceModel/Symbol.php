@@ -15,30 +15,37 @@ class Symbol extends \Magento\Eav\Model\Entity\AbstractEntity
     ];
 
     protected $storeId;
+
     /**
      * @var \MageSuite\ProductSymbols\Model\ResourceModel\Group\CollectionFactory
      */
     protected $groupCollectionFactory;
+
     /**
      * @var \Magento\Catalog\Model\ResourceModel\Product\Action
      */
     protected $productResourceAction;
+
     /**
      * @var \Magento\Catalog\Model\ResourceModel\Product\CollectionFactory
      */
     protected $productCollectionFactory;
+
     /**
      * @var \Magento\Store\Model\StoreManagerInterface
      */
     protected $storeManager;
+
     /**
      * @var \MageSuite\ProductSymbols\Api\GroupToSymbolRelationRepositoryInterface
      */
     protected $groupToSymbolRelationRepository;
+
     /**
      * @var \MageSuite\ProductSymbols\Api\Data\GroupToSymbolRelationInterfaceFactory
      */
     protected $groupToSymbolRelation;
+
     /**
      * @var \Magento\Eav\Model\ResourceModel\Entity\Attribute
      */
@@ -89,14 +96,14 @@ class Symbol extends \Magento\Eav\Model\Entity\AbstractEntity
         return $this->storeId;
     }
 
-    public function updateAttribute($object, $attribute, $value, $storeId)
+    public function updateAttribute($object, $attribute, $value, $storeId) //phpcs:ignore
     {
         if ($attribute->getBackendType() != 'static') {
             $this->_updateAttributeForStore($object, $attribute, $value, $storeId);
         }
     }
 
-    protected function _updateAttributeForStore($object, $attribute, $value, $storeId)
+    protected function _updateAttributeForStore($object, $attribute, $value, $storeId) //phpcs:ignore
     {
         $connection = $this->getConnection();
         $table = $attribute->getBackend()->getTable();

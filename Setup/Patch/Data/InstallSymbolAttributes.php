@@ -7,6 +7,7 @@ class InstallSymbolAttributes implements \Magento\Framework\Setup\Patch\DataPatc
      * @var \Magento\Framework\Setup\ModuleDataSetupInterface
      */
     protected $moduleDataSetup;
+
     /**
      * @var \MageSuite\ProductSymbols\Setup\SymbolSetupFactory
      */
@@ -16,7 +17,6 @@ class InstallSymbolAttributes implements \Magento\Framework\Setup\Patch\DataPatc
         \Magento\Framework\Setup\ModuleDataSetupInterface $moduleDataSetup,
         \MageSuite\ProductSymbols\Setup\SymbolSetupFactory $symbolSetupFactory
     ) {
-
         $this->moduleDataSetup = $moduleDataSetup;
         $this->symbolSetupFactory = $symbolSetupFactory;
     }

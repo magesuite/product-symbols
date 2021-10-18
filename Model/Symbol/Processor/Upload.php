@@ -109,14 +109,16 @@ class Upload
 
     public function prepareUploadImage()
     {
-        if (!isset($_FILES) && !$_FILES['symbol_icon']['name']) {
-            $result = ['error' => __('Image file has been not uploaded'), 'errorcode' => __('Image file has been not uploaded')];
-            return $result;
+        if (!isset($_FILES) && !$_FILES['symbol_icon']['name']) { //phpcs:ignore
+            return [
+                'error' => __('Image file has been not uploaded'),
+                'errorcode' => __('Image file has been not uploaded')
+            ];
         }
 
         return [
-            'tmp_name' => $_FILES['symbol_icon']['tmp_name'],
-            'name' => $_FILES['symbol_icon']['name']
+            'tmp_name' => $_FILES['symbol_icon']['tmp_name'], //phpcs:ignore
+            'name' => $_FILES['symbol_icon']['name'] //phpcs:ignore
         ];
     }
 
@@ -126,10 +128,10 @@ class Upload
             throw new \Magento\Framework\Exception\InputException(new \Magento\Framework\Phrase('The image content is invalid. Verify the content and try again.'));
         }
 
-        $fileContent = @base64_decode($imageData->getBase64EncodedData(), true);
+        $fileContent = @base64_decode($imageData->getBase64EncodedData(), true); //phpcs:ignore
         $tmpDirectory = $this->filesystem->getDirectoryWrite(\Magento\Framework\App\Filesystem\DirectoryList::SYS_TMP);
         $fileName = $this->getFileName($imageData);
-        $tmpFileName = substr(md5(rand()), 0, 7) . '.' . $fileName;
+        $tmpFileName = substr(md5(rand()), 0, 7) . '.' . $fileName; //phpcs:ignore
         $tmpDirectory->writeFile($tmpFileName, $fileContent);
 
         return [
@@ -141,7 +143,7 @@ class Upload
     protected function getFileName($imageContent)
     {
         $fileName = $imageContent->getName();
-        if (!pathinfo($fileName, PATHINFO_EXTENSION)) {
+        if (!pathinfo($fileName, PATHINFO_EXTENSION)) { //phpcs:ignore
             if (!$imageContent->getType() || !$this->getMimeTypeExtension($imageContent->getType())) {
                 throw new \Magento\Framework\Exception\InputException(new \Magento\Framework\Phrase('Cannot recognize image extension.'));
             }

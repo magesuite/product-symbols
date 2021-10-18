@@ -1,8 +1,10 @@
 <?php
 namespace MageSuite\ProductSymbols\Setup\Patch\Data;
 
-class AddSymbolDescriptionAttribute implements \Magento\Framework\Setup\Patch\DataPatchInterface
+class AddConditionsSerializedAttribute implements \Magento\Framework\Setup\Patch\DataPatchInterface
 {
+    const CONDITIONS_SERIALIZED_ATTRIBUTE_CODE = 'conditions_serialized';
+
     /**
      * @var \Magento\Framework\Setup\ModuleDataSetupInterface
      */
@@ -28,14 +30,14 @@ class AddSymbolDescriptionAttribute implements \Magento\Framework\Setup\Patch\Da
         $symbolSetup = $this->symbolSetupFactory->create(['setup' => $this->moduleDataSetup]);
         $symbolSetup->addAttribute(
             \MageSuite\ProductSymbols\Model\Symbol::ENTITY,
-            'symbol_description',
+            self::CONDITIONS_SERIALIZED_ATTRIBUTE_CODE,
             [
                 'type' => 'text',
-                'label' => 'Description',
+                'label' => 'Conditions Serialized',
                 'input' => 'textarea',
                 'required' => false,
-                'sort_order' => 8,
-                'global' => \Magento\Eav\Model\Entity\Attribute\ScopedAttributeInterface::SCOPE_STORE,
+                'sort_order' => 0,
+                'global' => \Magento\Eav\Model\Entity\Attribute\ScopedAttributeInterface::SCOPE_GLOBAL,
             ]
         );
 

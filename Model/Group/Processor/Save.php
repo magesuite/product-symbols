@@ -3,8 +3,6 @@ namespace MageSuite\ProductSymbols\Model\Group\Processor;
 
 class Save
 {
-    const DEFAULT_STORE_ID = 0;
-
     /**
      * @var \Magento\Framework\Event\Manager
      */

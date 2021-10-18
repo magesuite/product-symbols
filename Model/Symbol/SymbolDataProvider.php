@@ -3,8 +3,6 @@ namespace MageSuite\ProductSymbols\Model\Symbol;
 
 class SymbolDataProvider extends \Magento\Ui\DataProvider\AbstractDataProvider
 {
-    const DEFAULT_STORE_ID = 0;
-
     const HIDDEN_ATTRIBUTES = [
         'entity_id',
         'store_id',
@@ -110,6 +108,7 @@ class SymbolDataProvider extends \Magento\Ui\DataProvider\AbstractDataProvider
             $symbol->getEntityId() => [
                 'entity_id' => $symbol->getEntityId(),
                 'store_id' => $symbol->getStoreId(),
+                'is_enabled' => $symbol->getIsEnabled(),
                 'symbol_name' => $symbol->getSymbolName(),
                 'symbol_short_description' => $symbol->getSymbolShortDescription(),
                 'symbol_description' => $symbol->getSymbolDescription(),
@@ -118,13 +117,21 @@ class SymbolDataProvider extends \Magento\Ui\DataProvider\AbstractDataProvider
             ]
         ];
 
+        //$result[$symbol->getEntityId()]['rule']['conditions'] = $symbol->getConditions()->asArray();
+
         if ($symbol->getSymbolIcon()) {
             $name = $symbol->getSymbolIcon();
-            $url = $symbol->getSymbolIconUrl();
-            $size = file_exists('media/symbol/' . $name) ? filesize('media/symbol/' . $name) : 0;
+            $size = 0;
+
+            $filePath = sprintf('media/symbol/%s', $name);
+
+            if (file_exists($filePath)) { //phpcs:ignore
+                $size = filesize($filePath); //phpcs:ignore
+            }
+
             $result[$symbol->getEntityId()]['symbol_icon'] = [
                 0 => [
-                    'url' => $url,
+                    'url' => $symbol->getSymbolIconUrl(),
                     'name' => $name,
                     'size' => $size
                 ]
@@ -140,6 +147,7 @@ class SymbolDataProvider extends \Magento\Ui\DataProvider\AbstractDataProvider
         $params = $this->request->getParams();
         $groupsToFields = [
             'symbol_name_group' => 'use_config.symbol_name',
+            'is_enabled_group' => 'use_config.is_enabled',
             'symbol_icon_group' => 'use_config.symbol_icon',
             'symbol_short_description_group' => 'use_config.symbol_short_description',
             'symbol_description_group' => 'use_config.symbol_description',
@@ -158,6 +166,6 @@ class SymbolDataProvider extends \Magento\Ui\DataProvider\AbstractDataProvider
 
     protected function checkIsDefaultScope($storeId)
     {
-        return $storeId == self::DEFAULT_STORE_ID;
+        return $storeId == \Magento\Store\Model\Store::DEFAULT_STORE_ID;
     }
 }

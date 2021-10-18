@@ -22,7 +22,7 @@ class UploadTest extends \Magento\TestFramework\TestCase\AbstractBackendControll
      */
     public function testUploadActionWithCorrectData()
     {
-        $_FILES = [
+        $_FILES = [ //phpcs:ignore
             'symbol_icon' => [
                 'name' => 'magento_image.jpg',
                 'type' => 'image/jpg',
@@ -48,7 +48,7 @@ class UploadTest extends \Magento\TestFramework\TestCase\AbstractBackendControll
      */
     public function testUploadActionWithWrongData()
     {
-        $_FILES = [
+        $_FILES = [ //phpcs:ignore
             'symbol_icon' => [
                 'name' => 'magento_image.jpg',
                 'type' => 'image/jpg',

@@ -4,8 +4,6 @@ namespace MageSuite\ProductSymbols\ViewModel\Symbol;
 
 class Group extends \Magento\Framework\DataObject implements \Magento\Framework\View\Element\Block\ArgumentInterface
 {
-    protected $product = null;
-
     /**
      * @var \Magento\Framework\Registry
      */
@@ -30,6 +28,8 @@ class Group extends \Magento\Framework\DataObject implements \Magento\Framework\
      */
     protected $groupToSymbolRelationRepository;
 
+    protected $product = null;
+
     public function __construct(
         \Magento\Framework\Registry $registry,
         \MageSuite\ProductSymbols\Model\ResourceModel\Group\CollectionFactory $groupCollectionFactory,
@@ -47,41 +47,6 @@ class Group extends \Magento\Framework\DataObject implements \Magento\Framework\
     }
 
     public function getGroupSymbols()
-    {
-        return $this->mapSymbolsToGroup();
-    }
-
-    public function setProduct($product)
-    {
-        $this->product = $product;
-
-        return $this;
-    }
-
-    public function getProduct()
-    {
-        if (!$this->product) {
-            $this->product = $this->registry->registry('product');
-        }
-        return $this->product;
-    }
-
-    public function getGroupsToDisplay()
-    {
-        $groupCollection = $this->groupCollectionFactory->create();
-
-        if (!empty($this->getIncludedGroups())) {
-            $groupCollection->addFieldToFilter('group_code', ['in' => $this->getIncludedGroups()]);
-        }
-
-        if (!empty($this->getExcludedGroups())) {
-            $groupCollection->addFieldToFilter('group_code', ['nin' => $this->getExcludedGroups()]);
-        }
-
-        return $groupCollection;
-    }
-
-    public function mapSymbolsToGroup()
     {
         $groups = $this->getGroupsToDisplay();
         $product = $this->getProduct();
@@ -106,6 +71,38 @@ class Group extends \Magento\Framework\DataObject implements \Magento\Framework\
         }
 
         return $groupFullData;
+    }
+
+    public function setProduct($product)
+    {
+        $this->product = $product;
+
+        return $this;
+    }
+
+    public function getProduct()
+    {
+        if ($this->product) {
+            return $this->product;
+        }
+
+        $this->product = $this->registry->registry('product');
+        return $this->product;
+    }
+
+    public function getGroupsToDisplay()
+    {
+        $groupCollection = $this->groupCollectionFactory->create();
+
+        if (!empty($this->getIncludedGroups())) {
+            $groupCollection->addFieldToFilter('group_code', ['in' => $this->getIncludedGroups()]);
+        }
+
+        if (!empty($this->getExcludedGroups())) {
+            $groupCollection->addFieldToFilter('group_code', ['nin' => $this->getExcludedGroups()]);
+        }
+
+        return $groupCollection;
     }
 
     public function getSymbolsByGroups($groupIds)

@@ -49,6 +49,17 @@ interface SymbolInterface
     public function setStoreId($storeId);
 
     /**
+     * @return int
+     */
+    public function getIsEnabled();
+
+    /**
+     * @param int $isEnabled
+     * @return $this
+     */
+    public function setIsEnabled($isEnabled);
+
+    /**
      * @return string
      */
     public function getSymbolName();

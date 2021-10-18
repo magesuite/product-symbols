@@ -3,8 +3,6 @@ namespace MageSuite\ProductSymbols\Model\Symbol\Processor;
 
 class Save
 {
-    const DEFAULT_STORE_ID = 0;
-
     /**
      * @var \Magento\Framework\Event\Manager
      */
@@ -25,17 +23,24 @@ class Save
      */
     protected $symbolRepository;
 
+    /**
+     * @var \Magento\Framework\Serialize\SerializerInterface
+     */
+    protected $serializer;
+
     public function __construct(
         \MageSuite\ProductSymbols\Model\SymbolFactory $symbolFactory,
         \MageSuite\ProductSymbols\Api\SymbolRepositoryInterface $symbolRepository,
         \Magento\Framework\Event\Manager $eventManager,
-        \Magento\Framework\DataObjectFactory $dataObjectFactory
+        \Magento\Framework\DataObjectFactory $dataObjectFactory,
+        \Magento\Framework\Serialize\SerializerInterface $serializer
     ) {
 
         $this->eventManager = $eventManager;
         $this->dataObjectFactory = $dataObjectFactory;
         $this->symbolFactory = $symbolFactory;
         $this->symbolRepository = $symbolRepository;
+        $this->serializer = $serializer;
     }
 
     public function processSave($params)
@@ -44,7 +49,7 @@ class Save
 
         if ($isNew) {
             if (!isset($params['store_id'])) {
-                $params['store_id'] = self::DEFAULT_STORE_ID;
+                $params['store_id'] = \Magento\Store\Model\Store::DEFAULT_STORE_ID;
             }
             $symbol = $this->symbolFactory->create();
             $symbol->setData($params->getData());
@@ -69,7 +74,7 @@ class Save
         }
         if ($imagePath) {
             $symbol->setSymbolIcon($imagePath);
-        } elseif ($symbol->getStoreId() == self::DEFAULT_STORE_ID) {
+        } elseif ($symbol->getStoreId() == \Magento\Store\Model\Store::DEFAULT_STORE_ID) {
             $symbol->setSymbolIcon('');
         }
 
@@ -110,6 +115,16 @@ class Save
         $matchedParams['entity_id'] = $params['entity_id'];
         $matchedParams['store_id'] = $params['store_id'];
 
+        $matchedParams['conditions_serialized'] = $this->prepareConditions($params);
+
         return $this->dataObjectFactory->create()->setData($matchedParams);
+    }
+
+    protected function prepareConditions($params)
+    {
+        $symbol = $this->symbolFactory->create();
+        $symbol->loadPost($params->getData('rule'));
+
+        return $this->serializer->serialize($symbol->getConditions()->asArray());
     }
 }

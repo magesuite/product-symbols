@@ -4,8 +4,6 @@ namespace MageSuite\ProductSymbols\Model;
 
 class GroupRepository implements \MageSuite\ProductSymbols\Api\GroupRepositoryInterface
 {
-    const DEFAULT_STORE_ID = 0;
-
     /**
      * @var ResourceModel\Group
      */

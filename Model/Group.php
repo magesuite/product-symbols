@@ -7,16 +7,15 @@ class Group extends \Magento\Catalog\Model\AbstractModel implements \MageSuite\P
 
     const SYMBOL_URL = 'group';
     const SYMBOL_ATTRIBUTE_CODE = 'group';
-    const ENTITY = 'group';
-    const CACHE_TAG = 'groups';
 
+    const ENTITY = 'group';
     const STORE_ID = 'store_id';
 
-    protected $_eventPrefix = 'groups';
+    const CACHE_TAG = 'groups';
+    const EVENT_PREFIX = 'groups';
 
-    protected $_eventObject = 'groups';
-
-    protected $_cacheTag = self::CACHE_TAG;
+    protected $_cacheTag = self::CACHE_TAG; //phpcs:ignore
+    protected $_eventPrefix = self::EVENT_PREFIX; //phpcs:ignore
 
     protected function _construct()
     {
