@@ -54,23 +54,23 @@ class Group extends \Magento\Framework\DataObject implements \Magento\Framework\
         $groupIds = $groups->getColumnValues('entity_id');
         $symbolsCollection = $this->getSymbolsByGroups($groupIds);
 
-        $groupFullData = [];
+        $result = [];
 
         foreach ($groups as $group) {
             $groupSymbols = $product->getData($group->getGroupCode());
-
             $groupSymbols = explode(',', $groupSymbols);
 
             foreach ($symbolsCollection as $symbol) {
-                if (!in_array($symbol->getEntityId(), $groupSymbols)) {
+
+                if (!$this->canDisplaySymbol($symbol, $product, $group, $groupSymbols)) {
                     continue;
                 }
 
-                $groupFullData[$group->getGroupCode()]['symbols'][] = $symbol;
+                $result[$group->getGroupCode()]['symbols'][] = $symbol;
             }
         }
 
-        return $groupFullData;
+        return $result;
     }
 
     public function setProduct($product)
@@ -126,5 +126,22 @@ class Group extends \Magento\Framework\DataObject implements \Magento\Framework\
         }
 
         return $groupCssClass;
+    }
+
+    protected function canDisplaySymbol($symbol, $product, $group, $groupSymbols) //phpcs:ignore
+    {
+        if ($symbol->hasIsEnabled() && !$symbol->getIsEnabled()) {
+            return false;
+        }
+
+        if (!$group->getIgnoreProductAssignment() && !in_array($symbol->getEntityId(), $groupSymbols)) {
+            return false;
+        }
+
+        if (!$symbol->validate($product)) {
+            return false;
+        }
+
+        return true;
     }
 }

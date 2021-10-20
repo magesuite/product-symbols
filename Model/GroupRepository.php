@@ -55,6 +55,7 @@ class GroupRepository implements \MageSuite\ProductSymbols\Api\GroupRepositoryIn
         if (!$group->getEntityId() && $this->getByCode($group->getGroupCode())) {
             throw new \Magento\Framework\Exception\AlreadyExistsException(new \Magento\Framework\Phrase('Group with the same code already exist.'));
         }
+
         $this->groupResource->save($group);
         $this->createGroupAttribute($group);
 

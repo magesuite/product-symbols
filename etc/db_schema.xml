@@ -4,6 +4,7 @@
     <table name="product_symbol_group" resource="default" engine="innodb">
         <column xsi:type="int" name="entity_id" padding="10" nullable="false" comment="Entity ID" unsigned="true" identity="true"/>
         <column xsi:type="text" name="group_name" nullable="false" comment="Group Name"/>
+        <column xsi:type="tinyint" name="ignore_product_assignment" default="0" />
         <column xsi:type="text" name="group_code" nullable="false" comment="Group Code"/>
         <constraint xsi:type="primary" referenceId="IDX_PRIMARY">
             <column name="entity_id"/>

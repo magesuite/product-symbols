@@ -117,8 +117,6 @@ class SymbolDataProvider extends \Magento\Ui\DataProvider\AbstractDataProvider
             ]
         ];
 
-        //$result[$symbol->getEntityId()]['rule']['conditions'] = $symbol->getConditions()->asArray();
-
         if ($symbol->getSymbolIcon()) {
             $name = $symbol->getSymbolIcon();
             $size = 0;

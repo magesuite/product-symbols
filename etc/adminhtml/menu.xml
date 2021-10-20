@@ -1,22 +1,21 @@
 <?xml version="1.0"?>
-<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
     <menu>
         <add
                 id="MageSuite_ProductSymbols::symbol_menu"
                 title="Product Symbols"
                 module="MageSuite_ProductSymbols"
-                sortOrder="40"
+                sortOrder="50"
                 parent="Magento_Catalog::inventory"
                 action="symbol/grid/symbol"
-                resource="Magento_Backend::content" />
+                resource="Magento_Backend::content"/>
         <add
                 id="MageSuite_ProductSymbols::group_menu"
                 title="Product Symbol Groups"
                 module="MageSuite_ProductSymbols"
-                sortOrder="50"
+                sortOrder="60"
                 parent="Magento_Catalog::inventory"
                 action="symbol/grid/group"
-                resource="Magento_Backend::content" />
+                resource="Magento_Backend::content"/>
     </menu>
 </config>

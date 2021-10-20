@@ -8,6 +8,8 @@ namespace MageSuite\ProductSymbols\Test\Integration\Model;
  */
 class SymbolTest extends \PHPUnit\Framework\TestCase
 {
+    const SYMBOL_WITH_CONDITION = 1101;
+
     /**
      * @var \Magento\TestFramework\ObjectManager
      */
@@ -28,66 +30,47 @@ class SymbolTest extends \PHPUnit\Framework\TestCase
      */
     protected $store;
 
+    /**
+     * @var \Magento\Catalog\Api\ProductRepositoryInterface
+     */
+    protected $productRepository;
+
     public function setUp(): void
     {
         $this->objectManager = \Magento\TestFramework\ObjectManager::getInstance();
+
         $this->symbolRepositoryInterface = $this->objectManager->create(\MageSuite\ProductSymbols\Api\SymbolRepositoryInterface::class);
         $this->symbolFactory = $this->objectManager->create(\MageSuite\ProductSymbols\Model\SymbolFactory::class);
-
-        $this->store = \Magento\TestFramework\Helper\Bootstrap::getObjectManager()->create('Magento\Store\Model\Store');
+        $this->store = $this->objectManager->create(\Magento\Store\Model\Store::class);
+        $this->productRepository = $this->objectManager->create(\Magento\Catalog\Api\ProductRepositoryInterface::class);
     }
 
     /**
      * @magentoDbIsolation enabled
      * @magentoDataFixture loadSymbols
      */
-    public function testIsNewSymbolSavedCorrectlyToDb()
+    public function testIsNewSymbolSavedCorrectly()
     {
         $symbol = $this->symbolRepositoryInterface->getById(600, 1);
         $url = str_replace('pub/', '', $symbol->getSymbolIconUrl());
         $this->assertEquals(1, $symbol->getStoreId());
+
         $this->assertEquals('test symbol 1', $symbol->getSymbolName());
         $this->assertEquals('this is test symbol 1', $symbol->getSymbolShortDescription());
         $this->assertEquals('http://localhost/media/symbol/testimage.png', $url);
         $this->assertEquals('100,200', $symbol->getSymbolGroups());
         $this->assertEquals('testimage.png', $symbol->getSymbolIcon());
 
-        $symbol = $this->symbolRepositoryInterface->getById(700, 0);
-        $url = str_replace('pub/', '', $symbol->getSymbolIconUrl());
-        $this->assertEquals(0, $symbol->getStoreId());
-        $this->assertEquals('test symbol 2', $symbol->getSymbolName());
-        $this->assertEquals('this is test symbol 2', $symbol->getSymbolShortDescription());
-        $this->assertEquals('http://localhost/media/symbol/testimage.png', $url);
-        $this->assertEquals('100,200', $symbol->getSymbolGroups());
-        $this->assertEquals('testimage.png', $symbol->getSymbolIcon());
-
-        $symbol = $this->symbolRepositoryInterface->getById(800, 0);
-        $url = str_replace('pub/', '', $symbol->getSymbolIconUrl());
-        $this->assertEquals(0, $symbol->getStoreId());
-        $this->assertEquals('test symbol 3', $symbol->getSymbolName());
-        $this->assertEquals('this is test symbol 3', $symbol->getSymbolShortDescription());
-        $this->assertEquals('http://localhost/media/symbol/testimage.png', $url);
-        $this->assertEquals('200', $symbol->getSymbolGroups());
-        $this->assertEquals('testimage.png', $symbol->getSymbolIcon());
-
         $store = $this->store->load('test333', 'code');
 
         $symbol = $this->symbolRepositoryInterface->getById(1000, $store->getId());
         $url = str_replace('pub/', '', $symbol->getSymbolIconUrl());
+
         $this->assertEquals($store->getId(), $symbol->getStoreId());
         $this->assertEquals('test symbol 4', $symbol->getSymbolName());
         $this->assertEquals('this is test symbol 4', $symbol->getSymbolShortDescription());
         $this->assertEquals('http://localhost/media/symbol/testimage.png', $url);
         $this->assertEquals('200,300', $symbol->getSymbolGroups());
-        $this->assertEquals('testimage.png', $symbol->getSymbolIcon());
-
-        $symbol = $this->symbolRepositoryInterface->getById(1100, $store->getId());
-        $url = str_replace('pub/', '', $symbol->getSymbolIconUrl());
-        $this->assertEquals($store->getId(), $symbol->getStoreId());
-        $this->assertEquals('test symbol 5', $symbol->getSymbolName());
-        $this->assertEquals('this is test symbol 5', $symbol->getSymbolShortDescription());
-        $this->assertEquals('http://localhost/media/symbol/testimage.png', $url);
-        $this->assertEquals('100,300', $symbol->getSymbolGroups());
         $this->assertEquals('testimage.png', $symbol->getSymbolIcon());
     }
 
@@ -95,7 +78,7 @@ class SymbolTest extends \PHPUnit\Framework\TestCase
      * @magentoDbIsolation enabled
      * @magentoDataFixture loadSymbols
      */
-    public function testIsEditedSymbolSavedCorrectlyToDb()
+    public function testIsEditedSymbolSavedCorrectly()
     {
         $editData = [
             'store_id' => 1,
@@ -129,32 +112,6 @@ class SymbolTest extends \PHPUnit\Framework\TestCase
             'symbol_groups' => [100, 200]
         ];
 
-        $symbol = $this->symbolRepositoryInterface->getById(700, $editData['store_id']);
-        $symbol
-            ->setStoreId($editData['store_id'])
-            ->setSymbolShortDescription($editData['symbol_short_description'])
-            ->setSymbolIcon($editData['symbol_icon'])
-            ->setSymbolName($editData['symbol_name'])
-            ->setSymbolGroups($editData['symbol_groups']);
-
-        $this->symbolRepositoryInterface->save($symbol);
-        $editedSymbol = $this->symbolRepositoryInterface->getById(700, $editData['store_id']);
-
-        $this->assertEquals($editData['symbol_name'], $editedSymbol->getSymbolName());
-        $this->assertEquals($editData['store_id'], $editedSymbol->getStoreId());
-        $this->assertEquals($editData['symbol_icon'], $editedSymbol->getSymbolIcon());
-        $this->assertEquals($editData['symbol_short_description'], $editedSymbol->getSymbolShortDescription());
-
-        $store = $this->store->load('test333', 'code');
-
-        $editData = [
-            'store_id' => $store->getId(),
-            'symbol_name' => 'edit symbol 1000',
-            'symbol_icon' => 'edit_image.jpg',
-            'symbol_short_description' => 'symbol short description 1000',
-            'symbol_groups' => [100, 200]
-        ];
-
         $symbol = $this->symbolRepositoryInterface->getById(1000, $editData['store_id']);
         $symbol
             ->setStoreId($editData['store_id'])
@@ -176,13 +133,29 @@ class SymbolTest extends \PHPUnit\Framework\TestCase
      * @magentoDbIsolation enabled
      * @magentoDataFixture loadSymbols
      */
-    public function testDeleteSymbolFromDb()
+    public function testIsSymbolDeleted()
     {
-        $savedSymbol = $this->symbolRepositoryInterface->getById(600);
-
-        $result = $this->symbolRepositoryInterface->delete($savedSymbol);
+        $symbol = $this->symbolRepositoryInterface->getById(600);
+        $result = $this->symbolRepositoryInterface->delete($symbol);
 
         $this->assertTrue($result);
+    }
+
+    /**
+     * @magentoDbIsolation enabled
+     * @magentoDataFixture Magento/Catalog/_files/product_simple.php
+     * @magentoDataFixture loadSymbols
+     *
+     */
+    public function testItValidateRulesCorrectly()
+    {
+        $symbol = $this->symbolRepositoryInterface->getById(self::SYMBOL_WITH_CONDITION);
+        $product = $this->productRepository->get('simple');
+
+        $this->assertFalse($symbol->validate($product));
+
+        $product->setTestAttribute('test_value');
+        $this->assertTrue(($symbol->validate($product)));
     }
 
     public static function loadSymbols()

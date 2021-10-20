@@ -34,20 +34,15 @@ class Save
 
     public function processSave($params)
     {
-        $isNew = (!isset($params['entity_id'])) || (isset($params['entity_id']) && $params['entity_id'] == "") ? true : false;
+        $id = $params['entity_id'] ?? null;
 
-        if ($isNew) {
-            $group = $this->groupFactory->create();
-            $group
-                ->setGroupCode($params['group_code'])
-                ->setGroupName($params['group_name']);
-        } else {
+        if ($id) {
             $group = $this->groupRepository->getById($params['entity_id']);
-            $group->setGroupName($params['group_name']);
+        } else {
+            $group = $this->groupFactory->create();
         }
 
-        $group = $this->groupRepository->save($group);
-
-        return $group;
+        $group->setData($params);
+        return $this->groupRepository->save($group);
     }
 }

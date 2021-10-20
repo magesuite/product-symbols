@@ -122,8 +122,14 @@ class Save
 
     protected function prepareConditions($params)
     {
+        $rule = $params->getData('rule');
+
+        if (empty($rule)) {
+            return null;
+        }
+
         $symbol = $this->symbolFactory->create();
-        $symbol->loadPost($params->getData('rule'));
+        $symbol->loadPost($rule);
 
         return $this->serializer->serialize($symbol->getConditions()->asArray());
     }

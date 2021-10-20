@@ -57,6 +57,23 @@ class Group extends \Magento\Catalog\Model\AbstractModel implements \MageSuite\P
     }
 
     /**
+     * @return int
+     */
+    public function getIgnoreProductAssignment()
+    {
+        return $this->getData('ignore_product_assignment');
+    }
+
+    /**
+     * @param int $ignoreProductAssignment
+     * @return $this
+     */
+    public function setIgnoreProductAssignment($ignoreProductAssignment)
+    {
+        return $this->setData('ignore_product_assignment', $ignoreProductAssignment);
+    }
+
+    /**
      * @return mixed
      */
     public function getGroupCode()
