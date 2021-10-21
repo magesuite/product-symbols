@@ -34,6 +34,7 @@ class SaveTest extends \Magento\TestFramework\TestCase\AbstractBackendController
             'group_name' => 'group 1',
             'group_code' => 'group_1'
         ];
+
         $this->getRequest()->setPostValue($editData);
         $this->dispatch('backend/symbol/group/save');
 
@@ -50,15 +51,17 @@ class SaveTest extends \Magento\TestFramework\TestCase\AbstractBackendController
     {
         $group = $this->groupFactory->create();
 
-        $group->setGroupName('group 1');
-        $group->setGroupCode('group_1');
+        $group
+            ->setGroupName('group 1')
+            ->setGroupCode('group_1');
 
         $group = $this->groupRepositoryInterface->save($group);
 
         $editData = [
             'entity_id' => $group->getEntityId(),
             'group_name' => 'group 1 edited',
-            'group_code' => 'group_1'
+            'group_code' => 'group_1',
+            'ignore_product_assignment' => 1
         ];
 
         $this->getRequest()->setPostValue($editData);
@@ -68,5 +71,6 @@ class SaveTest extends \Magento\TestFramework\TestCase\AbstractBackendController
 
         $this->assertEquals('group 1 edited', $group->getGroupName());
         $this->assertEquals('group_1', $group->getGroupCode());
+        $this->assertTrue((bool)$group->getIgnoreProductAssignment());
     }
 }

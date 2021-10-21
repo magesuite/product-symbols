@@ -27,6 +27,17 @@ interface GroupInterface
     public function setGroupName($groupName);
 
     /**
+     * @return int
+     */
+    public function getIgnoreProductAssignment();
+
+    /**
+     * @param int $ignoreProductAssignment
+     * @return void
+     */
+    public function setIgnoreProductAssignment($ignoreProductAssignment);
+
+    /**
      * @return string
      */
     public function getGroupCode();

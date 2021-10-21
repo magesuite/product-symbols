@@ -4,8 +4,6 @@ namespace MageSuite\ProductSymbols\Model;
 
 class GroupRepository implements \MageSuite\ProductSymbols\Api\GroupRepositoryInterface
 {
-    const DEFAULT_STORE_ID = 0;
-
     /**
      * @var ResourceModel\Group
      */
@@ -57,6 +55,7 @@ class GroupRepository implements \MageSuite\ProductSymbols\Api\GroupRepositoryIn
         if (!$group->getEntityId() && $this->getByCode($group->getGroupCode())) {
             throw new \Magento\Framework\Exception\AlreadyExistsException(new \Magento\Framework\Phrase('Group with the same code already exist.'));
         }
+
         $this->groupResource->save($group);
         $this->createGroupAttribute($group);
 

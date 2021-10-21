@@ -1,34 +1,33 @@
 <?php
+    /** @var \MageSuite\ProductSymbols\Block\Symbol\Group $block */
     /** @var \MageSuite\ProductSymbols\ViewModel\Symbol\Group $viewModel */
     $viewModel = $block->getViewModel();
     $groupSymbols = $viewModel->getGroupSymbols();
 ?>
-<?php if (!empty($groupSymbols)): ?>
-    <ul class="cs-product-details__symbols cs-product-details__symbols--<?= $viewModel->getGroupCssClass(); ?>">
-        <?php foreach ($groupSymbols as $group): ?>
-            <?php if (isset($group['symbols'])): ?>
-                <?php foreach ($group['symbols'] as $symbol): ?>
-                    <?php
-                        $image = $symbol->getSymbolIconUrl();
-                        $shortDescription = $symbol->getSymbolShortDescription();
-                        $description = $symbol->getSymbolDescription();
-                    ?>
-                    <?php if ($image && $shortDescription): ?>
-                        <li class="cs-product-details__symbol">
-                            <span class="cs-product-details__symbol-icon-wrapper"<?php if($description): ?> title="<?= $description ?>"<?php endif; ?>>
-                                <?= $this->getLayout()
-                                        ->createBlock('MageSuite\ThemeHelpers\Block\Icon')
-                                        ->setIconUrl($image)
-                                        ->setInlined(false)
-                                        ->setLazyLoaded(true)
-                                        ->toHtml();
-                                ?>
-                            </span>
-                            <span class="cs-product-details__symbol-label"><?= $shortDescription; ?></span>
-                        </li>
-                    <?php endif; ?>
-                <?php endforeach;?>
-            <?php endif; ?>
+<?php if (!empty($groupSymbols)) : ?>
+    <ul class="cs-product-details__symbols cs-product-details__symbols--<?= /* @noEscape */ $viewModel->getGroupCssClass(); ?>">
+        <?php foreach ($groupSymbols as $group) : ?>
+            <?php foreach ($group['symbols'] as $symbol) : ?>
+                <?php
+                    $image = $symbol->getSymbolIconUrl();
+                    $shortDescription = $symbol->getSymbolShortDescription();
+                    $description = $symbol->getSymbolDescription();
+                ?>
+                <?php if ($image && $shortDescription) : ?>
+                    <li class="cs-product-details__symbol">
+                        <span class="cs-product-details__symbol-icon-wrapper"<?php if ($description) : ?> title="<?= /* @noEscape */ $description ?>"<?php endif; ?>>
+                            <?= $block->getLayout()
+                                    ->createBlock(\MageSuite\ThemeHelpers\Block\Icon::class)
+                                    ->setIconUrl($image)
+                                    ->setInlined(false)
+                                    ->setLazyLoaded(true)
+                                    ->toHtml();
+                            ?>
+                        </span>
+                        <span class="cs-product-details__symbol-label"><?= /* @noEscape */ $shortDescription; ?></span>
+                    </li>
+                <?php endif; ?>
+            <?php endforeach;?>
         <?php endforeach;?>
     </ul>
 <?php endif; ?>

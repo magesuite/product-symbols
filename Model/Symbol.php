@@ -2,21 +2,56 @@
 
 namespace MageSuite\ProductSymbols\Model;
 
-class Symbol extends \Magento\Catalog\Model\AbstractModel implements \MageSuite\ProductSymbols\Api\Data\SymbolInterface
+class Symbol extends \Magento\Rule\Model\AbstractModel implements \MageSuite\ProductSymbols\Api\Data\SymbolInterface
 {
 
     const SYMBOL_URL = 'product_symbol';
     const SYMBOL_ATTRIBUTE_CODE = 'product_symbol';
     const ENTITY = 'product_symbol';
-    const CACHE_TAG = 'product_symbol';
 
     const STORE_ID = 'store_id';
 
-    protected $_eventPrefix = 'product_symbol';
+    const CACHE_TAG = 'product_symbol';
+    const EVENT_PREFIX = 'product_symbol';
 
-    protected $_eventObject = 'product_symbol';
+    protected $_cacheTag = self::CACHE_TAG; //phpcs:ignore
+    protected $_eventPrefix = self::EVENT_PREFIX; //phpcs:ignore
 
-    protected $_cacheTag = self::CACHE_TAG;
+    /**
+     * @var \Magento\Store\Model\StoreManagerInterface
+     */
+    protected $storeManager;
+
+    /**
+     * @var \MageSuite\ProductSymbols\Model\Symbol\Condition\CombineFactory
+     */
+    protected $conditionsCombineFactory;
+
+    /**
+     * @var \Magento\Rule\Model\Action\CollectionFactory
+     */
+    protected $actionsFactory;
+
+    public function __construct(
+        \Magento\Framework\Model\Context $context,
+        \Magento\Framework\Registry $registry,
+        \Magento\Framework\Data\FormFactory $formFactory,
+        \Magento\Framework\Stdlib\DateTime\TimezoneInterface $localeDate,
+        \Magento\Store\Model\StoreManagerInterface $storeManager,
+        \MageSuite\ProductSymbols\Model\Symbol\Condition\CombineFactory $conditionsCombineFactory,
+        \Magento\Rule\Model\Action\CollectionFactory $actionsFactory,
+        \Magento\Framework\Model\ResourceModel\AbstractResource $resource = null,
+        \Magento\Framework\Data\Collection\AbstractDb $resourceCollection = null,
+        array $data = []
+    ) {
+        parent::__construct($context, $registry, $formFactory, $localeDate, $resource, $resourceCollection, $data);
+
+        $this->storeManager = $storeManager;
+        $this->conditionsCombineFactory = $conditionsCombineFactory;
+        $this->actionsFactory = $actionsFactory;
+
+        parent::__construct($context, $registry, $formFactory, $localeDate, $resource, $resourceCollection, $data);
+    }
 
     protected function _construct()
     {
@@ -93,6 +128,24 @@ class Symbol extends \Magento\Catalog\Model\AbstractModel implements \MageSuite\
     public function setStoreId($storeId)
     {
         return $this->setData('store_id', $storeId);
+    }
+
+    /**
+     * @return int
+     */
+    public function getIsEnabled()
+    {
+        return $this->getData('is_enabled');
+    }
+
+    /**
+     * @param int $isEnabled
+     *
+     * @return $this
+     */
+    public function setIsEnabled($isEnabled)
+    {
+        return $this->setData('is_enabled', $isEnabled);
     }
 
     /**
@@ -201,7 +254,7 @@ class Symbol extends \Magento\Catalog\Model\AbstractModel implements \MageSuite\
             return '';
         }
 
-        return $this->_storeManager
+        return $this->storeManager
                 ->getStore()
                 ->getBaseUrl(
                     \Magento\Framework\UrlInterface::URL_TYPE_MEDIA
@@ -234,5 +287,15 @@ class Symbol extends \Magento\Catalog\Model\AbstractModel implements \MageSuite\
     public function setSymbolIconEncodedData($symbolIcon)
     {
         return $this->setData('symbol_icon_encoded_data', $symbolIcon);
+    }
+
+    public function getConditionsInstance()
+    {
+        return $this->conditionsCombineFactory->create();
+    }
+
+    public function getActionsInstance()
+    {
+        return $this->actionsFactory->create();
     }
 }

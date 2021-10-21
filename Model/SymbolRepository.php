@@ -4,8 +4,6 @@ namespace MageSuite\ProductSymbols\Model;
 
 class SymbolRepository implements \MageSuite\ProductSymbols\Api\SymbolRepositoryInterface
 {
-    const DEFAULT_STORE_ID = 0;
-
     protected $instances = [];
 
     /**
@@ -63,7 +61,7 @@ class SymbolRepository implements \MageSuite\ProductSymbols\Api\SymbolRepository
         }
         $symbol->getResource()->setDefaultStoreId($storeId);
         $symbol->load($id);
-        $symbol->getResource()->setDefaultStoreId(self::DEFAULT_STORE_ID);
+        $symbol->getResource()->setDefaultStoreId(\Magento\Store\Model\Store::DEFAULT_STORE_ID);
         $symbol->load($id);
 
         if (!$symbol->getEntityId()) {

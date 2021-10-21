@@ -14,9 +14,10 @@ class SymbolIcon extends \MageSuite\ProductSymbols\Block\Adminhtml\Symbol\Grid\R
 
         $iconPath = $this->filesystem->getDirectoryRead(\Magento\Framework\App\Filesystem\DirectoryList::MEDIA)->getAbsolutePath() . 'symbol/' . $symbolData->getSymbolIcon();
 
-        if (!file_exists($iconPath)) {
+        if (!file_exists($iconPath)) { //phpcs:ignore
             return '';
         }
+
         return sprintf('<img src="%s" width="250"/>', $symbolData->getSymbolIconUrl());
     }
 }

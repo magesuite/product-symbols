@@ -4,8 +4,6 @@ namespace MageSuite\ProductSymbols\ViewModel\Symbol;
 
 class Group extends \Magento\Framework\DataObject implements \Magento\Framework\View\Element\Block\ArgumentInterface
 {
-    protected $product = null;
-
     /**
      * @var \Magento\Framework\Registry
      */
@@ -30,6 +28,8 @@ class Group extends \Magento\Framework\DataObject implements \Magento\Framework\
      */
     protected $groupToSymbolRelationRepository;
 
+    protected $product = null;
+
     public function __construct(
         \Magento\Framework\Registry $registry,
         \MageSuite\ProductSymbols\Model\ResourceModel\Group\CollectionFactory $groupCollectionFactory,
@@ -48,7 +48,29 @@ class Group extends \Magento\Framework\DataObject implements \Magento\Framework\
 
     public function getGroupSymbols()
     {
-        return $this->mapSymbolsToGroup();
+        $groups = $this->getGroupsToDisplay();
+        $product = $this->getProduct();
+
+        $groupIds = $groups->getColumnValues('entity_id');
+        $symbolsCollection = $this->getSymbolsByGroups($groupIds);
+
+        $result = [];
+
+        foreach ($groups as $group) {
+            $groupSymbols = $product->getData($group->getGroupCode());
+            $groupSymbols = explode(',', $groupSymbols);
+
+            foreach ($symbolsCollection as $symbol) {
+
+                if (!$this->canDisplaySymbol($symbol, $product, $group, $groupSymbols)) {
+                    continue;
+                }
+
+                $result[$group->getGroupCode()]['symbols'][] = $symbol;
+            }
+        }
+
+        return $result;
     }
 
     public function setProduct($product)
@@ -60,9 +82,11 @@ class Group extends \Magento\Framework\DataObject implements \Magento\Framework\
 
     public function getProduct()
     {
-        if (!$this->product) {
-            $this->product = $this->registry->registry('product');
+        if ($this->product) {
+            return $this->product;
         }
+
+        $this->product = $this->registry->registry('product');
         return $this->product;
     }
 
@@ -79,33 +103,6 @@ class Group extends \Magento\Framework\DataObject implements \Magento\Framework\
         }
 
         return $groupCollection;
-    }
-
-    public function mapSymbolsToGroup()
-    {
-        $groups = $this->getGroupsToDisplay();
-        $product = $this->getProduct();
-
-        $groupIds = $groups->getColumnValues('entity_id');
-        $symbolsCollection = $this->getSymbolsByGroups($groupIds);
-
-        $groupFullData = [];
-
-        foreach ($groups as $group) {
-            $groupSymbols = $product->getData($group->getGroupCode());
-
-            $groupSymbols = explode(',', $groupSymbols);
-
-            foreach ($symbolsCollection as $symbol) {
-                if (!in_array($symbol->getEntityId(), $groupSymbols)) {
-                    continue;
-                }
-
-                $groupFullData[$group->getGroupCode()]['symbols'][] = $symbol;
-            }
-        }
-
-        return $groupFullData;
     }
 
     public function getSymbolsByGroups($groupIds)
@@ -129,5 +126,22 @@ class Group extends \Magento\Framework\DataObject implements \Magento\Framework\
         }
 
         return $groupCssClass;
+    }
+
+    protected function canDisplaySymbol($symbol, $product, $group, $groupSymbols) //phpcs:ignore
+    {
+        if ($symbol->hasIsEnabled() && !$symbol->getIsEnabled()) {
+            return false;
+        }
+
+        if (!$group->getIgnoreProductAssignment() && !in_array($symbol->getEntityId(), $groupSymbols)) {
+            return false;
+        }
+
+        if (!$symbol->validate($product)) {
+            return false;
+        }
+
+        return true;
     }
 }

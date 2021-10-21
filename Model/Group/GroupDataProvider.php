@@ -48,9 +48,11 @@ class GroupDataProvider extends \Magento\Ui\DataProvider\AbstractDataProvider
     public function getCurrentGroup()
     {
         $group = $this->registry->registry('group');
+
         if ($group) {
             return $group;
         }
+
         $requestId = $this->request->getParam($this->requestFieldName);
 
         if ($requestId) {
@@ -71,19 +73,9 @@ class GroupDataProvider extends \Magento\Ui\DataProvider\AbstractDataProvider
             return $result;
         }
 
-        $result = [
-            $group->getEntityId() => [
-                'entity_id' => $group->getEntityId(),
-                'group_name' => $group->getGroupName(),
-                'group_code' => $group->getGroupCode(),
-                'use_config' => [
-                    'group_name' => false,
-                    'group_code' => false
-                ]
-            ]
+        return [
+            $group->getEntityId() => $group->getData()
         ];
-
-        return $result;
     }
 
     public function getMeta()

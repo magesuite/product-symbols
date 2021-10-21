@@ -5,7 +5,7 @@ class Group extends \Magento\Framework\View\Element\Template
 {
     const BASE_VIEW_MODEL = \MageSuite\ProductSymbols\ViewModel\Symbol\Group::class;
 
-    protected $_template = 'MageSuite_ProductSymbols::symbols/group.phtml';
+    protected $_template = 'MageSuite_ProductSymbols::symbols/group.phtml'; //phpcs:ignore
     /**
      * @var \Magento\Framework\View\Element\Template\Context
      */

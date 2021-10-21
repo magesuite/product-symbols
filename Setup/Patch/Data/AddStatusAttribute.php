@@ -1,8 +1,10 @@
 <?php
 namespace MageSuite\ProductSymbols\Setup\Patch\Data;
 
-class AddSymbolDescriptionAttribute implements \Magento\Framework\Setup\Patch\DataPatchInterface
+class AddStatusAttribute implements \Magento\Framework\Setup\Patch\DataPatchInterface
 {
+    const IS_ENABLED_ATTRIBUTE_CODE = 'is_enabled';
+
     /**
      * @var \Magento\Framework\Setup\ModuleDataSetupInterface
      */
@@ -28,13 +30,14 @@ class AddSymbolDescriptionAttribute implements \Magento\Framework\Setup\Patch\Da
         $symbolSetup = $this->symbolSetupFactory->create(['setup' => $this->moduleDataSetup]);
         $symbolSetup->addAttribute(
             \MageSuite\ProductSymbols\Model\Symbol::ENTITY,
-            'symbol_description',
+            self::IS_ENABLED_ATTRIBUTE_CODE,
             [
-                'type' => 'text',
-                'label' => 'Description',
-                'input' => 'textarea',
+                'type' => 'int',
+                'label' => 'Is enabled',
+                'input' => 'select',
                 'required' => false,
-                'sort_order' => 8,
+                'sort_order' => 0,
+                'source_model' => \Magento\Eav\Model\Entity\Attribute\Source\Boolean::class,
                 'global' => \Magento\Eav\Model\Entity\Attribute\ScopedAttributeInterface::SCOPE_STORE,
             ]
         );

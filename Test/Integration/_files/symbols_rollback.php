@@ -10,7 +10,7 @@ $registry->register('isSecureArea', true);
 
 $symbolRepository = $objectManager->create('MageSuite\ProductSymbols\Api\SymbolRepositoryInterface');
 
-foreach ([600,700,800,1000,1100] as $symbolId) {
+foreach ([600,1000,1101] as $symbolId) {
     $symbol = $objectManager->create('MageSuite\ProductSymbols\Model\Symbol');
 
     $symbol->load($symbolId);

@@ -41,7 +41,7 @@
             <item name="config" xsi:type="array">
                 <item name="collapsible" xsi:type="boolean">true</item>
                 <item name="label" xsi:type="string" translate="true">Symbol Details</item>
-                <item name="sortOrder" xsi:type="number">20</item>
+                <item name="sortOrder" xsi:type="number">10</item>
                 <item name="opened" xsi:type="boolean">true</item>
                 <item name="additionalClasses" xsi:type="string">cs-csfeature__logo</item>
             </item>
@@ -67,6 +67,62 @@
                 </item>
             </argument>
         </field>
+
+        <container name="is_enabled_group">
+            <argument name="data" xsi:type="array">
+                <item name="type" xsi:type="string">group</item>
+                <item name="config" xsi:type="array">
+                    <item name="breakLine" xsi:type="boolean">true</item>
+                    <item name="component" xsi:type="string">Magento_Ui/js/form/components/group</item>
+                    <item name="sortOrder" xsi:type="number">10</item>
+                    <item name="label" xsi:type="string" translate="true">Is Enabled</item>
+                </item>
+            </argument>
+            <field name="is_enabled" formElement="checkbox">
+                <argument name="data" xsi:type="array">
+                    <item name="config" xsi:type="array">
+                        <item name="fit" xsi:type="boolean">false</item>
+                        <item name="default" xsi:type="number">1</item>
+                    </item>
+                </argument>
+                <settings>
+                    <validation>
+                        <rule name="required-entry" xsi:type="boolean">true</rule>
+                    </validation>
+                    <dataType>text</dataType>
+                    <label>Is Enabled</label>
+                </settings>
+                <formElements>
+                    <checkbox>
+                        <settings>
+                            <valueMap>
+                                <map name="false" xsi:type="string">0</map>
+                                <map name="true" xsi:type="string">1</map>
+                            </valueMap>
+                            <prefer>toggle</prefer>
+                        </settings>
+                    </checkbox>
+                </formElements>
+            </field>
+            <field name="use_config.is_enabled">
+                <argument name="data" xsi:type="array">
+                    <item name="config" xsi:type="array">
+                        <item name="description" xsi:type="string" translate="true">Use Default Value</item>
+                        <item name="dataType" xsi:type="string">boolean</item>
+                        <item name="formElement" xsi:type="string">checkbox</item>
+                        <item name="valueMap" xsi:type="array">
+                            <item name="true" xsi:type="boolean">1</item>
+                            <item name="false" xsi:type="boolean">0</item>
+                        </item>
+                        <item name="default" xsi:type="boolean">1</item>
+                        <item name="exports" xsi:type="array">
+                            <item name="checked" xsi:type="string">ns = ${ $.ns }, index = is_enabled :disabled</item>
+                        </item>
+                    </item>
+                </argument>
+            </field>
+        </container>
+
         <container name="symbol_name_group">
             <argument name="data" xsi:type="array">
                 <item name="type" xsi:type="string">group</item>
@@ -285,6 +341,26 @@
                     </item>
                 </argument>
             </field>
+        </container>
+    </fieldset>
+    <fieldset name="serialized_condition">
+        <argument name="data" xsi:type="array">
+            <item name="config" xsi:type="array">
+                <item name="label" xsi:type="string" translate="true">Conditions</item>
+                <item name="collapsible" xsi:type="boolean">true</item>
+                <item name="opened" xsi:type="boolean">true</item>
+                <item name="sortOrder" xsi:type="number">20</item>
+            </item>
+        </argument>
+        <container name="serialized_condition" >
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="sortOrder" xsi:type="number">10</item>
+                </item>
+            </argument>
+            <htmlContent name="html_content">
+                <argument name="block" xsi:type="object">MageSuite\ProductSymbols\Block\Symbol\Fieldset\Conditions</argument>
+            </htmlContent>
         </container>
     </fieldset>
 </form>
