@@ -28,9 +28,4 @@ class Upload extends \Magento\Backend\App\Action
         }
         return $this->resultFactory->create(\Magento\Framework\Controller\ResultFactory::TYPE_JSON)->setData($result);
     }
-
-    protected function _isAllowed()
-    {
-        return $this->_authorization->isAllowed(self::ADMIN_RESOURCE);
-    }
 }

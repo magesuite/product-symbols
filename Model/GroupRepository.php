@@ -24,16 +24,37 @@ class GroupRepository implements \MageSuite\ProductSymbols\Api\GroupRepositoryIn
      */
     protected $eavSetupFactory;
 
+    /**
+     * @var \Magento\Framework\Api\SearchResultsInterfaceFactory
+     */
+    protected $searchResultsFactory;
+
+    /**
+     * @var \Magento\Framework\Api\SearchCriteriaBuilder
+     */
+    protected $searchCriteriaBuilder;
+
+    /**
+     * @var \Magento\Framework\Api\SearchCriteria\CollectionProcessorInterface
+     */
+    protected $collectionProcessor;
+
     public function __construct(
         \MageSuite\ProductSymbols\Model\ResourceModel\Group $groupResource,
         \MageSuite\ProductSymbols\Model\ResourceModel\Group\CollectionFactory $collectionFactory,
         \MageSuite\ProductSymbols\Model\Group\Processor\SaveFactory $saveFactory,
-        \Magento\Eav\Setup\EavSetupFactory $eavSetupFactory
+        \Magento\Eav\Setup\EavSetupFactory $eavSetupFactory,
+        \Magento\Framework\Api\SearchResultsInterfaceFactory $searchResultsFactory,
+        \Magento\Framework\Api\SearchCriteriaBuilder $searchCriteriaBuilder,
+        \Magento\Framework\Api\SearchCriteria\CollectionProcessorInterface $collectionProcessor
     ) {
         $this->groupResource = $groupResource;
         $this->collectionFactory = $collectionFactory;
         $this->saveFactory = $saveFactory;
         $this->eavSetupFactory = $eavSetupFactory;
+        $this->searchResultsFactory = $searchResultsFactory;
+        $this->searchCriteriaBuilder = $searchCriteriaBuilder;
+        $this->collectionProcessor = $collectionProcessor;
     }
 
     public function getById($id)
@@ -60,6 +81,24 @@ class GroupRepository implements \MageSuite\ProductSymbols\Api\GroupRepositoryIn
         $this->createGroupAttribute($group);
 
         return $group;
+    }
+
+    public function getList(\Magento\Framework\Api\SearchCriteriaInterface $criteria = null)
+    {
+        $collection = $this->collectionFactory->create();
+
+        if ($criteria === null) {
+            $criteria = $this->searchCriteriaBuilder->create();
+        } else {
+            $this->collectionProcessor->process($criteria, $collection);
+        }
+
+        $searchResults = $this->searchResultsFactory->create();
+        $searchResults->setSearchCriteria($criteria);
+        $searchResults->setItems($collection->getItems());
+        $searchResults->setTotalCount($collection->getSize());
+
+        return $searchResults;
     }
 
     public function delete(\MageSuite\ProductSymbols\Api\Data\GroupInterface $group)

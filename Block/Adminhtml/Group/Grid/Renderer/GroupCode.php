@@ -6,12 +6,12 @@ class GroupCode extends \MageSuite\ProductSymbols\Block\Adminhtml\Group\Grid\Ren
 {
     public function getColumnValue($columnId, $entityId)
     {
-        $symbolData = $this->getGroupData($entityId);
+        $groupData = $this->getGroupData($entityId);
 
-        if (!$symbolData->getEntityId()) {
+        if (!$groupData->getEntityId()) {
             return '';
         }
 
-        return $symbolData->getGroupCode();
+        return $groupData->getGroupCode();
     }
 }

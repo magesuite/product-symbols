@@ -2,7 +2,7 @@
 
 namespace MageSuite\ProductSymbols\Block\Adminhtml\Group\Grid\Renderer;
 
-class GroupName extends \MageSuite\ProductSymbols\Block\Adminhtml\Group\Grid\Renderer\AbstractColumnRenderer
+class IgnoreProductAssignment extends \MageSuite\ProductSymbols\Block\Adminhtml\Group\Grid\Renderer\AbstractColumnRenderer
 {
     public function getColumnValue($columnId, $entityId)
     {
@@ -12,6 +12,6 @@ class GroupName extends \MageSuite\ProductSymbols\Block\Adminhtml\Group\Grid\Ren
             return '';
         }
 
-        return $groupData->getGroupName();
+        return $groupData->getIgnoreProductAssignment() ? __('Yes') : __('No');
     }
 }

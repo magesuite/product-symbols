@@ -88,6 +88,7 @@ class SymbolDataProvider extends \Magento\Ui\DataProvider\AbstractDataProvider
         if ($symbol->getStoreId() === \Magento\Store\Model\Store::DEFAULT_STORE_ID) {
             $useConfig = [
                 'symbol_name' => false,
+                'is_enabled' => false,
                 'symbol_icon' => false,
                 'symbol_short_description' => false,
                 'symbol_description' => false,

@@ -52,6 +52,17 @@
                                 <argument name="filter" xsi:type="string">0</argument>
                             </arguments>
                         </block>
+                        <block class="Magento\Backend\Block\Widget\Grid\Column" as="ignore_product_assignment">
+                            <arguments>
+                                <argument name="header" xsi:type="string" translate="true">Ignore Product Assignment</argument>
+                                <argument name="index" xsi:type="string">group_name</argument>
+                                <argument name="type" xsi:type="string">text</argument>
+                                <argument name="column_css_class" xsi:type="string">col-id</argument>
+                                <argument name="header_css_class" xsi:type="string">col-id</argument>
+                                <argument name="renderer" xsi:type="string">MageSuite\ProductSymbols\Block\Adminhtml\Group\Grid\Renderer\IgnoreProductAssignment</argument>
+                                <argument name="filter" xsi:type="string">0</argument>
+                            </arguments>
+                        </block>
                         <block class="Magento\Backend\Block\Widget\Grid\Column" as="group_code">
                             <arguments>
                                 <argument name="header" xsi:type="string" translate="true">Group Code</argument>

@@ -40,6 +40,10 @@ class Save
             $group = $this->groupRepository->getById($params['entity_id']);
         } else {
             $group = $this->groupFactory->create();
+
+            if (isset($params['entity_id'])) {
+                unset($params['entity_id']);
+            }
         }
 
         $group->setData($params);

@@ -52,6 +52,17 @@
                                 <argument name="filter" xsi:type="string">0</argument>
                             </arguments>
                         </block>
+                        <block class="Magento\Backend\Block\Widget\Grid\Column" as="is_enabled">
+                            <arguments>
+                                <argument name="header" xsi:type="string" translate="true">Is Enabled</argument>
+                                <argument name="index" xsi:type="string">is_enabled</argument>
+                                <argument name="type" xsi:type="string">text</argument>
+                                <argument name="column_css_class" xsi:type="string">col-id</argument>
+                                <argument name="header_css_class" xsi:type="string">col-id</argument>
+                                <argument name="renderer" xsi:type="string">MageSuite\ProductSymbols\Block\Adminhtml\Symbol\Grid\Renderer\IsEnabled</argument>
+                                <argument name="filter" xsi:type="string">0</argument>
+                            </arguments>
+                        </block>
                         <block class="Magento\Backend\Block\Widget\Grid\Column" as="symbol_icon">
                             <arguments>
                                 <argument name="header" xsi:type="string" translate="true">Symbol Icon</argument>
