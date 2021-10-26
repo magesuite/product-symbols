@@ -52,7 +52,11 @@ class Save
                 $params['store_id'] = \Magento\Store\Model\Store::DEFAULT_STORE_ID;
             }
             $symbol = $this->symbolFactory->create();
-            $symbol->setData($params->getData());
+
+            $paramsData = $params->getData();
+            $paramsData['conditions_serialized'] = $this->prepareConditions($params);
+
+            $symbol->setData($paramsData);
         } else {
             if (!$params['is_api']) {
                 $matchedParams = $this->matchParams($params);
@@ -114,7 +118,6 @@ class Save
         }
         $matchedParams['entity_id'] = $params['entity_id'];
         $matchedParams['store_id'] = $params['store_id'];
-
         $matchedParams['conditions_serialized'] = $this->prepareConditions($params);
 
         return $this->dataObjectFactory->create()->setData($matchedParams);

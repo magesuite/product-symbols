@@ -18,6 +18,12 @@ interface GroupRepositoryInterface
     public function save(\MageSuite\ProductSymbols\Api\Data\GroupInterface $group);
 
     /**
+     * @param \Magento\Framework\Api\SearchCriteriaInterface|null $searchCriteria
+     * @return \Magento\Framework\Api\SearchResultsInterface
+     */
+    public function getList(\Magento\Framework\Api\SearchCriteriaInterface $searchCriteria = null);
+
+    /**
      * @param \MageSuite\ProductSymbols\Api\Data\GroupInterface $group
      * @return void
      */

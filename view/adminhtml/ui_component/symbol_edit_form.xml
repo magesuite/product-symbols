@@ -176,23 +176,27 @@
                     <item name="label" xsi:type="string" translate="true">Symbol Icon</item>
                 </item>
             </argument>
-            <field name="symbol_icon">
-                <argument name="data" xsi:type="array">
-                    <item name="config" xsi:type="array">
-                        <item name="label" xsi:type="string" translate="true">Symbol Icon</item>
-                        <item name="formElement" xsi:type="string">fileUploader</item>
-                        <item name="componentType" xsi:type="string">fileUploader</item>
-                        <item name="notice" xsi:type="string" translate="true">Allowed file types: png, gif, jpg, jpeg, svg. Max file size 1MB.</item>
-                        <item name="maxFileSize" xsi:type="number">1048576</item>
-                        <item name="allowedExtensions" xsi:type="string">jpg jpeg gif png svg</item>
-                        <item name="uploaderConfig" xsi:type="array">
-                            <item name="url" xsi:type="string">symbol/symbol/upload</item>
-                        </item>
-                        <item name="validation" xsi:type="array">
-                            <item name="required-entry" xsi:type="boolean">true</item>
-                        </item>
-                    </item>
-                </argument>
+            <field name="symbol_icon" sortOrder="40" formElement="imageUploader">
+                <settings>
+                    <elementTmpl>ui/form/element/uploader/image</elementTmpl>
+                    <dataType>string</dataType>
+                    <label translate="true">Symbol Icon</label>
+                    <visible>true</visible>
+                    <required>true</required>
+                </settings>
+                <formElements>
+                    <imageUploader>
+                        <settings>
+                            <required>false</required>
+                            <uploaderConfig>
+                                <param xsi:type="url" name="url" path="symbol/symbol/upload" />
+                            </uploaderConfig>
+                            <previewTmpl>Magento_Catalog/image-preview</previewTmpl>
+                            <openDialogTitle>Media Gallery</openDialogTitle>
+                            <initialMediaGalleryOpenSubpath>symbol</initialMediaGalleryOpenSubpath>
+                        </settings>
+                    </imageUploader>
+                </formElements>
             </field>
             <field name="use_config.symbol_icon">
                 <argument name="data" xsi:type="array">

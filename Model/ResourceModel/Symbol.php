@@ -7,6 +7,7 @@ class Symbol extends \Magento\Eav\Model\Entity\AbstractEntity
     protected $symbolAttributes = [
         'entity_id',
         'store_id',
+        'is_enabled',
         'symbol_name',
         'symbol_icon',
         'symbol_icon_url',

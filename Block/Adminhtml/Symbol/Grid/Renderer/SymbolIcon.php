@@ -18,6 +18,6 @@ class SymbolIcon extends \MageSuite\ProductSymbols\Block\Adminhtml\Symbol\Grid\R
             return '';
         }
 
-        return sprintf('<img src="%s" width="250"/>', $symbolData->getSymbolIconUrl());
+        return sprintf('<img src="%s" width="100"/>', $symbolData->getSymbolIconUrl());
     }
 }
