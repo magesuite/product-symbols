@@ -21,11 +21,6 @@ class SymbolDataProvider extends \Magento\Ui\DataProvider\AbstractDataProvider
     protected $requestScopeFieldName = 'store';
 
     /**
-     * @var \Magento\Framework\Registry
-     */
-    protected $registry;
-
-    /**
      * @var \MageSuite\ProductSymbols\Api\SymbolRepositoryInterface
      */
     protected $symbolRepository;
@@ -43,13 +38,11 @@ class SymbolDataProvider extends \Magento\Ui\DataProvider\AbstractDataProvider
         \MageSuite\ProductSymbols\Api\SymbolRepositoryInterface $symbolRepository,
         \MageSuite\ProductSymbols\Api\Data\SymbolInterfaceFactory $symbolFactory,
         \Magento\Framework\App\RequestInterface $request,
-        \Magento\Framework\Registry $registry,
         array $meta = [],
         array $data = []
     ) {
         $this->collection = $symbolCollectionFactory->create();
         $this->request = $request;
-        $this->registry = $registry;
         parent::__construct($name, $primaryFieldName, $requestFieldName, $meta, $data);
         $this->symbolRepository = $symbolRepository;
         $this->symbolFactory = $symbolFactory;
