@@ -57,10 +57,6 @@ class SymbolDataProvider extends \Magento\Ui\DataProvider\AbstractDataProvider
 
     public function getCurrentSymbol()
     {
-        $symbol = $this->registry->registry('symbol');
-        if ($symbol) {
-            return $symbol;
-        }
         $requestId = $this->request->getParam($this->requestFieldName);
         $requestScope = $this->request->getParam($this->requestScopeFieldName, \Magento\Store\Model\Store::DEFAULT_STORE_ID);
 
