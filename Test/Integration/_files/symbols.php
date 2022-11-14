@@ -13,7 +13,8 @@ $symbol
     ->setSymbolName('test symbol 1')
     ->setSymbolShortDescription('this is test symbol 1')
     ->setSymbolIcon('testimage.png')
-    ->setSymbolGroups('100,200');
+    ->setSymbolGroups('100,200')
+    ->setSortOrder(10);
 
 $symbolRepository->save($symbol);
 
@@ -27,7 +28,8 @@ $symbol
     ->setSymbolName('test symbol 4')
     ->setSymbolShortDescription('this is test symbol 4')
     ->setSymbolIcon('testimage.png')
-    ->setSymbolGroups('200,300');
+    ->setSymbolGroups('200,300')
+    ->setSortOrder(20);
 
 $symbolRepository->save($symbol);
 

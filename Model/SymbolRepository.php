@@ -4,7 +4,7 @@ namespace MageSuite\ProductSymbols\Model;
 
 class SymbolRepository implements \MageSuite\ProductSymbols\Api\SymbolRepositoryInterface
 {
-    protected $instances = [];
+    protected array $instances = [];
 
     /**
      * @var ResourceModel\Symbol
@@ -54,6 +54,12 @@ class SymbolRepository implements \MageSuite\ProductSymbols\Api\SymbolRepository
 
     public function getById($id, $storeId = null)
     {
+        $cacheKey = sprintf('%s_%s', $id, (int)$storeId);
+
+        if (isset($this->instances[$cacheKey])) {
+            return $this->instances[$cacheKey];
+        }
+
         $symbol = $this->symbolFactory->create();
 
         if (null !== $storeId) {
@@ -68,6 +74,8 @@ class SymbolRepository implements \MageSuite\ProductSymbols\Api\SymbolRepository
             return null;
         }
 
+        $this->instances[$cacheKey] = $symbol;
+
         return $symbol;
     }
 
@@ -75,9 +83,7 @@ class SymbolRepository implements \MageSuite\ProductSymbols\Api\SymbolRepository
     {
         try {
             $isNew = $this->getById($symbol->getEntityId()) ? false : true;
-
             $symbol->setIsNew($isNew);
-
             $this->symbolResource->save($symbol);
         } catch (\Exception $e) {
             throw new \Magento\Framework\Exception\CouldNotSaveException(
@@ -91,14 +97,10 @@ class SymbolRepository implements \MageSuite\ProductSymbols\Api\SymbolRepository
         return $symbol;
     }
 
-    public function delete(\MageSuite\ProductSymbols\Api\Data\SymbolInterface $symbol)
+    public function delete(\MageSuite\ProductSymbols\Api\Data\SymbolInterface $symbol): bool
     {
-        $symbolFactory = $this->symbolFactory->create();
-        $symbolFactory->setData($symbol->getData());
-
         try {
-            $this->symbolResource->delete($symbolFactory);
-            return true;
+            $this->symbolResource->delete($symbol);
         } catch (\Exception $e) {
             throw new \Magento\Framework\Exception\CouldNotDeleteException(
                 __(
@@ -108,24 +110,27 @@ class SymbolRepository implements \MageSuite\ProductSymbols\Api\SymbolRepository
                 $e
             );
         }
+
+        return true;
     }
 
-    public function getAllSymbols($storeId = null)
+    public function getAllSymbols($storeId = null): array
     {
         if ($storeId == null) {
             $storeId = $this->storeManager->getStore()->getId();
         }
-        
-        $symbolCollection = $this->collectionFactory->create();
-        $symbolCollection->setStoreId($storeId);
-        $symbolCollection->addAttributeToSelect('*');
 
-        $symbolDataArray = [];
-        foreach ($symbolCollection as $symbol) {
-            $symbolDataArray[$symbol->getEntityId()] = $symbol;
+        $collection = $this->collectionFactory->create();
+        $collection->setStoreId($storeId);
+        $collection->addAttributeToSelect('*')
+            ->addAttributeToSort('sort_order');
+        $entities = [];
+
+        foreach ($collection as $item) {
+            $entities[$item->getId()] = $item;
         }
 
-        return $symbolDataArray;
+        return $entities;
     }
 
     public function create(\MageSuite\ProductSymbols\Api\Data\SymbolInterface $symbol)
@@ -140,25 +145,29 @@ class SymbolRepository implements \MageSuite\ProductSymbols\Api\SymbolRepository
 
             $symbol = $this->saveFactory->create()->processSave($symbol);
         } catch (\Exception $e) {
-            throw new \Magento\Framework\Exception\CouldNotSaveException(__('Could not save symbol.', $e->getMessage()), $e);
+            throw new \Magento\Framework\Exception\CouldNotSaveException(
+                __(
+                    'Could not save symbol: %1',
+                    $e->getMessage()
+                ),
+                $e
+            );
         }
+
         return $symbol;
     }
 
     public function update(\MageSuite\ProductSymbols\Api\Data\SymbolInterface $symbol)
     {
         $storeId = $this->storeManager->getStore()->getId();
-
         $symbolEntity = $this->getById($symbol->getEntityId(), $storeId);
-
         $symbolEntity->addData($symbol->getData());
 
         return $this->create($symbolEntity);
     }
 
-    public function deleteById($id)
+    public function deleteById($id): bool
     {
-        $symbol = $this->getById($id);
-        $this->delete($symbol);
+        return $this->delete($this->getById($id));
     }
 }

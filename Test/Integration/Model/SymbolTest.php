@@ -60,6 +60,7 @@ class SymbolTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals('http://localhost/media/symbol/testimage.png', $url);
         $this->assertEquals('100,200', $symbol->getSymbolGroups());
         $this->assertEquals('testimage.png', $symbol->getSymbolIcon());
+        $this->assertEquals(10, $symbol->getSortOrder());
 
         $store = $this->store->load('test333', 'code');
 
@@ -72,6 +73,7 @@ class SymbolTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals('http://localhost/media/symbol/testimage.png', $url);
         $this->assertEquals('200,300', $symbol->getSymbolGroups());
         $this->assertEquals('testimage.png', $symbol->getSymbolIcon());
+        $this->assertEquals(20, $symbol->getSortOrder());
     }
 
     /**
@@ -85,7 +87,8 @@ class SymbolTest extends \PHPUnit\Framework\TestCase
             'symbol_name' => 'edit symbol2',
             'symbol_icon' => 'edit_image.jpg',
             'symbol_short_description' => 'symbol short description 2',
-            'symbol_groups' => [100, 200]
+            'symbol_groups' => [100, 200],
+            'sort_order' => 100
         ];
 
         $symbol = $this->symbolRepositoryInterface->getById(600, $editData['store_id']);
@@ -94,7 +97,8 @@ class SymbolTest extends \PHPUnit\Framework\TestCase
             ->setSymbolShortDescription($editData['symbol_short_description'])
             ->setSymbolIcon($editData['symbol_icon'])
             ->setSymbolName($editData['symbol_name'])
-            ->setSymbolGroups($editData['symbol_groups']);
+            ->setSymbolGroups($editData['symbol_groups'])
+            ->setSortOrder($editData['sort_order']);
 
         $this->symbolRepositoryInterface->save($symbol);
         $editedSymbol = $this->symbolRepositoryInterface->getById(600, $editData['store_id']);
@@ -103,13 +107,15 @@ class SymbolTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals($editData['store_id'], $editedSymbol->getStoreId());
         $this->assertEquals($editData['symbol_icon'], $editedSymbol->getSymbolIcon());
         $this->assertEquals($editData['symbol_short_description'], $editedSymbol->getSymbolShortDescription());
+        $this->assertEquals($editData['sort_order'], $editedSymbol->getSortOrder());
 
         $editData = [
             'store_id' => 0,
             'symbol_name' => 'edit symbol 700',
             'symbol_icon' => 'edit_image.jpg',
             'symbol_short_description' => 'symbol short description 700',
-            'symbol_groups' => [100, 200]
+            'symbol_groups' => [100, 200],
+            'sort_order' => 1000
         ];
 
         $symbol = $this->symbolRepositoryInterface->getById(1000, $editData['store_id']);
@@ -118,7 +124,8 @@ class SymbolTest extends \PHPUnit\Framework\TestCase
             ->setSymbolShortDescription($editData['symbol_short_description'])
             ->setSymbolIcon($editData['symbol_icon'])
             ->setSymbolName($editData['symbol_name'])
-            ->setSymbolGroups($editData['symbol_groups']);
+            ->setSymbolGroups($editData['symbol_groups'])
+            ->setSortOrder($editData['sort_order']);
 
         $this->symbolRepositoryInterface->save($symbol);
         $editedSymbol = $this->symbolRepositoryInterface->getById(1000, $editData['store_id']);
@@ -127,6 +134,7 @@ class SymbolTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals($editData['store_id'], $editedSymbol->getStoreId());
         $this->assertEquals($editData['symbol_icon'], $editedSymbol->getSymbolIcon());
         $this->assertEquals($editData['symbol_short_description'], $editedSymbol->getSymbolShortDescription());
+        $this->assertEquals($editData['sort_order'], $editedSymbol->getSortOrder());
     }
 
     /**
