@@ -82,6 +82,7 @@ class SymbolDataProvider extends \Magento\Ui\DataProvider\AbstractDataProvider
                 'symbol_short_description' => false,
                 'symbol_description' => false,
                 'symbol_groups' => false,
+                'sort_order' => false
             ];
         } else {
             foreach ($symbol->getData() as $attrName => $value) {
@@ -103,6 +104,7 @@ class SymbolDataProvider extends \Magento\Ui\DataProvider\AbstractDataProvider
                 'symbol_short_description' => $symbol->getSymbolShortDescription(),
                 'symbol_description' => $symbol->getSymbolDescription(),
                 'symbol_groups' => $symbol->getSymbolGroups(),
+                'sort_order' => $symbol->getSortOrder(),
                 'use_config' => $useConfig
             ]
         ];
@@ -139,7 +141,8 @@ class SymbolDataProvider extends \Magento\Ui\DataProvider\AbstractDataProvider
             'symbol_icon_group' => 'use_config.symbol_icon',
             'symbol_short_description_group' => 'use_config.symbol_short_description',
             'symbol_description_group' => 'use_config.symbol_description',
-            'symbol_groups_group' => 'use_config.symbol_groups'
+            'symbol_groups_group' => 'use_config.symbol_groups',
+            'sort_order_group' => 'use_config.sort_order'
         ];
 
         if (!isset($params['store']) || (isset($params['store']) && $this->checkIsDefaultScope($params['store']))) {

@@ -115,6 +115,17 @@ interface SymbolInterface
     public function setSymbolGroups($symbolGroups);
 
     /**
+     * @return int
+     */
+    public function getSortOrder();
+
+    /**
+     * @param int $sortOrder
+     * @return mixed
+     */
+    public function setSortOrder($sortOrder);
+
+    /**
      * @return string
      */
     public function getSymbolIconUrl();
@@ -124,7 +135,7 @@ interface SymbolInterface
      * @return mixed
      */
     public function setSymbolIconUrl($symbolIconUrl);
-    
+
     /**
      * @return \MageSuite\ProductSymbols\Api\Data\SymbolImageInterface
      */

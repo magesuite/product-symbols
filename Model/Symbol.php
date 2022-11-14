@@ -238,6 +238,16 @@ class Symbol extends \Magento\Rule\Model\AbstractModel implements \MageSuite\Pro
         return $this->setData('symbol_groups', $symbolGroups);
     }
 
+    public function getSortOrder()
+    {
+        return $this->getData('sort_order');
+    }
+
+    public function setSortOrder($sortOrder)
+    {
+        return $this->setData('sort_order', $sortOrder);
+    }
+
     /**
      * @param string|null $image
      *

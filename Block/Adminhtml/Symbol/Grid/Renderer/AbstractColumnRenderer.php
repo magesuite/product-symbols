@@ -4,11 +4,6 @@ namespace MageSuite\ProductSymbols\Block\Adminhtml\Symbol\Grid\Renderer;
 abstract class AbstractColumnRenderer extends \Magento\Backend\Block\Widget\Grid\Column\Renderer\AbstractRenderer
 {
     /**
-     * @var
-     */
-    protected $symbol;
-
-    /**
      * @var \MageSuite\ProductSymbols\Api\SymbolRepositoryInterface
      */
     protected $symbolRepository;
@@ -33,7 +28,6 @@ abstract class AbstractColumnRenderer extends \Magento\Backend\Block\Widget\Grid
     public function render(\Magento\Framework\DataObject $row)
     {
         $column = $this->getColumn()->getIndex();
-
         $value = $this->getColumnValue($column, $row->getEntityId());
 
         return $value;
@@ -41,11 +35,7 @@ abstract class AbstractColumnRenderer extends \Magento\Backend\Block\Widget\Grid
 
     public function getSymbolData($entityId)
     {
-        if (!isset($this->symbolData[$entityId])) {
-            $this->symbolData[$entityId] = $this->symbolRepository->getById($entityId);
-        }
-
-        return $this->symbolData[$entityId];
+        return $this->symbolRepository->getById($entityId);
     }
 
     abstract public function getColumnValue($columnId, $entityId);
