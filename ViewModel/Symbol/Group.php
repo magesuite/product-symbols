@@ -58,12 +58,7 @@ class Group extends \Magento\Framework\DataObject implements \Magento\Framework\
 
         foreach ($groups as $group) {
             $groupSymbols = $product->getData($group->getGroupCode());
-
-            if (empty($groupSymbols)) {
-                continue;
-            }
-
-            $groupSymbols = explode(',', $groupSymbols);
+            $groupSymbols = !empty($groupSymbols) ? explode(',', $groupSymbols) : [];
 
             foreach ($symbolsCollection as $symbol) {
 
