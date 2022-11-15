@@ -60,5 +60,4 @@ class DisableSymbolGroupsWithIgnoreFlag
 
         return $result;
     }
-
 }
