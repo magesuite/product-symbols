@@ -3,7 +3,8 @@
         "column": {
             "entity_id": true,
             "group_name": true,
-            "group_code": true
+            "group_code": true,
+            "ignore_product_assignment": true
         },
         "constraint": {
             "PRIMARY": true
@@ -36,7 +37,8 @@
             "PRIMARY": true,
             "PRD_SYMBOL_ENTT_INT_ATTR_ID_EAV_ATTR_ATTR_ID": true,
             "PRD_SYMBOL_ENTT_INT_ENTT_ID_PRD_SYMBOL_ENTT_ENTT_ID": true,
-            "PRODUCT_SYMBOL_ENTITY_INT_STORE_ID_STORE_STORE_ID": true
+            "PRODUCT_SYMBOL_ENTITY_INT_STORE_ID_STORE_STORE_ID": true,
+            "PRODUCT_SYMBOL_ENTITY_INT_ENTITY_ID_ATTRIBUTE_ID_STORE_ID": true
         }
     },
     "product_symbol_entity_text": {
@@ -56,7 +58,8 @@
             "PRIMARY": true,
             "PRD_SYMBOL_ENTT_TEXT_ATTR_ID_EAV_ATTR_ATTR_ID": true,
             "PRD_SYMBOL_ENTT_TEXT_ENTT_ID_PRD_SYMBOL_ENTT_ENTT_ID": true,
-            "PRODUCT_SYMBOL_ENTITY_TEXT_STORE_ID_STORE_STORE_ID": true
+            "PRODUCT_SYMBOL_ENTITY_TEXT_STORE_ID_STORE_STORE_ID": true,
+            "PRODUCT_SYMBOL_ENTITY_TEXT_ENTITY_ID_ATTRIBUTE_ID_STORE_ID": true
         }
     },
     "product_symbol_entity_varchar": {
@@ -76,7 +79,8 @@
             "PRIMARY": true,
             "PRD_SYMBOL_ENTT_VCHR_ATTR_ID_EAV_ATTR_ATTR_ID": true,
             "PRD_SYMBOL_ENTT_VCHR_ENTT_ID_PRD_SYMBOL_ENTT_ENTT_ID": true,
-            "PRODUCT_SYMBOL_ENTITY_VARCHAR_STORE_ID_STORE_STORE_ID": true
+            "PRODUCT_SYMBOL_ENTITY_VARCHAR_STORE_ID_STORE_STORE_ID": true,
+            "PRODUCT_SYMBOL_ENTITY_VARCHAR_ENTITY_ID_ATTRIBUTE_ID_STORE_ID": true
         }
     },
     "product_group_to_symbol_relation": {
