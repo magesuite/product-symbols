@@ -51,7 +51,7 @@
         </arguments>
     </type>
 
-    <type name="Magento\Setup\Model\DeclarationInstaller">
-        <plugin name="remove_duplicate_records" type="MageSuite\ProductSymbols\Plugin\Setup\Model\DeclarationInstaller\RemoveDuplicateRecords" sortOrder="10" />
+    <type name="Magento\Framework\Setup\Declaration\Schema\SchemaConfigInterface">
+        <plugin name="remove_duplicate_records" type="MageSuite\ProductSymbols\Plugin\Framework\Setup\Declaration\Schema\SchemaConfigInterface\RemoveDuplicateRecords" sortOrder="10" />
     </type>
 </config>

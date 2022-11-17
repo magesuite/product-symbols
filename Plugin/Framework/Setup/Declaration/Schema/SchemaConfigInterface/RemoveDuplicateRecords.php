@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace MageSuite\ProductSymbols\Plugin\Setup\Model\DeclarationInstaller;
+namespace MageSuite\ProductSymbols\Plugin\Framework\Setup\Declaration\Schema\SchemaConfigInterface;
 
 class RemoveDuplicateRecords
 {
@@ -15,14 +15,13 @@ class RemoveDuplicateRecords
     /**
      * Remove duplicates before adding unique key for fields: attribute_id, store_id, entity_id
      *
-     * @param \Magento\Setup\Model\DeclarationInstaller $subject
-     * @param array $requestData
-     * @return array[]
+     * @param \Magento\Framework\Setup\Declaration\Schema\SchemaConfigInterface $subject
+     * @return array
      */
-    public function beforeInstallSchema(\Magento\Setup\Model\DeclarationInstaller $subject, array $requestData)
+    public function beforeGetDbConfig(\Magento\Framework\Setup\Declaration\Schema\SchemaConfigInterface $subject)
     {
         if ($this->isUniqueKeyAlreadyInstalled()) {
-            return [$requestData];
+            return [];
         }
 
         $connection = $this->resourceConnection->getConnection();
@@ -38,7 +37,7 @@ class RemoveDuplicateRecords
             $connection->query($select->deleteFromSelect('t1'));
         }
 
-        return [$requestData];
+        return [];
     }
 
     protected function isUniqueKeyAlreadyInstalled(): bool
