@@ -116,7 +116,7 @@ class Symbol extends \Magento\Eav\Model\Entity\AbstractEntity
             ->where('attribute_id = :attribute_id');
         $bind = [
             'entity_field_id' => $object->getId(),
-            'store_id' => $storeId,
+            'store_id' => (int)$storeId,
             'attribute_id' => $attribute->getId(),
         ];
         $valueId = $connection->fetchOne($select, $bind);
