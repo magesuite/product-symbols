@@ -4,6 +4,8 @@ namespace MageSuite\ProductSymbols\Api\Data;
 
 interface SymbolInterface
 {
+    const SVG_FILE_EXTENSION = 'svg';
+
     /**
      * @return int|string|null
      */
@@ -146,4 +148,10 @@ interface SymbolInterface
      * @return mixed
      */
     public function setSymbolIconEncodedData($symbolIcon);
+
+    /**
+     * @param string $image
+     * @return bool
+     */
+    public function shouldDisplaySvgInline(string $image): bool;
 }

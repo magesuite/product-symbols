@@ -17,20 +17,13 @@ class Symbol extends \Magento\Rule\Model\AbstractModel implements \MageSuite\Pro
     protected $_cacheTag = self::CACHE_TAG; //phpcs:ignore
     protected $_eventPrefix = self::EVENT_PREFIX; //phpcs:ignore
 
-    /**
-     * @var \Magento\Store\Model\StoreManagerInterface
-     */
-    protected $storeManager;
+    protected \Magento\Store\Model\StoreManagerInterface $storeManager;
 
-    /**
-     * @var \MageSuite\ProductSymbols\Model\Symbol\Condition\CombineFactory
-     */
-    protected $conditionsCombineFactory;
+    protected \MageSuite\ProductSymbols\Model\Symbol\Condition\CombineFactory $conditionsCombineFactory;
 
-    /**
-     * @var \Magento\Rule\Model\Action\CollectionFactory
-     */
-    protected $actionsFactory;
+    protected \Magento\Rule\Model\Action\CollectionFactory $actionsFactory;
+
+    protected \MageSuite\ProductSymbols\Helper\Configuration $configuration;
 
     public function __construct(
         \Magento\Framework\Model\Context $context,
@@ -40,6 +33,7 @@ class Symbol extends \Magento\Rule\Model\AbstractModel implements \MageSuite\Pro
         \Magento\Store\Model\StoreManagerInterface $storeManager,
         \MageSuite\ProductSymbols\Model\Symbol\Condition\CombineFactory $conditionsCombineFactory,
         \Magento\Rule\Model\Action\CollectionFactory $actionsFactory,
+        \MageSuite\ProductSymbols\Helper\Configuration $configuration,
         \Magento\Framework\Model\ResourceModel\AbstractResource $resource = null,
         \Magento\Framework\Data\Collection\AbstractDb $resourceCollection = null,
         array $data = []
@@ -49,6 +43,7 @@ class Symbol extends \Magento\Rule\Model\AbstractModel implements \MageSuite\Pro
         $this->storeManager = $storeManager;
         $this->conditionsCombineFactory = $conditionsCombineFactory;
         $this->actionsFactory = $actionsFactory;
+        $this->configuration = $configuration;
 
         parent::__construct($context, $registry, $formFactory, $localeDate, $resource, $resourceCollection, $data);
     }
@@ -307,5 +302,16 @@ class Symbol extends \Magento\Rule\Model\AbstractModel implements \MageSuite\Pro
     public function getActionsInstance()
     {
         return $this->actionsFactory->create();
+    }
+
+    public function shouldDisplaySvgInline(string $image): bool
+    {
+        $extension = pathinfo($image, PATHINFO_EXTENSION); //phpcs:ignore
+
+        if ($extension != self::SVG_FILE_EXTENSION) {
+            return false;
+        }
+
+        return $this->configuration->shouldDisplaySvgInline();
     }
 }

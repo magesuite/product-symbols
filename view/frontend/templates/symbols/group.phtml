@@ -12,6 +12,7 @@
                     $image = $symbol->getSymbolIconUrl();
                     $shortDescription = $symbol->getSymbolShortDescription();
                     $description = $symbol->getSymbolDescription();
+                    $shouldDisplaySvgInline = $symbol->shouldDisplaySvgInline((string) $image);
                 ?>
                 <?php if ($image && $shortDescription) : ?>
                     <li class="cs-product-details__symbol">
@@ -19,7 +20,7 @@
                             <?= $block->getLayout()
                                     ->createBlock(\MageSuite\ThemeHelpers\Block\Icon::class)
                                     ->setIconUrl($image)
-                                    ->setInlined(false)
+                                    ->setInlined($shouldDisplaySvgInline)
                                     ->setLazyLoaded(true)
                                     ->toHtml();
                             ?>

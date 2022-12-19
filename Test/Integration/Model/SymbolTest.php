@@ -166,6 +166,22 @@ class SymbolTest extends \PHPUnit\Framework\TestCase
         $this->assertTrue(($symbol->validate($product)));
     }
 
+    /**
+     * @magentoAppArea frontend
+     * @magentoDataFixture MageSuite_ProductSymbols::Test/Integration/_files/symbols.php
+     */
+    public function testItReturnCorrectFlagForSvgImage()
+    {
+        $testSymbolId = 600;
+        $symbol = $this->symbolRepositoryInterface->getById($testSymbolId);
+
+        $pngImageName = 'image.png';
+        $svgImageName = 'image.svg';
+
+        $this->assertFalse($symbol->shouldDisplaySvgInline($pngImageName));
+        $this->assertTrue($symbol->shouldDisplaySvgInline($svgImageName));
+    }
+
     public static function loadSymbols()
     {
         include __DIR__ . '/../_files/symbols.php';
