@@ -1,0 +1,19 @@
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:MageSuite_Changelog:etc/changelog.xsd">
+    <module id="MageSuite_ProductSymbols" name="MageSuite_ProductSymbols">
+        <changelog>
+            <tag version="1.0.0" date="2020-02-01">
+                <entry>
+                    <type>INIT</type>
+                    <overview>First version with base functionality</overview>
+                </entry>
+            </tag>
+            <tag version="1.1.7" date="2022-12-19">
+                <entry>
+                    <type>FEATURE</type>
+                    <overview>Added possibility to display product symbol SVG images inline</overview>
+                    <ticket_id>IPET-1716</ticket_id>
+                </entry>
+            </tag>
+        </changelog>
+    </module>
+</config>

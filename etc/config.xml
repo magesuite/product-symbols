@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <product_symbols>
+            <general>
+                <should_display_svg_inline>1</should_display_svg_inline>
+            </general>
+        </product_symbols>
+    </default>
+</config>
