@@ -79,7 +79,7 @@ class Save
         if ($imagePath) {
             $symbol->setSymbolIcon($imagePath);
         } elseif ($symbol->getStoreId() == \Magento\Store\Model\Store::DEFAULT_STORE_ID) {
-            $symbol->setSymbolIcon('');
+            $symbol->setSymbolIcon(null);
         }
 
         $symbol = $this->symbolRepository->save($symbol);
