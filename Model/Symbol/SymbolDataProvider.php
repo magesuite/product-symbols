@@ -82,6 +82,7 @@ class SymbolDataProvider extends \Magento\Ui\DataProvider\AbstractDataProvider
                 'symbol_short_description' => false,
                 'symbol_description' => false,
                 'symbol_groups' => false,
+                'cms_block_identifier' => false,
                 'sort_order' => false
             ];
         } else {
@@ -104,6 +105,7 @@ class SymbolDataProvider extends \Magento\Ui\DataProvider\AbstractDataProvider
                 'symbol_short_description' => $symbol->getSymbolShortDescription(),
                 'symbol_description' => $symbol->getSymbolDescription(),
                 'symbol_groups' => $symbol->getSymbolGroups(),
+                'cms_block_identifier' => $symbol->getCmsBlockIdentifier(),
                 'sort_order' => $symbol->getSortOrder(),
                 'use_config' => $useConfig
             ]
@@ -142,6 +144,7 @@ class SymbolDataProvider extends \Magento\Ui\DataProvider\AbstractDataProvider
             'symbol_short_description_group' => 'use_config.symbol_short_description',
             'symbol_description_group' => 'use_config.symbol_description',
             'symbol_groups_group' => 'use_config.symbol_groups',
+            'cms_block_identifier_group' => 'use_config.cms_block_identifier',
             'sort_order_group' => 'use_config.sort_order'
         ];
 

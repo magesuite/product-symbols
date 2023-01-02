@@ -233,6 +233,16 @@ class Symbol extends \Magento\Rule\Model\AbstractModel implements \MageSuite\Pro
         return $this->setData('symbol_groups', $symbolGroups);
     }
 
+    public function getCmsBlockIdentifier()
+    {
+        return $this->getData('cms_block_identifier');
+    }
+
+    public function setCmsBlockIdentifier($cmsBlockIdentifier)
+    {
+        return $this->setData('cms_block_identifier', $cmsBlockIdentifier);
+    }
+
     public function getSortOrder()
     {
         return $this->getData('sort_order');

@@ -88,6 +88,7 @@ class SymbolTest extends \PHPUnit\Framework\TestCase
             'symbol_icon' => 'edit_image.jpg',
             'symbol_short_description' => 'symbol short description 2',
             'symbol_groups' => [100, 200],
+            'cms_block_identifier' => 'header_topbar_hotline',
             'sort_order' => 100
         ];
 
@@ -98,6 +99,7 @@ class SymbolTest extends \PHPUnit\Framework\TestCase
             ->setSymbolIcon($editData['symbol_icon'])
             ->setSymbolName($editData['symbol_name'])
             ->setSymbolGroups($editData['symbol_groups'])
+            ->setCmsBlockIdentifier($editData['cms_block_identifier'])
             ->setSortOrder($editData['sort_order']);
 
         $this->symbolRepositoryInterface->save($symbol);
@@ -107,6 +109,7 @@ class SymbolTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals($editData['store_id'], $editedSymbol->getStoreId());
         $this->assertEquals($editData['symbol_icon'], $editedSymbol->getSymbolIcon());
         $this->assertEquals($editData['symbol_short_description'], $editedSymbol->getSymbolShortDescription());
+        $this->assertEquals($editData['cms_block_identifier'], $editedSymbol->getCmsBlockIdentifier());
         $this->assertEquals($editData['sort_order'], $editedSymbol->getSortOrder());
 
         $editData = [

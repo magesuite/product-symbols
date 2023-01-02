@@ -117,6 +117,17 @@ interface SymbolInterface
     public function setSymbolGroups($symbolGroups);
 
     /**
+     * @return mixed
+     */
+    public function getCmsBlockIdentifier();
+
+    /**
+     * @param $cmsBlockIdentifier
+     * @return mixed
+     */
+    public function setCmsBlockIdentifier($cmsBlockIdentifier);
+
+    /**
      * @return int
      */
     public function getSortOrder();
