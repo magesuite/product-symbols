@@ -1,0 +1,22 @@
+<?php
+    /** @var \MageSuite\ProductSymbols\Block\Symbol\Group $block */
+    /** @var \MageSuite\ProductSymbols\ViewModel\Symbol\Group $viewModel */
+    $viewModel = $block->getSymbolViewModel();
+    $groupSymbols = $viewModel->getGroupSymbols();
+?>
+<?php if (!empty($groupSymbols)) : ?>
+        <?php foreach ($groupSymbols as $group) : ?>
+            <?php foreach ($group['symbols'] as $symbol) : ?>
+                <?php
+                    $cmsBlockId = $symbol->getCmsBlockIdentifier();
+                ?>
+                <?php if ($cmsBlockId) : ?>
+                    <?= $this->getLayout()
+                    ->createBlock(\MageSuite\ThemeHelpers\Block\Cms\CacheableBlock::class)
+                    ->setBlockId($cmsBlockId)
+                    ->toHtml();
+                    ?>
+                <?php endif; ?>
+            <?php endforeach;?>
+        <?php endforeach;?>
+<?php endif; ?>
