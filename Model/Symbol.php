@@ -314,6 +314,11 @@ class Symbol extends \Magento\Rule\Model\AbstractModel implements \MageSuite\Pro
         return $this->actionsFactory->create();
     }
 
+    public function getConditionsFieldSetId($formName = '')
+    {
+        return $formName . 'rule_conditions_fieldset_' . $this->getId();
+    }
+
     public function shouldDisplaySvgInline(string $image): bool
     {
         $extension = pathinfo($image, PATHINFO_EXTENSION); //phpcs:ignore
