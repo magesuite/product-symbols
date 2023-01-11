@@ -2,14 +2,14 @@
 <page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
     <body>
         <referenceBlock name="product.info.details">
-            <block name="symbol.cms" template="MageSuite_ProductSymbols::product/view/cms.phtml" group="detailed_info">
+            <block name="symbol.cms" class="Magento\Catalog\Block\Product\View\Description" template="MageSuite_ProductSymbols::product/view/cms.phtml" group="detailed_info">
                 <arguments>
                     <argument name="title" translate="true" xsi:type="string">Product Showcase</argument>
                     <argument name="sort_order" xsi:type="string">40</argument>
                     <argument name="contain_content" xsi:type="boolean">false</argument>
                     <argument name="is_collapsible" xsi:type="boolean">false</argument>
                     <argument name="in_nav" xsi:type="boolean">false</argument>
-                    <argument name="symbol_view_model" xsi:type="object">MageSuite\ProductSymbols\ViewModel\Symbol\Group</argument>
+                    <argument name="symbol_view_model" xsi:type="object">MageSuite\ProductSymbols\ViewModel\Symbol\CmsBlockList</argument>
                 </arguments>
             </block>
         </referenceBlock>
