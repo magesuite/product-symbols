@@ -362,7 +362,7 @@
                     <item name="options" xsi:type="object">MageSuite\ProductSymbols\Model\Source\CmsBlockList</item>
                     <item name="config" xsi:type="array">
                         <item name="dataType" xsi:type="string">text</item>
-                        <item name="label" xsi:type="string" translate="true">Add CMS Page</item>
+                        <item name="label" xsi:type="string" translate="true">Add CMS Block</item>
                         <item name="formElement" xsi:type="string">select</item>
                         <item name="source" xsi:type="string">product_symbol_entity</item>
                         <item name="dataScope" xsi:type="string">cms_block_identifier</item>
