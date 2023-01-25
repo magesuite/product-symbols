@@ -96,20 +96,9 @@ class SymbolDataProvider extends \Magento\Ui\DataProvider\AbstractDataProvider
                 $useConfig[$attrName] = $useConfigValue;
             }
         }
-        $result = [
-            $symbol->getEntityId() => [
-                'entity_id' => $symbol->getEntityId(),
-                'store_id' => $symbol->getStoreId(),
-                'is_enabled' => $symbol->getIsEnabled(),
-                'symbol_name' => $symbol->getSymbolName(),
-                'symbol_short_description' => $symbol->getSymbolShortDescription(),
-                'symbol_description' => $symbol->getSymbolDescription(),
-                'symbol_groups' => $symbol->getSymbolGroups(),
-                'cms_block_identifier' => $symbol->getCmsBlockIdentifier(),
-                'sort_order' => $symbol->getSortOrder(),
-                'use_config' => $useConfig
-            ]
-        ];
+        $symbolData = $symbol->getData();
+        $symbolData['use_config'] = $useConfig;
+        $result = [$symbol->getEntityId() => $symbolData];
 
         if ($symbol->getSymbolIcon()) {
             $name = $symbol->getSymbolIcon();
