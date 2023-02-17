@@ -73,7 +73,8 @@ class Conditions extends \Magento\Backend\Block\Widget\Form\Generic
         $renderer = $this->rendererFieldset
             ->setTemplate('Magento_CatalogRule::promo/fieldset.phtml')
             ->setNewChildUrl($newChildUrl)
-            ->setFieldSetId($conditionsFieldSetId);
+            ->setFieldSetId($conditionsFieldSetId)
+            ->setNameInLayout($conditionsFieldSetId);
 
         $fieldset = $form
             ->addFieldset('conditions_serialized', [])
