@@ -5,7 +5,7 @@ $product = $block->getProduct();
 $viewModel = $block->getSymbolViewModel();
 ?>
 <?php if ($product) : ?>
-    <?php foreach ($viewModel->getList($product) as $cmsBlock): ?>
+    <?php foreach ($viewModel->getList($product) as $cmsBlock) : ?>
         <?= /* @noEscape */ $cmsBlock ?>
     <?php endforeach; ?>
 <?php endif; ?>

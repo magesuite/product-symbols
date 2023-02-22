@@ -21,6 +21,13 @@
                     <ticket_id>RK-292</ticket_id>
                 </entry>
             </tag>
+            <tag version="1.2.5" date="2023-02-22">
+                <entry>
+                    <type>FIX</type>
+                    <overview>Hide product symbol conditions on store scope</overview>
+                    <ticket_id>IPET-1866</ticket_id>
+                </entry>
+            </tag>
         </changelog>
     </module>
 </config>

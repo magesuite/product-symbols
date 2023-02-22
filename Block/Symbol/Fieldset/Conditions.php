@@ -4,25 +4,13 @@ namespace MageSuite\ProductSymbols\Block\Symbol\Fieldset;
 
 class Conditions extends \Magento\Backend\Block\Widget\Form\Generic
 {
-    /**
-     * @var string
-     */
     protected $_nameInLayout = 'conditions_serialized'; //phpcs:ignore
 
-    /**
-     * @var \Magento\Rule\Block\Conditions
-     */
-    protected $conditions;
+    protected \Magento\Rule\Block\Conditions $conditions;
 
-    /**
-     * @var \MageSuite\ProductSymbols\Model\SymbolFactory
-     */
-    protected $symbolFactory;
+    protected \MageSuite\ProductSymbols\Model\SymbolFactory $symbolFactory;
 
-    /**
-     * @var \Magento\Backend\Block\Widget\Form\Renderer\Fieldset
-     */
-    protected $rendererFieldset;
+    protected \Magento\Backend\Block\Widget\Form\Renderer\Fieldset $rendererFieldset;
 
     public function __construct(
         \Magento\Backend\Block\Template\Context $context,
@@ -33,11 +21,11 @@ class Conditions extends \Magento\Backend\Block\Widget\Form\Generic
         \Magento\Backend\Block\Widget\Form\Renderer\Fieldset $rendererFieldset,
         array $data = []
     ) {
+        parent::__construct($context, $registry, $formFactory, $data);
+
         $this->rendererFieldset = $rendererFieldset;
         $this->conditions = $conditions;
         $this->symbolFactory = $symbolFactory;
-
-        parent::__construct($context, $registry, $formFactory, $data);
     }
 
     protected function _prepareForm()
@@ -101,7 +89,7 @@ class Conditions extends \Magento\Backend\Block\Widget\Form\Generic
         return $form;
     }
 
-    private function setConditionFormName(\Magento\Rule\Model\Condition\AbstractCondition $conditions, $formName)
+    protected function setConditionFormName(\Magento\Rule\Model\Condition\AbstractCondition $conditions, $formName)
     {
         $conditions->setFormName($formName);
 
@@ -110,40 +98,5 @@ class Conditions extends \Magento\Backend\Block\Widget\Form\Generic
                 $this->setConditionFormName($condition, $formName);
             }
         }
-    }
-
-    public function getTabClass()
-    {
-        return null;
-    }
-
-    public function getTabUrl()
-    {
-        return null;
-    }
-
-    public function isAjaxLoaded()
-    {
-        return false;
-    }
-
-    public function getTabLabel()
-    {
-        return __('Conditions');
-    }
-
-    public function getTabTitle()
-    {
-        return __('Conditions');
-    }
-
-    public function canShowTab()
-    {
-        return true;
-    }
-
-    public function isHidden()
-    {
-        return false;
     }
 }

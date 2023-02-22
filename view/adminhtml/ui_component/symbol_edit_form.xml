@@ -425,7 +425,7 @@
             </field>
         </container>
     </fieldset>
-    <fieldset name="serialized_condition">
+    <fieldset name="serialized_condition" class="MageSuite\ProductSymbols\Ui\Component\Form\SerializedConditionVisibility">
         <argument name="data" xsi:type="array">
             <item name="config" xsi:type="array">
                 <item name="label" xsi:type="string" translate="true">Conditions</item>
