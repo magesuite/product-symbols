@@ -1,32 +1,19 @@
 <?php
+
 namespace MageSuite\ProductSymbols\Model\Symbol\Processor;
 
 class Save
 {
-    /**
-     * @var \Magento\Framework\Event\Manager
-     */
-    protected $eventManager;
 
-    /**
-     * @var \Magento\Framework\DataObjectFactory
-     */
-    protected $dataObjectFactory;
+    protected \Magento\Framework\Event\Manager $eventManager;
 
-    /**
-     * @var \MageSuite\ProductSymbols\Model\SymbolFactory
-     */
-    protected $symbolFactory;
+    protected \Magento\Framework\DataObjectFactory $dataObjectFactory;
 
-    /**
-     * @var \MageSuite\ProductSymbols\Api\SymbolRepositoryInterface
-     */
-    protected $symbolRepository;
+    protected \MageSuite\ProductSymbols\Model\SymbolFactory $symbolFactory;
 
-    /**
-     * @var \Magento\Framework\Serialize\SerializerInterface
-     */
-    protected $serializer;
+    protected \MageSuite\ProductSymbols\Api\SymbolRepositoryInterface $symbolRepository;
+
+    protected \Magento\Framework\Serialize\SerializerInterface $serializer;
 
     public function __construct(
         \MageSuite\ProductSymbols\Model\SymbolFactory $symbolFactory,
@@ -35,7 +22,6 @@ class Save
         \Magento\Framework\DataObjectFactory $dataObjectFactory,
         \Magento\Framework\Serialize\SerializerInterface $serializer
     ) {
-
         $this->eventManager = $eventManager;
         $this->dataObjectFactory = $dataObjectFactory;
         $this->symbolFactory = $symbolFactory;
@@ -45,7 +31,7 @@ class Save
 
     public function processSave($params)
     {
-        $isNew = (!isset($params['entity_id'])) || (isset($params['entity_id']) && $params['entity_id'] == "") ? true : false;
+        $isNew = empty($params['entity_id']);
 
         if ($isNew) {
             if (!isset($params['store_id'])) {
@@ -67,6 +53,7 @@ class Save
             $symbol = $this->symbolRepository->getById($params['entity_id'], $params['store_id']);
             $symbol->setData($params->getData());
         }
+
         $imagePath = false;
 
         if (isset($params['symbol_icon'])) {
@@ -87,17 +74,6 @@ class Save
         return $symbol;
     }
 
-    public function matchChangedFields($config)
-    {
-        $matchedFields = [];
-        foreach ($config as $field => $value) {
-            if ($value == 'false') {
-                $matchedFields[] = $field;
-            }
-        }
-        return $matchedFields;
-    }
-
     public function matchParams($params)
     {
         $changedFields = $this->matchChangedFields($params['use_config']);
@@ -116,11 +92,25 @@ class Save
 
             $matchedParams[$field] = $params[$field];
         }
+
         $matchedParams['entity_id'] = $params['entity_id'];
         $matchedParams['store_id'] = $params['store_id'];
-        $matchedParams['conditions_serialized'] = $this->prepareConditions($params);
+        if ($params['store_id'] == null || $params['store_id'] == \Magento\Store\Model\Store::DEFAULT_STORE_ID) {
+            $matchedParams['conditions_serialized'] = $this->prepareConditions($params);
+        }
 
         return $this->dataObjectFactory->create()->setData($matchedParams);
+    }
+
+    public function matchChangedFields($config)
+    {
+        $matchedFields = [];
+        foreach ($config as $field => $value) {
+            if ($value == 'false') {
+                $matchedFields[] = $field;
+            }
+        }
+        return $matchedFields;
     }
 
     protected function prepareConditions($params)

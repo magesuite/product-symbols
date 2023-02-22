@@ -1,4 +1,5 @@
 <?php
+
 namespace MageSuite\ProductSymbols\Model\Symbol;
 
 class SymbolDataProvider extends \Magento\Ui\DataProvider\AbstractDataProvider
@@ -10,25 +11,13 @@ class SymbolDataProvider extends \Magento\Ui\DataProvider\AbstractDataProvider
         'updated_at'
     ];
 
-    /**
-     * @var \Magento\Framework\App\RequestInterface
-     */
-    protected $request;
+    protected string $requestScopeFieldName = 'store';
 
-    /**
-     * @var string
-     */
-    protected $requestScopeFieldName = 'store';
+    protected \MageSuite\ProductSymbols\Api\SymbolRepositoryInterface $symbolRepository;
 
-    /**
-     * @var \MageSuite\ProductSymbols\Api\SymbolRepositoryInterface
-     */
-    protected $symbolRepository;
+    protected \MageSuite\ProductSymbols\Api\Data\SymbolInterfaceFactory $symbolFactory;
 
-    /**
-     * @var \MageSuite\ProductSymbols\Api\Data\SymbolInterfaceFactory
-     */
-    protected $symbolFactory;
+    protected \Magento\Framework\App\RequestInterface $request;
 
     public function __construct(
         $name,
@@ -41,11 +30,12 @@ class SymbolDataProvider extends \Magento\Ui\DataProvider\AbstractDataProvider
         array $meta = [],
         array $data = []
     ) {
-        $this->collection = $symbolCollectionFactory->create();
-        $this->request = $request;
         parent::__construct($name, $primaryFieldName, $requestFieldName, $meta, $data);
+
+        $this->collection = $symbolCollectionFactory->create();
         $this->symbolRepository = $symbolRepository;
         $this->symbolFactory = $symbolFactory;
+        $this->request = $request;
     }
 
     public function getCurrentSymbol()

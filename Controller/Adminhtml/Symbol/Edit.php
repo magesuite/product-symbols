@@ -6,20 +6,11 @@ class Edit extends \Magento\Backend\App\Action
 {
     const ADMIN_RESOURCE = 'MageSuite_ProductSymbols::symbol_edit';
 
-    /**
-     * @var \Magento\Framework\View\Result\PageFactory
-     */
-    protected $resultPageFactory;
+    protected \Magento\Framework\View\Result\PageFactory $resultPageFactory;
 
-    /**
-     * @var \MageSuite\ProductSymbols\Api\SymbolRepositoryInterface
-     */
-    protected $symbolRepository;
+    protected \MageSuite\ProductSymbols\Api\SymbolRepositoryInterface $symbolRepository;
 
-    /**
-     * @var \Magento\Framework\Registry
-     */
-    protected $registry;
+    protected \Magento\Framework\Registry $registry;
 
     public function __construct(
         \Magento\Backend\App\Action\Context $context,
@@ -27,21 +18,22 @@ class Edit extends \Magento\Backend\App\Action
         \MageSuite\ProductSymbols\Api\SymbolRepositoryInterface $symbolRepository,
         \Magento\Framework\Registry $registry
     ) {
+        parent::__construct($context);
+
         $this->resultPageFactory = $resultPageFactory;
         $this->symbolRepository = $symbolRepository;
         $this->registry = $registry;
-
-        parent::__construct($context);
     }
 
     public function execute()
     {
         $id = (int)$this->getRequest()->getParam('id');
+        $storeId = $this->getRequest()->getParam('store');
 
         $title = __('New Symbol');
 
         if ($id) {
-            $symbol = $this->symbolRepository->getById($id);
+            $symbol = $this->symbolRepository->getById($id, $storeId);
 
             if (!$symbol->getId()) {
                 $this->messageManager->addErrorMessage(__('This symbol no longer exists.'));

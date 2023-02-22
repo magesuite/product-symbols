@@ -6,25 +6,13 @@ class Delete extends \Magento\Backend\App\Action
 {
     const ADMIN_RESOURCE = 'MageSuite_ProductSymbols::symbol_delete';
 
-    /**
-     * @var \Magento\Framework\View\Result\PageFactory
-     */
-    protected $pageFactory;
+    protected \Magento\Framework\View\Result\PageFactory $pageFactory;
 
-    /**
-     * @var \Magento\Eav\Model\Config
-     */
-    protected $eavConfig;
+    protected \Magento\Eav\Model\Config $eavConfig;
 
-    /**
-     * @var \Magento\Framework\Controller\ResultFactory
-     */
-    protected $resultRedirect;
+    protected \Magento\Framework\Controller\ResultFactory $resultRedirect;
 
-    /**
-     * @var \MageSuite\ProductSymbols\Api\SymbolRepositoryInterface
-     */
-    protected $symbolRepository;
+    protected \MageSuite\ProductSymbols\Api\SymbolRepositoryInterface $symbolRepository;
 
     public function __construct(
         \Magento\Backend\App\Action\Context $context,
@@ -33,12 +21,12 @@ class Delete extends \Magento\Backend\App\Action
         \Magento\Eav\Model\Config $eavConfig,
         \Magento\Framework\Controller\ResultFactory $resultRedirect
     ) {
+        parent::__construct($context);
+
         $this->pageFactory = $pageFactory;
         $this->eavConfig = $eavConfig;
         $this->resultRedirect = $resultRedirect;
         $this->symbolRepository = $symbolRepository;
-
-        parent::__construct($context);
     }
 
     public function execute()
@@ -47,17 +35,15 @@ class Delete extends \Magento\Backend\App\Action
             $params = $this->_request->getParams();
 
             $symbol = $this->symbolRepository->getById($params['id']);
-
             $this->symbolRepository->delete($symbol);
 
             $this->messageManager->addSuccessMessage('Symbol has been deleted');
         } catch (\Exception $e) {
             $this->messageManager->addErrorMessage($e->getMessage());
         }
+
         $resultRedirect = $this->resultRedirectFactory->create();
-
         $url = $this->_url->getUrl('symbol/grid/symbol');
-
         $resultRedirect->setPath($url);
 
         return $resultRedirect;
