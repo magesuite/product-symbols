@@ -43,6 +43,10 @@ class Edit extends \Magento\Backend\App\Action
                 return $resultRedirect->setPath('*/*/');
             }
 
+            $symbol->getConditions()->setFormName('symbol_edit_form');
+            $symbol->getConditions()->setJsFormObject(
+                $symbol->getConditionsFieldSetId($symbol->getConditions()->getFormName())
+            );
             $this->registry->register('symbol', $symbol);
             $title = __('Edit Symbol %1', $symbol->getSymbolName());
         }
