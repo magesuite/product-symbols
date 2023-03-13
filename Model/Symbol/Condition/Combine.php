@@ -4,14 +4,11 @@ namespace MageSuite\ProductSymbols\Model\Symbol\Condition;
 
 class Combine extends \Magento\Rule\Model\Condition\Combine
 {
-    /**
-     * @var \Magento\CatalogRule\Model\Rule\Condition\Product
-     */
-    protected $conditionProduct;
+    protected \MageSuite\ProductSymbols\Model\Symbol\Condition\Product $conditionProduct;
 
     public function __construct(
         \Magento\Rule\Model\Condition\Context $context,
-        \Magento\CatalogRule\Model\Rule\Condition\Product $conditionProduct,
+        \MageSuite\ProductSymbols\Model\Symbol\Condition\Product $conditionProduct,
         array $data = []
     ) {
         $this->setType(\Magento\SalesRule\Model\Rule\Condition\Combine::class);
@@ -28,7 +25,7 @@ class Combine extends \Magento\Rule\Model\Condition\Combine
         $valueAttributes = [];
         foreach ($productAttributes as $code => $label) {
             $valueAttributes[] = [
-                'value' => 'Magento\CatalogRule\Model\Rule\Condition\Product|' . $code,
+                'value' => 'MageSuite\ProductSymbols\Model\Symbol\Condition\Product|' . $code,
                 'label' => $label,
             ];
         }
