@@ -86,4 +86,19 @@ class SymbolList extends \Magento\Eav\Model\Entity\Attribute\Source\AbstractSour
 
         return $options;
     }
+
+    public function getOptionText($value)
+    {
+        $options = $this->getAllOptions();
+
+        foreach ($options as $item) {
+            if ($item['value'] != $value) {
+                continue;
+            }
+
+            return $item['label'];
+        }
+
+        return false;
+    }
 }
