@@ -77,8 +77,8 @@ class GroupRepository implements \MageSuite\ProductSymbols\Api\GroupRepositoryIn
             throw new \Magento\Framework\Exception\AlreadyExistsException(new \Magento\Framework\Phrase('Group with the same code already exist.'));
         }
 
-        $this->groupResource->save($group);
         $this->createGroupAttribute($group);
+        $this->groupResource->save($group);
 
         return $group;
     }

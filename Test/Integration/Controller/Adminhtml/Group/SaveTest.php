@@ -3,6 +3,7 @@
 namespace MageSuite\ProductSymbols\Test\Integration\Controller\Adminhtml\Group;
 
 /**
+ * @magentoDbIsolation enabled
  * @magentoAppArea adminhtml
  */
 class SaveTest extends \Magento\TestFramework\TestCase\AbstractBackendController
@@ -26,27 +27,73 @@ class SaveTest extends \Magento\TestFramework\TestCase\AbstractBackendController
     }
 
     /**
-     * @magentoDbIsolation enabled
+     * @group symbolGroupSaving
      */
-    public function testSaveGroup()
+    public function testSaveGroupWithPascalCase()
     {
-        $editData = [
-            'group_name' => 'group 1',
-            'group_code' => 'group_1'
-        ];
-
-        $this->getRequest()->setPostValue($editData);
-        $this->dispatch('backend/symbol/group/save');
-
-        $group = $this->groupRepositoryInterface->getByCode('group_1');
-
-        $this->assertEquals('group 1', $group->getGroupName());
-        $this->assertEquals('group_1', $group->getGroupCode());
+        $this->saveGroup('Group', 'RandomGroup');
     }
 
     /**
-     * @magentoDbIsolation enabled
+     * @group symbolGroupSaving
      */
+    public function testSaveGroupWithCamelCase()
+    {
+        $this->saveGroup('group 1', 'groupOne');
+    }
+
+    /**
+     * @group symbolGroupSaving
+     */
+    public function testSaveGroupWithSnakeCase()
+    {
+        $this->saveGroup('group 2', 'group_2');
+    }
+
+    /**
+     * @group symbolGroupSaving
+     */
+    public function testSaveGroupWithKebabCase()
+    {
+        $this->saveGroup('group 3', 'group-3', false);
+    }
+
+    /**
+     * @group symbolGroupSaving
+     */
+    public function testSaveGroupWithSlashCase()
+    {
+        $this->saveGroup('group 4', 'group/4', false);
+    }
+
+    /**
+     * @group symbolGroupSaving
+     */
+    public function testSaveGroupWithSpaces()
+    {
+        $this->saveGroup('group 5', 'group 5', false);
+    }
+
+    protected function saveGroup(string $name, string $code, bool $isSuccessExpected = true): void
+    {
+        $this->getRequest()->setPostValue([
+            'group_name' => $name,
+            'group_code' => $code
+        ]);
+        $this->dispatch('backend/symbol/group/save');
+
+        $group = $this->groupRepositoryInterface->getByCode($code);
+
+        if ($isSuccessExpected) {
+            $this->assertEquals($name, $group->getGroupName());
+            $this->assertEquals($code, $group->getGroupCode());
+        } else {
+            $this->assertEmpty($group);
+        }
+
+
+    }
+
     public function testEditGroup()
     {
         $group = $this->groupFactory->create();
