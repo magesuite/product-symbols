@@ -6,15 +6,9 @@ class Save extends \Magento\Backend\App\Action
 {
     const ADMIN_RESOURCE = 'MageSuite_ProductSymbols::group_save';
 
-    /**
-     * @var \MageSuite\ProductSymbols\Model\Group\Processor\SaveFactory
-     */
-    protected $saveFactory;
-
-    /**
-     * @var \Magento\Framework\DataObjectFactory
-     */
-    protected $dataObjectFactory;
+    protected \Magento\Framework\View\Result\PageFactory $pageFactory;
+    protected \MageSuite\ProductSymbols\Model\Group\Processor\SaveFactory $saveFactory;
+    protected \Magento\Framework\DataObjectFactory $dataObjectFactory;
 
     public function __construct(
         \Magento\Backend\App\Action\Context $context,
