@@ -4,6 +4,7 @@
         <product_symbols>
             <general>
                 <should_display_svg_inline>1</should_display_svg_inline>
+                <indexing_is_enabled>1</indexing_is_enabled>
             </general>
         </product_symbols>
     </default>

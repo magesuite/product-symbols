@@ -107,4 +107,12 @@
             <column name="entity_id"/>
         </constraint>
     </table>
+
+    <table name="symbol_to_product_index" resource="default" engine="innodb">
+        <column xsi:type="int" name="product_id" padding="10" unsigned="true" nullable="false" comment="Entity ID"/>
+        <column xsi:type="smallint" name="symbol_id" padding="5" unsigned="true" nullable="false" default="0" comment="Symbol ID"/>
+        <index referenceId="SYMBOL_TO_PRODUCT_INDEX_PRODUCT_ID" indexType="btree">
+            <column name="product_id"/>
+        </index>
+    </table>
 </schema>

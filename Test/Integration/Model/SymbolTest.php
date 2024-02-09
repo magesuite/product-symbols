@@ -165,7 +165,7 @@ class SymbolTest extends \PHPUnit\Framework\TestCase
 
         $this->assertFalse($symbol->validate($product));
 
-        $product->setTestAttribute('test_value');
+        $product->setMetaDescription('meta_description_symbol_match');
         $this->assertTrue(($symbol->validate($product)));
     }
 

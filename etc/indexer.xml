@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Indexer/etc/indexer.xsd">
+    <indexer id="symbol_to_product"
+             view_id="symbol_to_product"
+             class="MageSuite\ProductSymbols\Model\Indexer\SymbolToProduct">
+        <title translate="true">Symbol to product</title>
+        <description translate="true">Associations between products and dynamically calculated symbols with defined conditions</description>
+    </indexer>
+</config>

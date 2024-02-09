@@ -218,6 +218,8 @@ class Symbol extends \Magento\Eav\Model\Entity\AbstractEntity
         }
         $this->removeAttribute($symbol, $attributesToRemove);
 
+        $symbol->afterSave();
+
         return $this;
     }
 

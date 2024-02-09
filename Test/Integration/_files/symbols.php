@@ -11,6 +11,7 @@ $symbol
     ->setEntityId(600)
     ->setStoreId(0)
     ->setSymbolName('test symbol 1')
+    ->setIsEnabled(true)
     ->setSymbolShortDescription('this is test symbol 1')
     ->setSymbolIcon('testimage.png')
     ->setSymbolGroups('100,200')
@@ -26,6 +27,7 @@ $symbol
     ->setEntityId(1000)
     ->setStoreId($store->getId())
     ->setSymbolName('test symbol 4')
+    ->setIsEnabled(true)
     ->setSymbolShortDescription('this is test symbol 4')
     ->setSymbolIcon('testimage.png')
     ->setSymbolGroups('200,300')
@@ -37,6 +39,7 @@ $symbol = \Magento\TestFramework\Helper\Bootstrap::getObjectManager()->create(\M
 $symbol
     ->setEntityId(1101)
     ->setStoreId(0)
+    ->setIsEnabled(true)
     ->setSymbolName('Symbol with conditions')
     ->setSymbolShortDescription('Symbol with conditions')
     ->setSymbolIcon('testimage.png')
@@ -56,9 +59,9 @@ $symbol->loadPost(
                 '1--1' =>
                     [
                         'type' => 'Magento\CatalogRule\Model\Rule\Condition\Product',
-                        'attribute' => 'test_attribute',
+                        'attribute' => 'meta_description',
                         'operator' => '==',
-                        'value' => 'test_value'
+                        'value' => 'meta_description_symbol_match'
                     ],
             ],
     ]

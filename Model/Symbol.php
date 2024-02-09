@@ -4,7 +4,6 @@ namespace MageSuite\ProductSymbols\Model;
 
 class Symbol extends \Magento\Rule\Model\AbstractModel implements \MageSuite\ProductSymbols\Api\Data\SymbolInterface
 {
-
     const SYMBOL_URL = 'product_symbol';
     const SYMBOL_ATTRIBUTE_CODE = 'product_symbol';
     const ENTITY = 'product_symbol';
@@ -16,14 +15,13 @@ class Symbol extends \Magento\Rule\Model\AbstractModel implements \MageSuite\Pro
 
     protected $_cacheTag = self::CACHE_TAG; //phpcs:ignore
     protected $_eventPrefix = self::EVENT_PREFIX; //phpcs:ignore
+    protected ?bool $hasConditions = null;
 
     protected \Magento\Store\Model\StoreManagerInterface $storeManager;
-
     protected \MageSuite\ProductSymbols\Model\Symbol\Condition\CombineFactory $conditionsCombineFactory;
-
     protected \Magento\Rule\Model\Action\CollectionFactory $actionsFactory;
-
     protected \MageSuite\ProductSymbols\Helper\Configuration $configuration;
+    protected \Magento\Framework\Indexer\IndexerRegistry $indexerRegistry;
 
     public function __construct(
         \Magento\Framework\Model\Context $context,
@@ -34,6 +32,7 @@ class Symbol extends \Magento\Rule\Model\AbstractModel implements \MageSuite\Pro
         \MageSuite\ProductSymbols\Model\Symbol\Condition\CombineFactory $conditionsCombineFactory,
         \Magento\Rule\Model\Action\CollectionFactory $actionsFactory,
         \MageSuite\ProductSymbols\Helper\Configuration $configuration,
+        \Magento\Framework\Indexer\IndexerRegistry $indexerRegistry,
         \Magento\Framework\Model\ResourceModel\AbstractResource $resource = null,
         \Magento\Framework\Data\Collection\AbstractDb $resourceCollection = null,
         array $data = []
@@ -46,6 +45,7 @@ class Symbol extends \Magento\Rule\Model\AbstractModel implements \MageSuite\Pro
         $this->configuration = $configuration;
 
         parent::__construct($context, $registry, $formFactory, $localeDate, $resource, $resourceCollection, $data);
+        $this->indexerRegistry = $indexerRegistry;
     }
 
     protected function _construct()
@@ -328,5 +328,45 @@ class Symbol extends \Magento\Rule\Model\AbstractModel implements \MageSuite\Pro
         }
 
         return $this->configuration->shouldDisplaySvgInline();
+    }
+
+    public function validate(\Magento\Framework\DataObject $product)
+    {
+        if ($this->shouldUseDataFromIndex($product)) {
+            return in_array($this->getId(), $product->getSymbolsFromIndex());
+        }
+
+        return parent::validate($product);
+    }
+
+    public function hasConditions(): bool
+    {
+        if ($this->hasConditions === null) {
+            $conditions = $this->getConditions();
+
+            $this->hasConditions = ($conditions !== null && !empty($conditions->getConditions()));
+        }
+
+        return $this->hasConditions;
+    }
+
+    public function afterSave()
+    {
+        if ($this->configuration->isIndexingEnabled() && $this->hasConditions()) {
+            $symbolToProductIndexer = $this->indexerRegistry->get(
+                \MageSuite\ProductSymbols\Model\Indexer\SymbolToProduct::INDEXER_ID
+            );
+            $symbolToProductIndexer->invalidate();
+        }
+
+        return parent::afterSave();
+    }
+
+    protected function shouldUseDataFromIndex(\Magento\Framework\DataObject $product): bool
+    {
+        return $this->configuration->isIndexingEnabled() &&
+            $this->hasConditions() &&
+            $this->getForceValidation() !== true &&
+            is_array($product->getSymbolsFromIndex());
     }
 }

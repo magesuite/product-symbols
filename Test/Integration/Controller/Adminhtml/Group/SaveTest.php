@@ -90,8 +90,6 @@ class SaveTest extends \Magento\TestFramework\TestCase\AbstractBackendController
         } else {
             $this->assertEmpty($group);
         }
-
-
     }
 
     public function testEditGroup()
