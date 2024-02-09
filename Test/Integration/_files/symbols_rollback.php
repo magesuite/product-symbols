@@ -19,3 +19,6 @@ foreach ([600,1000,1101] as $symbolId) {
         $symbol->delete();
     }
 }
+
+require 'groups_rollback.php';
+require 'store_rollback.php';
