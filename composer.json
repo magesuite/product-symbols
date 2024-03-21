@@ -1,15 +1,18 @@
 {
-  "name": "creativestyle/magesuite-product-symbols",
-  "description": "This module adds the possibility to define product symbols (with name, icon, and description), group symbols together, and display them on the frontend",
-  "type": "magento2-module",
-  "homepage": "https://creativestyle.de",
-  "license": "OSL-3.0",
-  "autoload": {
-    "files": [
-      "registration.php"
-    ],
-    "psr-4": {
-      "MageSuite\\ProductSymbols\\": ""
+    "name": "creativestyle/magesuite-product-symbols",
+    "description": "This module adds the possibility to define product symbols (with name, icon, and description), group symbols together, and display them on the frontend",
+    "type": "magento2-module",
+    "homepage": "https://creativestyle.de",
+    "license": "OSL-3.0",
+    "require": {
+        "creativestyle/magesuite-performance-preload": "^1.0.0"
+    },
+    "autoload": {
+        "files": [
+            "registration.php"
+        ],
+        "psr-4": {
+            "MageSuite\\ProductSymbols\\": ""
+        }
     }
-  }
 }
