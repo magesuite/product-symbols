@@ -26,6 +26,23 @@ class PreloadCalculatedSymbolsTest extends \PHPUnit\Framework\TestCase
      * @magentoDataFixture MageSuite_ProductSymbols::Test/Integration/_files/symbols.php
      * @magentoDataFixture MageSuite_ProductSymbols::Test/Integration/_files/product_with_test_attribute.php
      */
+    public function testPreloadingDoesNotHappenByDefault()
+    {
+        $this->indexBuilder->reindexList([self::SIMPLE_PRODUCT_ID]);
+
+        $products = $this->productCollection->addIdFilter([self::SIMPLE_PRODUCT_ID])->getItems();
+
+        $simpleProduct = array_shift($products);
+        $this->assertNull($simpleProduct->getSymbolsFromIndex());
+    }
+
+    /**
+     * @magentoDbIsolation disabled
+     * @magentoAppIsolation enabled
+     * @magentoAppArea frontend
+     * @magentoDataFixture MageSuite_ProductSymbols::Test/Integration/_files/symbols.php
+     * @magentoDataFixture MageSuite_ProductSymbols::Test/Integration/_files/product_with_test_attribute.php
+     */
     public function testValidationCalculationDoesNotHappenWhenProductWasIndexed()
     {
         $this->indexBuilder->reindexList([self::SIMPLE_PRODUCT_ID]);
@@ -33,8 +50,9 @@ class PreloadCalculatedSymbolsTest extends \PHPUnit\Framework\TestCase
         $products = $this->productCollection->addIdFilter([self::SIMPLE_PRODUCT_ID])->getItems();
 
         $simpleProduct = array_shift($products);
-
         $symbol = $this->symbolRepository->getById(1101);
+        // preload should happen below
+        $symbol->validate($simpleProduct);
 
         $this->assertEquals([1101], $simpleProduct->getSymbolsFromIndex());
 

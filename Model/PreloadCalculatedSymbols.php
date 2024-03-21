@@ -1,6 +1,6 @@
 <?php
 
-namespace MageSuite\ProductSymbols\Plugin\Catalog\Model\ResourceModel\Product\Collection;
+namespace MageSuite\ProductSymbols\Model;
 
 class PreloadCalculatedSymbols
 {
@@ -11,31 +11,31 @@ class PreloadCalculatedSymbols
         $this->indexResource = $indexResource;
     }
 
-    public function afterGetItems(\Magento\Catalog\Model\ResourceModel\Product\Collection $subject, $result)
+    public function execute(\Magento\Catalog\Model\ResourceModel\Product\Collection $collection)
     {
-        if ($subject->hasFlag('symbols_from_index_preloaded')) {
-            return $result;
+        if ($collection->hasFlag('symbols_from_index_preloaded')) {
+            return $collection;
         }
 
-        $subject->setFlag('symbols_from_index_preloaded', true);
+        $collection->setFlag('symbols_from_index_preloaded', true);
         $productIds = [];
 
-        foreach ($result as $item) {
+        foreach ($collection->getItems() as $item) {
             $productIds[] = $item->getId();
         }
 
         if (empty($productIds)) {
-            return $result;
+            return $collection;
         }
 
         $symbolsFromIndex = $this->indexResource->getByProductIds($productIds);
 
-        foreach ($result as $item) {
+        foreach ($collection as $item) {
             $productId = $item->getEntityId();
 
             $item->setSymbolsFromIndex($symbolsFromIndex[$productId] ?? []);
         }
 
-        return $result;
+        return $collection;
     }
 }

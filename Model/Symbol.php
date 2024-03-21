@@ -22,6 +22,7 @@ class Symbol extends \Magento\Rule\Model\AbstractModel implements \MageSuite\Pro
     protected \Magento\Rule\Model\Action\CollectionFactory $actionsFactory;
     protected \MageSuite\ProductSymbols\Helper\Configuration $configuration;
     protected \Magento\Framework\Indexer\IndexerRegistry $indexerRegistry;
+    protected \MageSuite\ProductSymbols\Model\PreloadCalculatedSymbols $preloadCalculatedSymbols;
 
     public function __construct(
         \Magento\Framework\Model\Context $context,
@@ -33,6 +34,7 @@ class Symbol extends \Magento\Rule\Model\AbstractModel implements \MageSuite\Pro
         \Magento\Rule\Model\Action\CollectionFactory $actionsFactory,
         \MageSuite\ProductSymbols\Helper\Configuration $configuration,
         \Magento\Framework\Indexer\IndexerRegistry $indexerRegistry,
+        \MageSuite\ProductSymbols\Model\PreloadCalculatedSymbols $preloadCalculatedSymbols,
         \Magento\Framework\Model\ResourceModel\AbstractResource $resource = null,
         \Magento\Framework\Data\Collection\AbstractDb $resourceCollection = null,
         array $data = []
@@ -46,6 +48,7 @@ class Symbol extends \Magento\Rule\Model\AbstractModel implements \MageSuite\Pro
 
         parent::__construct($context, $registry, $formFactory, $localeDate, $resource, $resourceCollection, $data);
         $this->indexerRegistry = $indexerRegistry;
+        $this->preloadCalculatedSymbols = $preloadCalculatedSymbols;
     }
 
     protected function _construct()
@@ -332,6 +335,10 @@ class Symbol extends \Magento\Rule\Model\AbstractModel implements \MageSuite\Pro
 
     public function validate(\Magento\Framework\DataObject $product)
     {
+        if ($this->canPreload($product)) {
+            $this->preloadCalculatedSymbols->execute($product->getData('origins_from_collection'));
+        }
+
         if ($this->shouldUseDataFromIndex($product)) {
             return in_array($this->getId(), $product->getSymbolsFromIndex());
         }
@@ -368,5 +375,12 @@ class Symbol extends \Magento\Rule\Model\AbstractModel implements \MageSuite\Pro
             $this->hasConditions() &&
             $this->getForceValidation() !== true &&
             is_array($product->getSymbolsFromIndex());
+    }
+
+    protected function canPreload(\Magento\Framework\DataObject $product): bool
+    {
+        return $this->configuration->isIndexingEnabled() &&
+            $product->getData('origins_from_collection') !== null
+            && $this->getForceValidation() !== true;
     }
 }
