@@ -4,31 +4,19 @@ namespace MageSuite\ProductSymbols\ViewModel\Symbol;
 
 class Group extends \Magento\Framework\DataObject implements \Magento\Framework\View\Element\Block\ArgumentInterface
 {
-    /**
-     * @var \Magento\Framework\Registry
-     */
-    protected $registry;
+    protected \Magento\Framework\Registry $registry;
 
-    /**
-     * @var \MageSuite\ProductSymbols\Model\ResourceModel\Group\CollectionFactory
-     */
-    protected $groupCollectionFactory;
+    protected \MageSuite\ProductSymbols\Model\ResourceModel\Group\CollectionFactory $groupCollectionFactory;
 
-    /**
-     * @var \MageSuite\ProductSymbols\Model\ResourceModel\Symbol\CollectionFactory
-     */
-    protected $symbolCollectionFactory;
+    protected \MageSuite\ProductSymbols\Model\ResourceModel\Symbol\CollectionFactory $symbolCollectionFactory;
 
-    /**
-     * @var \Magento\Store\Model\StoreManagerInterface
-     */
-    protected $storeManager;
-    /**
-     * @var \MageSuite\ProductSymbols\Model\GroupToSymbolRelationRepository
-     */
-    protected $groupToSymbolRelationRepository;
+    protected \Magento\Store\Model\StoreManagerInterface $storeManager;
 
-    protected $product = null;
+    protected \MageSuite\ProductSymbols\Model\GroupToSymbolRelationRepository $groupToSymbolRelationRepository;
+
+    protected ?\Magento\Catalog\Api\Data\ProductInterface $product = null;
+
+    protected array $symbolGroups = [];
 
     public function __construct(
         \Magento\Framework\Registry $registry,
@@ -48,13 +36,16 @@ class Group extends \Magento\Framework\DataObject implements \Magento\Framework\
 
     public function getGroupSymbols()
     {
-        $groups = $this->getGroupsToDisplay();
         $product = $this->getProduct();
-
+        $groups = $this->getGroupsToDisplay();
         $groupIds = $groups->getColumnValues('entity_id');
-        $symbolsCollection = $this->getSymbolsByGroups($groupIds);
+
+        if (isset($this->symbolGroups[$product->getId()][implode('_', $groupIds)])) {
+            return $this->symbolGroups[$product->getId()][implode('_', $groupIds)];
+        }
 
         $result = [];
+        $symbolsCollection = $this->getSymbolsByGroups($groupIds);
 
         foreach ($groups as $group) {
             $groupSymbols = $product->getData($group->getGroupCode());
@@ -70,17 +61,18 @@ class Group extends \Magento\Framework\DataObject implements \Magento\Framework\
             }
         }
 
+        $this->symbolGroups[$product->getId()][implode('_', $groupIds)] = $result;
         return $result;
     }
 
-    public function setProduct($product)
+    public function setProduct($product): self
     {
         $this->product = $product;
 
         return $this;
     }
 
-    public function getProduct()
+    public function getProduct(): \Magento\Catalog\Api\Data\ProductInterface
     {
         if ($this->product) {
             return $this->product;
@@ -90,7 +82,7 @@ class Group extends \Magento\Framework\DataObject implements \Magento\Framework\
         return $this->product;
     }
 
-    public function getGroupsToDisplay()
+    public function getGroupsToDisplay(): \MageSuite\ProductSymbols\Model\ResourceModel\Group\Collection
     {
         $groupCollection = $this->groupCollectionFactory->create();
 
@@ -105,7 +97,7 @@ class Group extends \Magento\Framework\DataObject implements \Magento\Framework\
         return $groupCollection;
     }
 
-    public function getSymbolsByGroups($groupIds)
+    public function getSymbolsByGroups($groupIds): \MageSuite\ProductSymbols\Model\ResourceModel\Symbol\Collection
     {
         $symbolIds = $this->groupToSymbolRelationRepository->getSymbolsByGroupId($groupIds);
 
@@ -117,7 +109,7 @@ class Group extends \Magento\Framework\DataObject implements \Magento\Framework\
         return $symbolsCollection;
     }
 
-    public function getGroupCssClass()
+    public function getGroupCssClass(): string
     {
         $groupCssClass = $this->getCssClassIdentifier();
 
@@ -128,7 +120,7 @@ class Group extends \Magento\Framework\DataObject implements \Magento\Framework\
         return $groupCssClass;
     }
 
-    protected function canDisplaySymbol($symbol, $product, $group, $groupSymbols) //phpcs:ignore
+    protected function canDisplaySymbol($symbol, $product, $group, $groupSymbols): bool //phpcs:ignore
     {
         if ($symbol->hasIsEnabled() && !$symbol->getIsEnabled()) {
             return false;

@@ -29,10 +29,14 @@ class Group extends \Magento\Framework\View\Element\Template
 
     public function getViewModel()
     {
+        $viewModel = $this->getData('view_model');
+        if (is_object($viewModel)) {
+            return $viewModel;
+        }
+
         $viewModel = self::BASE_VIEW_MODEL;
 
         $data = $this->getData();
-
         if (isset($data['view_model'])) {
             $viewModel = $data['view_model'];
         }
