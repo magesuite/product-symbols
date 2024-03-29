@@ -34,20 +34,24 @@ class Index
         );
     }
 
-    public function deleteByProductId(array $toDeleteProductIds): void
+    public function deleteByProductId(array $toDeleteProductIds, int $storeId): void
     {
+        $where = [
+            'store_id = ?' => $storeId,
+            'product_id IN (?)' => $toDeleteProductIds,
+        ];
         $this->connection->delete(
             $this->connection->getTableName('symbol_to_product_index'),
-            $this->connection->quoteInto('product_id IN (?)', $toDeleteProductIds)
+            $where
         );
     }
 
-    public function getByProductIds(array $productIds): ?array
+    public function getByProductIds(array $productIds, int $storeId): array
     {
         $select = $this->connection->select();
         $select->from($this->connection->getTableName('symbol_to_product_index'));
         $select->where('product_id IN (?)', $productIds);
-
+        $select->where('store_id = ?', $storeId);
         $result = [];
 
         foreach ($this->connection->fetchAll($select) as $row) {
