@@ -92,5 +92,20 @@
         "constraint": {
             "PRIMARY": true
         }
+    },
+    "symbol_to_product_index": {
+        "column": {
+            "product_id": true,
+            "symbol_id": true,
+            "store_id": true
+        },
+        "index": {
+            "SYMBOL_TO_PRODUCT_INDEX_PRODUCT_ID": true
+        },
+        "constraint": {
+            "SYMBOL_TO_PRODUCT_INDEX_PRODUCT_ID_CAT_PRD_ENTT_ENTT_ID": true,
+            "SYMBOL_TO_PRODUCT_INDEX_STORE_ID_STORE_STORE_ID": true,
+            "PRIMARY": true
+        }
     }
 }

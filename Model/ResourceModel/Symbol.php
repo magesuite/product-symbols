@@ -209,7 +209,7 @@ class Symbol extends \Magento\Eav\Model\Entity\AbstractEntity
                 continue;
             }
 
-            if ($key == 'symbol_groups') {
+            if ($key == 'symbol_groups' && is_array($value)) {
                 $value = implode(',', $value);
                 $this->updateGroupToSymbolRelation($symbol);
             }

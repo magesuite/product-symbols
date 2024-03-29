@@ -12,3 +12,8 @@ $product = $productRepository->get('simple');
 if ($product->getId()) {
     $product->delete();
 }
+
+$attribute = $objectManager->create(\Magento\Catalog\Model\ResourceModel\Eav\Attribute::class);
+$attribute->loadByCode(\Magento\Catalog\Model\Product::ENTITY, 'meta_description');
+$attribute->setIsUsedForPromoRules(0);
+$attribute->save();

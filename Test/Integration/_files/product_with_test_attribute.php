@@ -8,3 +8,8 @@ $productRepository = $objectManager->create(\Magento\Catalog\Model\ProductReposi
 $product = $productRepository->get('simple');
 $product->setMetaDescription('meta_description_symbol_match');
 $product->save();
+
+$attribute = $objectManager->create(\Magento\Catalog\Model\ResourceModel\Eav\Attribute::class);
+$attribute->loadByCode(\Magento\Catalog\Model\Product::ENTITY, 'meta_description');
+$attribute->setIsUsedForPromoRules(1);
+$attribute->save();

@@ -68,3 +68,7 @@ $symbol->loadPost(
 );
 
 $symbolRepository->save($symbol);
+
+$symbol = $symbolRepository->getById(1101, $store->getId());
+$symbol->setIsEnabled(false);
+$symbolRepository->save($symbol);

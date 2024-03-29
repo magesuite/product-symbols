@@ -28,11 +28,10 @@ class PreloadCalculatedSymbols
             return $collection;
         }
 
-        $symbolsFromIndex = $this->indexResource->getByProductIds($productIds);
+        $symbolsFromIndex = $this->indexResource->getByProductIds($productIds, (int)$collection->getStoreId());
 
         foreach ($collection as $item) {
             $productId = $item->getEntityId();
-
             $item->setSymbolsFromIndex($symbolsFromIndex[$productId] ?? []);
         }
 

@@ -50,8 +50,4 @@
             <argument name="imageUploader" xsi:type="object">Creativestyle\CustomizationIpetCatalog\PictogramImageUpload</argument>
         </arguments>
     </type>
-
-    <type name="Magento\Framework\Setup\Declaration\Schema\SchemaConfigInterface">
-        <plugin name="remove_duplicate_records" type="MageSuite\ProductSymbols\Plugin\Framework\Setup\Declaration\Schema\SchemaConfigInterface\RemoveDuplicateRecords" sortOrder="10" />
-    </type>
 </config>

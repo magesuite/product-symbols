@@ -11,14 +11,16 @@ class IndexBuilderTest extends \PHPUnit\Framework\TestCase
     protected ?\Magento\Catalog\Model\ProductRepository $productRepository;
     protected ?\MageSuite\ProductSymbols\Model\SymbolRepository $symbolRepository;
     protected ?\MageSuite\ProductSymbols\Indexer\IndexBuilder $indexBuilder;
+    protected ?\Magento\Store\Model\StoreManagerInterface $storeManager;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->objectManager = \Magento\TestFramework\ObjectManager::getInstance();
         $this->indexResourceModel = $this->objectManager->get(\MageSuite\ProductSymbols\Model\ResourceModel\Index::class);
         $this->productRepository = $this->objectManager->get(\Magento\Catalog\Model\ProductRepository::class);
         $this->symbolRepository = $this->objectManager->create(\MageSuite\ProductSymbols\Model\SymbolRepository::class);
         $this->indexBuilder = $this->objectManager->create(\MageSuite\ProductSymbols\Indexer\IndexBuilder::class);
+        $this->storeManager = $this->objectManager->get(\Magento\Store\Model\StoreManagerInterface::class);
     }
 
     /**
@@ -30,24 +32,33 @@ class IndexBuilderTest extends \PHPUnit\Framework\TestCase
     public function testItDoesNotPutProductIntoIndexWhenConditionsDoNotApply()
     {
         $this->indexBuilder->reindexList([self::SIMPLE_PRODUCT_ID]);
-
-        $symbols = $this->indexResourceModel->getByProductIds([self::SIMPLE_PRODUCT_ID]);
+        $storeId = $this->storeManager->getStore()->getId();
+        $symbols = $this->indexResourceModel->getByProductIds([self::SIMPLE_PRODUCT_ID], $storeId);
 
         $this->assertTrue(!isset($symbols[self::SIMPLE_PRODUCT_ID]));
     }
 
     /**
+     * @dataProvider getSymbolsDataProvider
      * @magentoDbIsolation disabled
      * @magentoAppIsolation enabled
      * @magentoDataFixture MageSuite_ProductSymbols::Test/Integration/_files/symbols.php
      * @magentoDataFixture MageSuite_ProductSymbols::Test/Integration/_files/product_with_test_attribute.php
      */
-    public function testItDoesPutProductIntoIndexWhenConditionsMatch()
+    public function testItDoesPutProductIntoIndexWhenConditionsMatch($store, $expectedSymbolIds)
     {
+        $storeId = $this->storeManager->getStore($store)->getId();
         $this->indexBuilder->reindexList([self::SIMPLE_PRODUCT_ID]);
+        $symbols = $this->indexResourceModel->getByProductIds([self::SIMPLE_PRODUCT_ID], $storeId);
 
-        $symbols = $this->indexResourceModel->getByProductIds([self::SIMPLE_PRODUCT_ID]);
+        $this->assertEquals($expectedSymbolIds, $symbols[self::SIMPLE_PRODUCT_ID] ?? []);
+    }
 
-        $this->assertEquals([1101], $symbols[self::SIMPLE_PRODUCT_ID]);
+    protected function getSymbolsDataProvider(): array
+    {
+        return [
+            [null, [1101]],
+            ['test333', []]
+        ];
     }
 }
