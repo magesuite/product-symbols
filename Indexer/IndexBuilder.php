@@ -42,6 +42,10 @@ class IndexBuilder
     public function reindexList(array $ids): void
     {
         foreach ($this->storeManager->getStores(false) as $store) {
+            if (!$store->isActive()) {
+                continue;
+            }
+
             $storeId = (int)$store->getId();
 
             foreach ($this->getProducts($ids, $storeId) as $products) {
@@ -86,7 +90,8 @@ class IndexBuilder
     {
         foreach (array_chunk($ids, $this->bunchSize) as $idsChunk) {
             $collection = $this->productCollectionFactory->create();
-            $collection->setStoreId($storeId);
+            $collection->addStoreFilter($storeId);
+            $collection->addAttributeToFilter('status', \Magento\Catalog\Model\Product\Attribute\Source\Status::STATUS_ENABLED);
             $collection->addAttributeToSelect($this->getAttributeList());
             $collection->addIdFilter($idsChunk);
 
