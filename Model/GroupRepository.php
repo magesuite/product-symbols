@@ -83,7 +83,7 @@ class GroupRepository implements \MageSuite\ProductSymbols\Api\GroupRepositoryIn
         return $group;
     }
 
-    public function getList(\Magento\Framework\Api\SearchCriteriaInterface $criteria = null)
+    public function getList(?\Magento\Framework\Api\SearchCriteriaInterface $criteria = null)
     {
         $collection = $this->collectionFactory->create();
 

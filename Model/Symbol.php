@@ -35,8 +35,8 @@ class Symbol extends \Magento\Rule\Model\AbstractModel implements \MageSuite\Pro
         \MageSuite\ProductSymbols\Helper\Configuration $configuration,
         \Magento\Framework\Indexer\IndexerRegistry $indexerRegistry,
         \MageSuite\ProductSymbols\Model\PreloadCalculatedSymbols $preloadCalculatedSymbols,
-        \Magento\Framework\Model\ResourceModel\AbstractResource $resource = null,
-        \Magento\Framework\Data\Collection\AbstractDb $resourceCollection = null,
+        ?\Magento\Framework\Model\ResourceModel\AbstractResource $resource = null,
+        ?\Magento\Framework\Data\Collection\AbstractDb $resourceCollection = null,
         array $data = []
     ) {
         parent::__construct($context, $registry, $formFactory, $localeDate, $resource, $resourceCollection, $data);

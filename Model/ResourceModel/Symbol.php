@@ -62,7 +62,7 @@ class Symbol extends \Magento\Eav\Model\Entity\AbstractEntity
         \MageSuite\ProductSymbols\Api\Data\GroupToSymbolRelationInterfaceFactory $groupToSymbolRelation,
         \Magento\Eav\Model\ResourceModel\Entity\Attribute $eavAttribute,
         $data = [],
-        \Magento\Eav\Model\Entity\Attribute\UniqueValidationInterface $uniqueValidator = null
+        ?\Magento\Eav\Model\Entity\Attribute\UniqueValidationInterface $uniqueValidator = null
     ) {
         parent::__construct($context, $data, $uniqueValidator);
         $this->groupCollectionFactory = $groupCollectionFactory;
