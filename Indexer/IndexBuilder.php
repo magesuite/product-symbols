@@ -102,6 +102,12 @@ class IndexBuilder
     protected function buildIndex(array $products, int $storeId): void
     {
         $symbols = $this->getSymbolsWithConditions($storeId);
+
+        if (empty($symbols)) {
+           $this->indexResourceModel->deleteByStoreId($storeId);
+           return;
+        }
+
         $toDeleteProductIds = [];
         $toInsertSymbols = [];
 
