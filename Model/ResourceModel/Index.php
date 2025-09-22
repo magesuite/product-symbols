@@ -46,6 +46,17 @@ class Index
         );
     }
 
+    public function deleteByStoreId(int $storeId): void
+    {
+        $where = [
+            'store_id = ?' => $storeId,
+        ];
+        $this->connection->delete(
+            $this->connection->getTableName('symbol_to_product_index'),
+            $where
+        );
+    }
+
     public function getByProductIds(array $productIds, int $storeId): array
     {
         $select = $this->connection->select();
