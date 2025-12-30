@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace MageSuite\ProductSymbols\Model\Indexer;
@@ -9,23 +10,21 @@ class SymbolToProduct implements
 {
     public const INDEXER_ID = 'symbol_to_product';
 
-    protected \MageSuite\ProductSymbols\Indexer\IndexBuilder $indexBuilder;
-    protected \Magento\Catalog\Model\ResourceModel\Product $productResource;
-    protected \MageSuite\ProductSymbols\Helper\Configuration $configuration;
-
     public function __construct(
-        \Magento\Catalog\Model\ResourceModel\Product $productResource,
-        \MageSuite\ProductSymbols\Indexer\IndexBuilder $indexBuilder,
-        \MageSuite\ProductSymbols\Helper\Configuration $configuration
-    ) {
-        $this->indexBuilder = $indexBuilder;
-        $this->productResource = $productResource;
-        $this->configuration = $configuration;
-    }
+        protected \MageSuite\ProductSymbols\Helper\Configuration $configuration,
+        protected \MageSuite\ProductSymbols\Model\Indexer\Product\Action\Full $fullAction,
+        protected \MageSuite\ProductSymbols\Model\Indexer\Product\Action\Rows $rowsAction,
+        protected \Magento\Framework\Indexer\CacheContext $cacheContext
+    ) {}
 
-    public function execute($ids): void
+    public function execute($ids): void //phpcs:ignore
     {
-        $this->executeList($ids);
+        if (!$this->configuration->isIndexingEnabled()) {
+            return;
+        }
+
+        $this->rowsAction->execute($ids);
+        $this->cacheContext->registerEntities(\Magento\Catalog\Model\Product::CACHE_TAG, $ids);
     }
 
     public function executeFull(): void
@@ -34,25 +33,22 @@ class SymbolToProduct implements
             return;
         }
 
-        $ids = array_column(
-            $this->productResource->getProductEntitiesInfo(['entity_id']),
-            'entity_id'
+        $this->fullAction->execute();
+        $this->cacheContext->registerTags(
+            [
+                \Magento\Catalog\Model\Category::CACHE_TAG,
+                \Magento\Catalog\Model\Product::CACHE_TAG
+            ]
         );
-
-        $this->indexBuilder->reindexList($ids);
     }
 
     public function executeList(array $ids): void
     {
-        if (!$this->configuration->isIndexingEnabled()) {
-            return;
-        }
-
-        $this->indexBuilder->reindexList($ids);
+        $this->execute($ids);
     }
 
-    public function executeRow($id)
+    public function executeRow($id) //phpcs:ignore
     {
-        $this->executeList([$id]);
+        $this->execute([$id]);
     }
 }

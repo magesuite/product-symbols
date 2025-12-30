@@ -112,12 +112,17 @@
         <column xsi:type="int" name="product_id" padding="10" unsigned="true" nullable="false" comment="Product ID"/>
         <column xsi:type="int" name="symbol_id" padding="10" unsigned="true" nullable="false" comment="Symbol ID"/>
         <column xsi:type="smallint" name="store_id" padding="5" unsigned="true" nullable="false" comment="Store ID"/>
-        <constraint xsi:type="foreign" referenceId="SYMBOL_TO_PRODUCT_INDEX_PRODUCT_ID_CAT_PRD_ENTT_ENTT_ID"
-                    table="symbol_to_product_index" column="product_id" referenceTable="catalog_product_entity"
-                    referenceColumn="entity_id" onDelete="CASCADE"/>
-        <constraint xsi:type="foreign" referenceId="SYMBOL_TO_PRODUCT_INDEX_STORE_ID_STORE_STORE_ID"
-                    table="symbol_to_product_index" column="store_id" referenceTable="store"
-                    referenceColumn="store_id" onDelete="CASCADE"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="product_id"/>
+            <column name="symbol_id"/>
+            <column name="store_id"/>
+        </constraint>
+    </table>
+
+    <table name="symbol_to_product_index_replica" resource="default" engine="innodb" comment="Symbol To Product Index Replica">
+        <column xsi:type="int" name="product_id" padding="10" unsigned="true" nullable="false" comment="Product ID"/>
+        <column xsi:type="int" name="symbol_id" padding="10" unsigned="true" nullable="false" comment="Symbol ID"/>
+        <column xsi:type="smallint" name="store_id" padding="5" unsigned="true" nullable="false" comment="Store ID"/>
         <constraint xsi:type="primary" referenceId="PRIMARY">
             <column name="product_id"/>
             <column name="symbol_id"/>

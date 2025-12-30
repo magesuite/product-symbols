@@ -1,51 +1,54 @@
 <?php
 
+declare(strict_types=1);
+
 namespace MageSuite\ProductSymbols\Test\Integration\Plugin\Catalog\Model\ResourceModel\Product\Collection;
 
 class PreloadCalculatedSymbolsTest extends \PHPUnit\Framework\TestCase
 {
-    const SIMPLE_PRODUCT_ID = 1;
+    protected const SIMPLE_PRODUCT_ID = 1;
 
     protected ?\Magento\Framework\App\ObjectManager $objectManager;
     protected ?\Magento\Catalog\Model\ResourceModel\Product\Collection $productCollection;
     protected ?\MageSuite\ProductSymbols\Model\SymbolRepository $symbolRepository;
-    protected ?\MageSuite\ProductSymbols\Indexer\IndexBuilder $indexBuilder;
+    protected ?\MageSuite\ProductSymbols\Model\Indexer\Product\Action\Rows $indexer;
 
     public function setUp(): void
     {
         $this->objectManager = \Magento\TestFramework\ObjectManager::getInstance();
         $this->productCollection = $this->objectManager->create(\Magento\Catalog\Model\ResourceModel\Product\Collection::class);
         $this->symbolRepository = $this->objectManager->create(\MageSuite\ProductSymbols\Model\SymbolRepository::class);
-        $this->indexBuilder = $this->objectManager->create(\MageSuite\ProductSymbols\Indexer\IndexBuilder::class);
+        $this->indexer = $this->objectManager->create(\MageSuite\ProductSymbols\Model\Indexer\Product\Action\Rows::class);
     }
 
     /**
-     * @magentoDbIsolation disabled
+     * @magentoDbIsolation enabled
      * @magentoAppIsolation enabled
      * @magentoAppArea frontend
      * @magentoDataFixture MageSuite_ProductSymbols::Test/Integration/_files/symbols.php
      * @magentoDataFixture MageSuite_ProductSymbols::Test/Integration/_files/product_with_test_attribute.php
+     * @magentoConfigFixture default_store cataloginventory/options/show_out_of_stock 1
      */
-    public function testPreloadingDoesNotHappenByDefault()
+    public function testPreloadingDoesNotHappenByDefault(): void
     {
-        $this->indexBuilder->reindexList([self::SIMPLE_PRODUCT_ID]);
+        $this->indexer->execute([self::SIMPLE_PRODUCT_ID]);
 
-        $products = $this->productCollection->addIdFilter([self::SIMPLE_PRODUCT_ID])->getItems();
-
+        $products = $this->productCollection->addIdFilter(self::SIMPLE_PRODUCT_ID)->getItems();
         $simpleProduct = array_shift($products);
         $this->assertNull($simpleProduct->getSymbolsFromIndex());
     }
 
     /**
-     * @magentoDbIsolation disabled
+     * @magentoDbIsolation enabled
      * @magentoAppIsolation enabled
      * @magentoAppArea frontend
      * @magentoDataFixture MageSuite_ProductSymbols::Test/Integration/_files/symbols.php
      * @magentoDataFixture MageSuite_ProductSymbols::Test/Integration/_files/product_with_test_attribute.php
+     * @magentoConfigFixture default_store cataloginventory/options/show_out_of_stock 1
      */
-    public function testValidationCalculationDoesNotHappenWhenProductWasIndexed()
+    public function testValidationCalculationDoesNotHappenWhenProductWasIndexed(): void
     {
-        $this->indexBuilder->reindexList([self::SIMPLE_PRODUCT_ID]);
+        $this->indexer->execute([self::SIMPLE_PRODUCT_ID]);
 
         $products = $this->productCollection->addIdFilter([self::SIMPLE_PRODUCT_ID])->getItems();
 
