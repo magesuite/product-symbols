@@ -1,25 +1,21 @@
 <?php
 
+declare(strict_types=1);
+
 namespace MageSuite\ProductSymbols\Controller\Adminhtml\Grid;
 
-class Symbol extends \Magento\Framework\App\Action\Action
+class Symbol extends \Magento\Backend\App\Action
 {
-    /**
-     * @var \Magento\Framework\View\Result\PageFactory
-     */
-    protected $pageFactory;
-
-    protected $resultPage = null;
+    protected ?\Magento\Framework\View\Result\Page $resultPage = null;
 
     public function __construct(
-        \Magento\Framework\App\Action\Context $context,
-        \Magento\Framework\View\Result\PageFactory $pageFactory
+        \Magento\Backend\App\Action\Context $context,
+        protected \Magento\Framework\View\Result\PageFactory $pageFactory
     ) {
         parent::__construct($context);
-        $this->pageFactory = $pageFactory;
     }
 
-    public function execute()
+    public function execute() //phpcs:ignore
     {
         $resultPage = $this->getResultPage();
         $resultPage->setActiveMenu('MageSuite_ProductSymbols::symbol_menu');
@@ -30,16 +26,17 @@ class Symbol extends \Magento\Framework\App\Action\Action
         return $resultPage;
     }
 
-    protected function _isAllowed()
+    protected function _isAllowed() //phpcs:ignore
     {
         return true;
     }
 
-    public function getResultPage()
+    public function getResultPage(): \Magento\Framework\View\Result\Page
     {
         if (!$this->resultPage) {
             $this->resultPage = $this->pageFactory->create();
         }
+
         return $this->resultPage;
     }
 }
