@@ -39,7 +39,7 @@ class TableMaintainer extends \Magento\Indexer\Model\ResourceModel\AbstractResou
         $tableName = $this->getTable(self::MAIN_INDEX_TABLE);
 
         foreach ($dimensions as $dimension) {
-            $tableName .= '_' . $dimension->getValue();
+            $tableName .= sprintf('_%s', $dimension->getValue());
         }
 
         return $tableName;
@@ -70,6 +70,7 @@ class TableMaintainer extends \Magento\Indexer\Model\ResourceModel\AbstractResou
 
         foreach ($dimensions as $dimension) {
             $key .= $dimension->getName() . '_' . $dimension->getValue();
+            $key .= sprintf('%s_%s', $dimension->getName(), $dimension->getValue());
         }
 
         return $key;
