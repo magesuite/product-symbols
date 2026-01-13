@@ -22,8 +22,8 @@ class PreloadCalculatedSymbolsTest extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * @magentoDbIsolation enabled
-     * @magentoAppIsolation enabled
+     * @magentoDbIsolation disabled
+     * @magentoAppIsolation disabled
      * @magentoAppArea frontend
      * @magentoDataFixture MageSuite_ProductSymbols::Test/Integration/_files/symbols.php
      * @magentoDataFixture MageSuite_ProductSymbols::Test/Integration/_files/product_with_test_attribute.php
@@ -39,8 +39,8 @@ class PreloadCalculatedSymbolsTest extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * @magentoDbIsolation enabled
-     * @magentoAppIsolation enabled
+     * @magentoDbIsolation disabled
+     * @magentoAppIsolation disabled
      * @magentoAppArea frontend
      * @magentoDataFixture MageSuite_ProductSymbols::Test/Integration/_files/symbols.php
      * @magentoDataFixture MageSuite_ProductSymbols::Test/Integration/_files/product_with_test_attribute.php
