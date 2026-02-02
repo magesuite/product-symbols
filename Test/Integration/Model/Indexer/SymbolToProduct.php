@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Integration\Model\Indexer;
+namespace MageSuite\ProductSymbols\Test\Integration\Model\Indexer;
 
 class SymbolToProduct extends \PHPUnit\Framework\TestCase
 {

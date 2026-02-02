@@ -6,9 +6,6 @@ namespace MageSuite\ProductSymbols\Provider\Data;
 
 class SymbolToProduct
 {
-    public const CACHE_KEY = 'google_structured_data_product_%s_%s';
-    public const CACHE_GROUP = 'google_structured_data_product';
-
     protected array $symbolsList = [];
 
     public function __construct(
