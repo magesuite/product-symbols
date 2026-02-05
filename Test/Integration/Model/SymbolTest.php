@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace MageSuite\ProductSymbols\Test\Integration\Model;
 
 /**
@@ -8,48 +10,27 @@ namespace MageSuite\ProductSymbols\Test\Integration\Model;
  */
 class SymbolTest extends \PHPUnit\Framework\TestCase
 {
-    const SYMBOL_WITH_CONDITION = 1101;
+    protected const SYMBOL_WITH_CONDITION = 1101;
 
-    /**
-     * @var \Magento\TestFramework\ObjectManager
-     */
-    protected $objectManager;
+    protected ?\MageSuite\ProductSymbols\Api\SymbolRepositoryInterface $symbolRepositoryInterface;
+    protected ?\MageSuite\ProductSymbols\Model\SymbolFactory $symbolFactory;
+    protected ?\Magento\Store\Model\Store $store;
+    protected ?\Magento\Catalog\Api\ProductRepositoryInterface $productRepository;
 
-    /**
-     * @var \MageSuite\ProductSymbols\Api\SymbolRepositoryInterface
-     */
-    protected $symbolRepositoryInterface;
-
-    /**
-     * @var \MageSuite\ProductSymbols\Model\SymbolFactory
-     */
-    protected $symbolFactory;
-
-    /**
-     * @var \Magento\Store\Model\Store
-     */
-    protected $store;
-
-    /**
-     * @var \Magento\Catalog\Api\ProductRepositoryInterface
-     */
-    protected $productRepository;
-
-    public function setUp(): void
+    protected function setUp(): void
     {
-        $this->objectManager = \Magento\TestFramework\ObjectManager::getInstance();
-
-        $this->symbolRepositoryInterface = $this->objectManager->create(\MageSuite\ProductSymbols\Api\SymbolRepositoryInterface::class);
-        $this->symbolFactory = $this->objectManager->create(\MageSuite\ProductSymbols\Model\SymbolFactory::class);
-        $this->store = $this->objectManager->create(\Magento\Store\Model\Store::class);
-        $this->productRepository = $this->objectManager->create(\Magento\Catalog\Api\ProductRepositoryInterface::class);
+        $objectManager = \Magento\TestFramework\ObjectManager::getInstance();
+        $this->symbolRepositoryInterface = $objectManager->get(\MageSuite\ProductSymbols\Api\SymbolRepositoryInterface::class);
+        $this->symbolFactory = $objectManager->get(\MageSuite\ProductSymbols\Model\SymbolFactory::class);
+        $this->store = $objectManager->get(\Magento\Store\Model\Store::class);
+        $this->productRepository = $objectManager->get(\Magento\Catalog\Api\ProductRepositoryInterface::class);
     }
 
     /**
      * @magentoDbIsolation enabled
-     * @magentoDataFixture loadSymbols
+     * @magentoDataFixture MageSuite_ProductSymbols::Test/Integration/_files/symbols.php
      */
-    public function testIsNewSymbolSavedCorrectly()
+    public function testIsNewSymbolSavedCorrectly(): void
     {
         $symbol = $this->symbolRepositoryInterface->getById(600, 1);
         $url = str_replace('pub/', '', $symbol->getSymbolIconUrl());
@@ -78,9 +59,9 @@ class SymbolTest extends \PHPUnit\Framework\TestCase
 
     /**
      * @magentoDbIsolation enabled
-     * @magentoDataFixture loadSymbols
+     * @magentoDataFixture MageSuite_ProductSymbols::Test/Integration/_files/symbols.php
      */
-    public function testIsEditedSymbolSavedCorrectly()
+    public function testIsEditedSymbolSavedCorrectly(): void
     {
         $editData = [
             'store_id' => 1,
@@ -142,9 +123,9 @@ class SymbolTest extends \PHPUnit\Framework\TestCase
 
     /**
      * @magentoDbIsolation enabled
-     * @magentoDataFixture loadSymbols
+     * @magentoDataFixture MageSuite_ProductSymbols::Test/Integration/_files/symbols.php
      */
-    public function testIsSymbolDeleted()
+    public function testIsSymbolDeleted(): void
     {
         $symbol = $this->symbolRepositoryInterface->getById(600);
         $result = $this->symbolRepositoryInterface->delete($symbol);
@@ -155,10 +136,10 @@ class SymbolTest extends \PHPUnit\Framework\TestCase
     /**
      * @magentoDbIsolation enabled
      * @magentoDataFixture Magento/Catalog/_files/product_simple.php
-     * @magentoDataFixture loadSymbols
+     * @magentoDataFixture MageSuite_ProductSymbols::Test/Integration/_files/symbols.php
      *
      */
-    public function testItValidateRulesCorrectly()
+    public function testItValidateRulesCorrectly(): void
     {
         $symbol = $this->symbolRepositoryInterface->getById(self::SYMBOL_WITH_CONDITION);
         $product = $this->productRepository->get('simple');
@@ -173,7 +154,7 @@ class SymbolTest extends \PHPUnit\Framework\TestCase
      * @magentoAppArea frontend
      * @magentoDataFixture MageSuite_ProductSymbols::Test/Integration/_files/symbols.php
      */
-    public function testItReturnCorrectFlagForSvgImage()
+    public function testItReturnCorrectFlagForSvgImage(): void
     {
         $testSymbolId = 600;
         $symbol = $this->symbolRepositoryInterface->getById($testSymbolId);
@@ -183,15 +164,5 @@ class SymbolTest extends \PHPUnit\Framework\TestCase
 
         $this->assertFalse($symbol->shouldDisplaySvgInline($pngImageName));
         $this->assertTrue($symbol->shouldDisplaySvgInline($svgImageName));
-    }
-
-    public static function loadSymbols()
-    {
-        include __DIR__ . '/../_files/symbols.php';
-    }
-
-    public static function loadSymbolsRollback()
-    {
-        include __DIR__ . '/../_files/symbols_rollback.php';
     }
 }

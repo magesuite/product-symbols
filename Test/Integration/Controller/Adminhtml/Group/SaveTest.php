@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace MageSuite\ProductSymbols\Test\Integration\Controller\Adminhtml\Group;
 
 /**
@@ -8,28 +10,21 @@ namespace MageSuite\ProductSymbols\Test\Integration\Controller\Adminhtml\Group;
  */
 class SaveTest extends \Magento\TestFramework\TestCase\AbstractBackendController
 {
-    /**
-     * @var \MageSuite\ProductSymbols\Api\GroupRepositoryInterface
-     */
-    protected $groupRepositoryInterface;
+    protected ?\MageSuite\ProductSymbols\Api\GroupRepositoryInterface $groupRepositoryInterface;
+    protected ?\MageSuite\ProductSymbols\Model\GroupFactory $groupFactory;
 
-    /**
-     * @var \MageSuite\ProductSymbols\Model\GroupFactory
-     */
-    protected $groupFactory;
-
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 
-        $this->groupRepositoryInterface = $this->_objectManager->create(\MageSuite\ProductSymbols\Api\GroupRepositoryInterface::class);
-        $this->groupFactory = $this->_objectManager->create(\MageSuite\ProductSymbols\Model\GroupFactory::class);
+        $this->groupRepositoryInterface = $this->_objectManager->get(\MageSuite\ProductSymbols\Api\GroupRepositoryInterface::class);
+        $this->groupFactory = $this->_objectManager->get(\MageSuite\ProductSymbols\Model\GroupFactory::class);
     }
 
     /**
      * @group symbolGroupSaving
      */
-    public function testSaveGroupWithPascalCase()
+    public function testSaveGroupWithPascalCase(): void
     {
         $this->saveGroup('Group', 'RandomGroup');
     }
@@ -37,7 +32,7 @@ class SaveTest extends \Magento\TestFramework\TestCase\AbstractBackendController
     /**
      * @group symbolGroupSaving
      */
-    public function testSaveGroupWithCamelCase()
+    public function testSaveGroupWithCamelCase(): void
     {
         $this->saveGroup('group 1', 'groupOne');
     }
@@ -45,7 +40,7 @@ class SaveTest extends \Magento\TestFramework\TestCase\AbstractBackendController
     /**
      * @group symbolGroupSaving
      */
-    public function testSaveGroupWithSnakeCase()
+    public function testSaveGroupWithSnakeCase(): void
     {
         $this->saveGroup('group 2', 'group_2');
     }
@@ -53,7 +48,7 @@ class SaveTest extends \Magento\TestFramework\TestCase\AbstractBackendController
     /**
      * @group symbolGroupSaving
      */
-    public function testSaveGroupWithKebabCase()
+    public function testSaveGroupWithKebabCase(): void
     {
         $this->saveGroup('group 3', 'group-3', false);
     }
@@ -61,7 +56,7 @@ class SaveTest extends \Magento\TestFramework\TestCase\AbstractBackendController
     /**
      * @group symbolGroupSaving
      */
-    public function testSaveGroupWithSlashCase()
+    public function testSaveGroupWithSlashCase(): void
     {
         $this->saveGroup('group 4', 'group/4', false);
     }
@@ -69,11 +64,14 @@ class SaveTest extends \Magento\TestFramework\TestCase\AbstractBackendController
     /**
      * @group symbolGroupSaving
      */
-    public function testSaveGroupWithSpaces()
+    public function testSaveGroupWithSpaces(): void
     {
         $this->saveGroup('group 5', 'group 5', false);
     }
 
+    /**
+     * @SuppressWarnings(PHPMD.ElseExpression)
+     */
     protected function saveGroup(string $name, string $code, bool $isSuccessExpected = true): void
     {
         $this->getRequest()->setPostValue([
@@ -92,7 +90,7 @@ class SaveTest extends \Magento\TestFramework\TestCase\AbstractBackendController
         }
     }
 
-    public function testEditGroup()
+    public function testEditGroup(): void
     {
         $group = $this->groupFactory->create();
 

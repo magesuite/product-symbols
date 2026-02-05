@@ -12,7 +12,7 @@ class SymbolToProduct extends \PHPUnit\Framework\TestCase
     protected ?\MageSuite\ProductSymbols\Model\ResourceModel\Index $indexResourceModel;
     protected ?\Magento\Catalog\Model\ProductRepository $productRepository;
     protected ?\MageSuite\ProductSymbols\Model\SymbolRepository $symbolRepository;
-    protected ?\MageSuite\ProductSymbols\Model\Indexer\Product\Action\Rows $indexer;
+    protected ?\MageSuite\ProductSymbols\Model\Indexer\SymbolToProduct $indexer;
     protected ?\Magento\Store\Model\StoreManagerInterface $storeManager;
 
     protected function setUp(): void
@@ -20,8 +20,8 @@ class SymbolToProduct extends \PHPUnit\Framework\TestCase
         $this->objectManager = \Magento\TestFramework\ObjectManager::getInstance();
         $this->indexResourceModel = $this->objectManager->get(\MageSuite\ProductSymbols\Model\ResourceModel\Index::class);
         $this->productRepository = $this->objectManager->get(\Magento\Catalog\Model\ProductRepository::class);
-        $this->symbolRepository = $this->objectManager->create(\MageSuite\ProductSymbols\Model\SymbolRepository::class);
-        $this->indexer = $this->objectManager->create(\MageSuite\ProductSymbols\Model\Indexer\Product\Action\Rows::class);
+        $this->symbolRepository = $this->objectManager->get(\MageSuite\ProductSymbols\Model\SymbolRepository::class);
+        $this->indexer = $this->objectManager->get(\MageSuite\ProductSymbols\Model\Indexer\SymbolToProduct::class);
         $this->storeManager = $this->objectManager->get(\Magento\Store\Model\StoreManagerInterface::class);
     }
 
@@ -35,6 +35,7 @@ class SymbolToProduct extends \PHPUnit\Framework\TestCase
     {
         $storeId = (int) $this->storeManager->getStore()->getId();
         $this->indexer->execute([self::SIMPLE_PRODUCT_ID]);
+
         $symbols = $this->indexResourceModel->getByProductIds([self::SIMPLE_PRODUCT_ID], $storeId);
 
         $this->assertTrue(!isset($symbols[self::SIMPLE_PRODUCT_ID]));
@@ -51,12 +52,13 @@ class SymbolToProduct extends \PHPUnit\Framework\TestCase
     {
         $storeId = (int) $this->storeManager->getStore($store)->getId();
         $this->indexer->execute([self::SIMPLE_PRODUCT_ID]);
+
         $symbols = $this->indexResourceModel->getByProductIds([self::SIMPLE_PRODUCT_ID], $storeId);
 
         $this->assertEquals($expectedSymbolIds, $symbols[self::SIMPLE_PRODUCT_ID] ?? []);
     }
 
-    protected function getSymbolsDataProvider(): array
+    public static function getSymbolsDataProvider(): array
     {
         return [
             [null, [1101]],

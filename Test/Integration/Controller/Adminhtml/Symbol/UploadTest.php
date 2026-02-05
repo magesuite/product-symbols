@@ -1,26 +1,29 @@
 <?php
 
+declare(strict_types=1);
+
 namespace MageSuite\ProductSymbols\Test\Integration\Controller\Adminhtml\Symbol;
 
 /**
  * @magentoAppArea adminhtml
+ * @SuppressWarnings(PHPMD.Superglobals)
  */
 class UploadTest extends \Magento\TestFramework\TestCase\AbstractBackendController
 {
-    protected $filesystem;
+    protected ?\Magento\Framework\Filesystem $filesystem;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 
-        $this->filesystem = $this->_objectManager->create('Magento\Framework\Filesystem');
+        $this->filesystem = $this->_objectManager->get(\Magento\Framework\Filesystem::class);
     }
 
     /**
      * @magentoDbIsolation disabled
-     * @magentoDataFixture moveSymbolImageToTmp
+     * @magentoDataFixture MageSuite_ProductSymbols::Test/Integration/_files/symbol_image.php
      */
-    public function testUploadActionWithCorrectData()
+    public function testUploadActionWithCorrectData(): void
     {
         $_FILES = [ //phpcs:ignore
             'symbol_icon' => [
@@ -44,9 +47,9 @@ class UploadTest extends \Magento\TestFramework\TestCase\AbstractBackendControll
 
     /**
      * @magentoDbIsolation disabled
-     * @magentoDataFixture moveSymbolImageToTmp
+     * @magentoDataFixture MageSuite_ProductSymbols::Test/Integration/_files/symbol_image.php
      */
-    public function testUploadActionWithWrongData()
+    public function testUploadActionWithWrongData(): void
     {
         $_FILES = [ //phpcs:ignore
             'symbol_icon' => [
@@ -63,10 +66,5 @@ class UploadTest extends \Magento\TestFramework\TestCase\AbstractBackendControll
         $response = json_decode($this->getResponse()->getBody(), true);
 
         $this->assertFalse($response);
-    }
-
-    public static function moveSymbolImageToTmp()
-    {
-        include __DIR__.'/../../../_files/symbol_image.php';
     }
 }

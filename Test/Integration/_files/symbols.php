@@ -1,9 +1,12 @@
 <?php
+
+declare(strict_types=1);
+
 require __DIR__ . '/store.php';
 require __DIR__ . '/groups.php';
 
 /** @var  \MageSuite\ProductSymbols\Api\SymbolRepositoryInterface $symbolRepository */
-$symbolRepository = \Magento\TestFramework\Helper\Bootstrap::getObjectManager()->create(\MageSuite\ProductSymbols\Api\SymbolRepositoryInterface::class);
+$symbolRepository = \Magento\TestFramework\Helper\Bootstrap::getObjectManager()->get(\MageSuite\ProductSymbols\Api\SymbolRepositoryInterface::class);
 
 /** @var  \MageSuite\ProductSymbols\Model\Symbol $symbol */
 $symbol = \Magento\TestFramework\Helper\Bootstrap::getObjectManager()->create(\MageSuite\ProductSymbols\Model\Symbol::class);

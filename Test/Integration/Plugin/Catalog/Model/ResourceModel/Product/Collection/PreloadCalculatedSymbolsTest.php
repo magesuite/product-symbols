@@ -9,16 +9,16 @@ class PreloadCalculatedSymbolsTest extends \PHPUnit\Framework\TestCase
     protected const SIMPLE_PRODUCT_ID = 1;
 
     protected ?\Magento\Framework\App\ObjectManager $objectManager;
-    protected ?\Magento\Catalog\Model\ResourceModel\Product\Collection $productCollection;
+    protected ?\Magento\Catalog\Model\ResourceModel\Product\CollectionFactory $productCollectionFactory;
     protected ?\MageSuite\ProductSymbols\Model\SymbolRepository $symbolRepository;
-    protected ?\MageSuite\ProductSymbols\Model\Indexer\Product\Action\Rows $indexer;
+    protected ?\MageSuite\ProductSymbols\Model\Indexer\SymbolToProduct $indexer;
 
     public function setUp(): void
     {
         $this->objectManager = \Magento\TestFramework\ObjectManager::getInstance();
-        $this->productCollection = $this->objectManager->create(\Magento\Catalog\Model\ResourceModel\Product\Collection::class);
-        $this->symbolRepository = $this->objectManager->create(\MageSuite\ProductSymbols\Model\SymbolRepository::class);
-        $this->indexer = $this->objectManager->create(\MageSuite\ProductSymbols\Model\Indexer\Product\Action\Rows::class);
+        $this->productCollectionFactory = $this->objectManager->get(\Magento\Catalog\Model\ResourceModel\Product\CollectionFactory::class);
+        $this->symbolRepository = $this->objectManager->get(\MageSuite\ProductSymbols\Model\SymbolRepository::class);
+        $this->indexer = $this->objectManager->get(\MageSuite\ProductSymbols\Model\Indexer\SymbolToProduct::class);
     }
 
     /**
@@ -33,7 +33,7 @@ class PreloadCalculatedSymbolsTest extends \PHPUnit\Framework\TestCase
     {
         $this->indexer->execute([self::SIMPLE_PRODUCT_ID]);
 
-        $products = $this->productCollection->addIdFilter(self::SIMPLE_PRODUCT_ID)->getItems();
+        $products = $this->productCollectionFactory->create()->addIdFilter(self::SIMPLE_PRODUCT_ID)->getItems();
         $simpleProduct = array_shift($products);
         $this->assertNull($simpleProduct->getSymbolsFromIndex());
     }
@@ -50,7 +50,7 @@ class PreloadCalculatedSymbolsTest extends \PHPUnit\Framework\TestCase
     {
         $this->indexer->execute([self::SIMPLE_PRODUCT_ID]);
 
-        $products = $this->productCollection->addIdFilter([self::SIMPLE_PRODUCT_ID])->getItems();
+        $products = $this->productCollectionFactory->create()->addIdFilter([self::SIMPLE_PRODUCT_ID])->getItems();
 
         $simpleProduct = array_shift($products);
         $symbol = $this->symbolRepository->getById(1101);
