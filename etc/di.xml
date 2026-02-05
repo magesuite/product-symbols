@@ -50,4 +50,20 @@
             <argument name="imageUploader" xsi:type="object">Creativestyle\CustomizationIpetCatalog\PictogramImageUpload</argument>
         </arguments>
     </type>
+
+    <type name="MageSuite\ProductSymbols\Model\Indexer\Product\Action\Full">
+        <arguments>
+            <argument name="dimensionProvider" xsi:type="object" shared="false">
+                Magento\Store\Model\StoreDimensionProvider
+            </argument>
+        </arguments>
+    </type>
+
+    <type name="MageSuite\ProductSymbols\Model\Indexer\Product\Action\Rows">
+        <arguments>
+            <argument name="dimensionProvider" xsi:type="object" shared="false">
+                Magento\Store\Model\StoreDimensionProvider
+            </argument>
+        </arguments>
+    </type>
 </config>
