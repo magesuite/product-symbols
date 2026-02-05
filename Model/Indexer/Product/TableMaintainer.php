@@ -69,7 +69,6 @@ class TableMaintainer extends \Magento\Indexer\Model\ResourceModel\AbstractResou
         $key = $this->tmpTableSuffix;
 
         foreach ($dimensions as $dimension) {
-            $key .= $dimension->getName() . '_' . $dimension->getValue();
             $key .= sprintf('%s_%s', $dimension->getName(), $dimension->getValue());
         }
 
