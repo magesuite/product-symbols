@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace MageSuite\ProductSymbols\Test\Integration\Controller\Adminhtml\Symbol;
 
 /**
@@ -7,31 +9,21 @@ namespace MageSuite\ProductSymbols\Test\Integration\Controller\Adminhtml\Symbol;
  */
 class SaveTest extends \Magento\TestFramework\TestCase\AbstractBackendController
 {
-    const CUSTOM_STORE_ID = 1;
+    protected const CUSTOM_STORE_ID = 1;
 
-    /**
-     * @var \MageSuite\ProductSymbols\Api\SymbolRepositoryInterface
-     */
-    protected $symbolRepositoryInterface;
+    protected ?\MageSuite\ProductSymbols\Api\SymbolRepositoryInterface $symbolRepositoryInterface;
 
-    /**
-     * @var \MageSuite\ProductSymbols\Model\SymbolFactory
-     */
-    protected $symbolFactory;
-
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
-
-        $this->symbolRepositoryInterface = $this->_objectManager->create(\MageSuite\ProductSymbols\Api\SymbolRepositoryInterface::class);
-        $this->symbolFactory = $this->_objectManager->create(\MageSuite\ProductSymbols\Model\SymbolFactory::class);
+        $this->symbolRepositoryInterface = $this->_objectManager->get(\MageSuite\ProductSymbols\Api\SymbolRepositoryInterface::class);
     }
 
     /**
      * @magentoDbIsolation enabled
-     * @magentoDataFixture loadSymbols
+     * @magentoDataFixture MageSuite_ProductSymbols::Test/Integration/_files/symbols.php
      */
-    public function testSaveSymbolWithoutConfig()
+    public function testSaveSymbolWithoutConfig(): void
     {
         $editData = [
             'entity_id' => 600,
@@ -61,9 +53,9 @@ class SaveTest extends \Magento\TestFramework\TestCase\AbstractBackendController
 
     /**
      * @magentoDbIsolation enabled
-     * @magentoDataFixture loadSymbols
+     * @magentoDataFixture MageSuite_ProductSymbols::Test/Integration/_files/symbols.php
      */
-    public function testSaveSymbolWithoutConfigDifferentStore()
+    public function testSaveSymbolWithoutConfigDifferentStore(): void
     {
         $editData = [
             'entity_id' => 600,
@@ -93,9 +85,9 @@ class SaveTest extends \Magento\TestFramework\TestCase\AbstractBackendController
 
     /**
      * @magentoDbIsolation enabled
-     * @magentoDataFixture loadSymbols
+     * @magentoDataFixture MageSuite_ProductSymbols::Test/Integration/_files/symbols.php
      */
-    public function testSaveSymbolWithConfigDifferentStore()
+    public function testSaveSymbolWithConfigDifferentStore(): void
     {
         $editData = [
             'entity_id' => 600,
@@ -121,15 +113,5 @@ class SaveTest extends \Magento\TestFramework\TestCase\AbstractBackendController
 
         $this->assertEquals('test symbol 1', $symbol->getSymbolName());
         $this->assertEquals('this is test symbol 2 edited store 1 used new value', $symbol->getSymbolShortDescription());
-    }
-
-    public static function loadSymbols()
-    {
-        include __DIR__.'/../../../_files/symbols.php';
-    }
-
-    public static function loadSymbolsRollback()
-    {
-        include __DIR__.'/../../../_files/symbols_rollback.php';
     }
 }
