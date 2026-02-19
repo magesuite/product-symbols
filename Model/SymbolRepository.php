@@ -31,7 +31,7 @@ class SymbolRepository implements \MageSuite\ProductSymbols\Api\SymbolRepository
 
     public function getById($id, $storeId = null)
     {
-        $cacheKey = $this->getCacheKey($id, (int)$storeId);
+        $cacheKey = $this->getCacheKey((int)$id, (int)$storeId);
 
         if (isset($this->instances[$cacheKey])) {
             return $this->instances[$cacheKey];
