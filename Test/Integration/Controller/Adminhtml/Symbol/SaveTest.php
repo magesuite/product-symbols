@@ -114,4 +114,33 @@ class SaveTest extends \Magento\TestFramework\TestCase\AbstractBackendController
         $this->assertEquals('test symbol 1', $symbol->getSymbolName());
         $this->assertEquals('this is test symbol 2 edited store 1 used new value', $symbol->getSymbolShortDescription());
     }
+
+    /**
+     * @magentoDbIsolation enabled
+     */
+    public function testSaveNewSymbolWithoutConfig(): void
+    {
+        $editData = [
+            'store_id' => self::CUSTOM_STORE_ID,
+            'symbol_name' => 'New symbol store 1',
+            'symbol_short_description' => 'This is new symbol store 1',
+            'symbol_icon' => [
+                0 => [
+                    'url' => '',
+                    'name' => 'test_image.png'
+                ]
+            ],
+            'use_config' => [
+                'symbol_name' => 'true',
+                'symbol_short_description' => 'false',
+                'symbol_icon' => 'false'
+            ]
+        ];
+        $this->getRequest()->setPostValue($editData);
+        $this->dispatch('backend/symbol/symbol/save');
+
+        $symbols = $this->symbolRepositoryInterface->getAllSymbols();
+        $this->assertEquals(1, count($symbols));
+        $this->assertEquals('New symbol store 1', array_first($symbols)->getSymbolName());
+    }
 }
