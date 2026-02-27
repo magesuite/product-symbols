@@ -1,26 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace MageSuite\ProductSymbols\Model\Symbol\Condition;
 
-class Combine extends \Magento\Rule\Model\Condition\Combine
+class Combine extends \Magento\CatalogRule\Model\Rule\Condition\Combine
 {
-    protected \MageSuite\ProductSymbols\Model\Symbol\Condition\Product $conditionProduct;
-
-    public function __construct(
-        \Magento\Rule\Model\Condition\Context $context,
-        \MageSuite\ProductSymbols\Model\Symbol\Condition\Product $conditionProduct,
-        array $data = []
-    ) {
-        $this->setType(\Magento\SalesRule\Model\Rule\Condition\Combine::class);
-
-        $this->conditionProduct = $conditionProduct;
-
-        parent::__construct($context, $data);
-    }
-
-    public function getNewChildSelectOptions()
+    public function getNewChildSelectOptions(): array
     {
-        $productAttributes = $this->conditionProduct->loadAttributeOptions()->getAttributeOption();
+        $productAttributes = $this->_productFactory->create()->loadAttributeOptions()->getAttributeOption();
 
         $valueAttributes = [];
         foreach ($productAttributes as $code => $label) {
@@ -30,7 +18,7 @@ class Combine extends \Magento\Rule\Model\Condition\Combine
             ];
         }
 
-        $conditions = parent::getNewChildSelectOptions();
+        $conditions = [parent::getNewChildSelectOptions()[0]];
 
         $conditions = array_merge_recursive(
             $conditions,

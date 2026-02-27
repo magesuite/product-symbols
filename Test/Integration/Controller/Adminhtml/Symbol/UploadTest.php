@@ -11,12 +11,22 @@ namespace MageSuite\ProductSymbols\Test\Integration\Controller\Adminhtml\Symbol;
 class UploadTest extends \Magento\TestFramework\TestCase\AbstractBackendController
 {
     protected ?\Magento\Framework\Filesystem $filesystem;
+    protected ?string $filesDirectory;
+    protected $uri = 'backend/symbol/symbol/upload'; // phpcs:ignore
+    protected $resource = \MageSuite\ProductSymbols\Controller\Adminhtml\Symbol\Upload::ADMIN_RESOURCE; // phpcs:ignore
 
     protected function setUp(): void
     {
         parent::setUp();
 
         $this->filesystem = $this->_objectManager->get(\Magento\Framework\Filesystem::class);
+        $this->filesDirectory = join(DIRECTORY_SEPARATOR, [
+            $this->_objectManager->get(\Magento\Framework\Module\Dir::class)->getDir('MageSuite_ProductSymbols'),
+            'Test',
+            'Integration',
+            '_files',
+            'tmp'
+        ]);
     }
 
     /**
@@ -29,7 +39,7 @@ class UploadTest extends \Magento\TestFramework\TestCase\AbstractBackendControll
             'symbol_icon' => [
                 'name' => 'magento_image.jpg',
                 'type' => 'image/jpg',
-                'tmp_name' => __DIR__.'/../../../_files/tmp/magento_image.jpg',
+                'tmp_name' => join(DIRECTORY_SEPARATOR, [$this->filesDirectory, 'magento_image.jpg']),
                 'error' => 0,
                 'size' => 13864
             ]
@@ -39,10 +49,9 @@ class UploadTest extends \Magento\TestFramework\TestCase\AbstractBackendControll
 
         $response = json_decode($this->getResponse()->getBody(), true);
 
-        $this->assertTrue(isset($response['name']));
-        $path = $this->filesystem->getDirectoryRead(\Magento\Framework\App\Filesystem\DirectoryList::MEDIA)->getAbsolutePath() . 'symbol/' . $response['name'];
-        $fileExist = file_exists($path);
-        $this->assertTrue($fileExist);
+        $this->assertArrayHasKey('name', $response);
+        $path = join(DIRECTORY_SEPARATOR, [$this->filesystem->getDirectoryRead(\Magento\Framework\App\Filesystem\DirectoryList::MEDIA)->getAbsolutePath(), 'symbol', $response['name']]);
+        $this->assertFileExists($path);
     }
 
     /**
@@ -55,7 +64,7 @@ class UploadTest extends \Magento\TestFramework\TestCase\AbstractBackendControll
             'symbol_icon' => [
                 'name' => 'magento_image.jpg',
                 'type' => 'image/jpg',
-                'tmp_name' => __DIR__.'/../../../d/_files/tmp/magento_image.jpg',
+                'tmp_name' => join(DIRECTORY_SEPARATOR, [$this->filesDirectory, 'missing_magento_image.jpg']),
                 'error' => 0,
                 'size' => 13864
             ]

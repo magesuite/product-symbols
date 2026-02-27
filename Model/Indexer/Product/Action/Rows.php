@@ -26,11 +26,47 @@ class Rows implements \Magento\Framework\Indexer\DimensionalIndexerInterface
     {
         $entityIds = iterator_to_array($entityIds);
 
+        $storeId = (int) $dimensions[\Magento\Store\Model\StoreDimensionProvider::DIMENSION_NAME]->getValue();
+        $symbols = $this->productDataProvider->getSymbolsWithConditions($storeId);
+
+        if (empty($symbols)) {
+            $this->indexResourceModel->deleteByStoreId($storeId);
+            return;
+        }
+
         foreach (array_chunk($entityIds, $this->dataProvider->getBatchSize()) as $entityIdsChunk) {
-            $collection = $this->dataProvider->getProducts($dimensions, $entityIdsChunk, 0);
             $this->prepareIndexTable($dimensions);
-            $this->buildIndex($dimensions, $collection);
+            foreach ($symbols as $symbol) {
+                $this->buildIndexForSymbol($symbol, $dimensions, $entityIdsChunk);
+            }
+
             $this->syncData($dimensions, $entityIds);
+        }
+    }
+
+    protected function buildIndexForSymbol(\MageSuite\ProductSymbols\Api\Data\SymbolInterface $symbol, array $dimensions, array $productIds): void
+    {
+        $indexData = [];
+        $storeId = (int) $dimensions[\Magento\Store\Model\StoreDimensionProvider::DIMENSION_NAME]->getValue();
+        $symbolId = $symbol->getId();
+        $collection = $this->dataProvider->getProducts($dimensions, $symbol, $productIds);
+        $ids = $collection->getAllIds();
+
+        foreach ($ids as $productId) {
+            $indexData[] = [
+                'product_id' => $productId,
+                'symbol_id' => $symbolId,
+                'store_id' => $storeId
+            ];
+        }
+
+        $indexBatches = array_chunk($indexData, $this->dataProvider->getBatchSize());
+
+        foreach ($indexBatches as $batch) {
+            $this->resourceConnection->getConnection()->insertMultiple(
+                $this->tableMaintainer->getMainTmpTable($dimensions),
+                $batch
+            );
         }
     }
 
@@ -66,43 +102,5 @@ class Rows implements \Magento\Framework\Indexer\DimensionalIndexerInterface
             )
         );
         $this->tableMaintainer->dropTableForDimensions($dimensions);
-    }
-
-    protected function buildIndex(array $dimensions, \Magento\Catalog\Model\ResourceModel\Product\Collection $products): void
-    {
-        $storeId = (int) $dimensions[\Magento\Store\Model\StoreDimensionProvider::DIMENSION_NAME]->getValue();
-        $symbols = $this->productDataProvider->getSymbolsWithConditions($storeId);
-
-        if (empty($symbols)) {
-            $this->indexResourceModel->deleteByStoreId($storeId);
-            return;
-        }
-
-        $toInsertSymbols = [];
-
-        foreach ($products as $product) {
-            foreach ($symbols as $symbol) {
-                if (!$symbol->validate($product)) {
-                    continue;
-                }
-
-                $toInsertSymbols[] = [
-                    'product_id' => $product->getId(),
-                    'symbol_id' => $symbol->getId(),
-                    'store_id' => $storeId
-                ];
-            }
-        }
-
-        $products->clear();
-
-        if (empty($toInsertSymbols)) {
-            return;
-        }
-
-        $this->resourceConnection->getConnection()->insertMultiple(
-            $this->tableMaintainer->getMainTmpTable($dimensions),
-            $toInsertSymbols
-        );
     }
 }

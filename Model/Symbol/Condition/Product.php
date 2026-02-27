@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace MageSuite\ProductSymbols\Model\Symbol\Condition;
@@ -14,5 +15,10 @@ class Product extends \Magento\CatalogRule\Model\Rule\Condition\Product
         $model->setData($this->getAttribute(), $value);
 
         return $this;
+    }
+
+    public function getType(): string
+    {
+        return \Magento\CatalogRule\Model\Rule\Condition\Product::class;
     }
 }
