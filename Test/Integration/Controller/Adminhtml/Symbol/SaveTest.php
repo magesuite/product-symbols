@@ -12,6 +12,8 @@ class SaveTest extends \Magento\TestFramework\TestCase\AbstractBackendController
     protected const CUSTOM_STORE_ID = 1;
 
     protected ?\MageSuite\ProductSymbols\Api\SymbolRepositoryInterface $symbolRepositoryInterface;
+    protected $uri = 'backend/symbol/symbol/save'; // phpcs:ignore
+    protected $resource = \MageSuite\ProductSymbols\Controller\Adminhtml\Symbol\Save::ADMIN_RESOURCE; // phpcs:ignore
 
     protected function setUp(): void
     {
@@ -141,6 +143,6 @@ class SaveTest extends \Magento\TestFramework\TestCase\AbstractBackendController
 
         $symbols = $this->symbolRepositoryInterface->getAllSymbols();
         $this->assertEquals(1, count($symbols));
-        $this->assertEquals('New symbol store 1', array_first($symbols)->getSymbolName());
+        $this->assertEquals('New symbol store 1', reset($symbols)->getSymbolName());
     }
 }

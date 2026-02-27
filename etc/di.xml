@@ -66,4 +66,16 @@
             </argument>
         </arguments>
     </type>
+
+    <virtualType name="MageSuite\ProductSymbols\Model\Symbol\Condition\CatalogRuleProductFactory" type="Magento\CatalogRule\Model\Rule\Condition\ProductFactory">
+        <arguments>
+            <argument name="instanceName" xsi:type="string">MageSuite\ProductSymbols\Model\Symbol\Condition\Product</argument>
+        </arguments>
+    </virtualType>
+
+    <type name="MageSuite\ProductSymbols\Model\Symbol\Condition\Combine">
+        <arguments>
+            <argument name="conditionFactory" xsi:type="object">MageSuite\ProductSymbols\Model\Symbol\Condition\CatalogRuleProductFactory</argument>
+        </arguments>
+    </type>
 </config>

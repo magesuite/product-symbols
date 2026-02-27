@@ -12,6 +12,8 @@ class SaveTest extends \Magento\TestFramework\TestCase\AbstractBackendController
 {
     protected ?\MageSuite\ProductSymbols\Api\GroupRepositoryInterface $groupRepositoryInterface;
     protected ?\MageSuite\ProductSymbols\Model\GroupFactory $groupFactory;
+    protected $uri = 'backend/symbol/group/save'; // phpcs:ignore
+    protected $resource = \MageSuite\ProductSymbols\Controller\Adminhtml\Group\Save::ADMIN_RESOURCE; // phpcs:ignore
 
     protected function setUp(): void
     {
@@ -69,9 +71,6 @@ class SaveTest extends \Magento\TestFramework\TestCase\AbstractBackendController
         $this->saveGroup('group 5', 'group 5', false);
     }
 
-    /**
-     * @SuppressWarnings(PHPMD.ElseExpression)
-     */
     protected function saveGroup(string $name, string $code, bool $isSuccessExpected = true): void
     {
         $this->getRequest()->setPostValue([
@@ -85,9 +84,11 @@ class SaveTest extends \Magento\TestFramework\TestCase\AbstractBackendController
         if ($isSuccessExpected) {
             $this->assertEquals($name, $group->getGroupName());
             $this->assertEquals($code, $group->getGroupCode());
-        } else {
-            $this->assertEmpty($group);
+
+            return;
         }
+
+        $this->assertEmpty($group);
     }
 
     public function testEditGroup(): void

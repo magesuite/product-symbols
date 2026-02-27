@@ -9,34 +9,30 @@ class DataProvider
     protected const DEPLOYMENT_CONFIG_INDEXER_BATCHES = 'indexer/batch_size/';
 
     public function __construct(
-        protected \Magento\Catalog\Model\Config $catalogConfig,
         protected \Magento\Catalog\Model\ResourceModel\Product\CollectionFactory $productCollectionFactory,
-        protected \Magento\Catalog\Model\ResourceModel\Product\Attribute\CollectionFactory $attributeCollectionFactory,
         protected \Magento\Framework\Event\ManagerInterface $eventManager,
         protected \Magento\Framework\App\DeploymentConfig $deploymentConfig,
+        protected \Magento\CatalogRule\Model\ResourceModel\Product\ConditionsToCollectionApplier $collectionApplier,
         protected int $batchSize = 1000
     ) {}
 
     public function getProducts(
         array $dimensions,
-        ?array $productIds = null,
-        int $lastProductId = 0
+        \MageSuite\ProductSymbols\Api\Data\SymbolInterface $symbol,
+        ?array $productIds = null
     ): \Magento\Catalog\Model\ResourceModel\Product\Collection
     {
         $storeId = (int)$dimensions[\Magento\Store\Model\StoreDimensionProvider::DIMENSION_NAME]->getValue();
         $collection = $this->productCollectionFactory->create();
+        $symbol->getConditions()->collectValidatedAttributes($collection);
+        $collection = $this->collectionApplier->applyConditionsToCollection($symbol->getConditions(), $collection);
         $collection->addStoreFilter($storeId);
         $collection->addAttributeToFilter('status', \Magento\Catalog\Model\Product\Attribute\Source\Status::STATUS_ENABLED);
-        $collection->addAttributeToSelect($this->getAttributeList());
 
         if (!empty($productIds)) {
             $collection->addIdFilter($productIds);
         } else {
             $collection->setPageSize($this->getBatchSize());
-        }
-
-        if ($lastProductId > 0) {
-            $collection->addFieldToFilter('entity_id', ['gt' => $lastProductId]);
         }
 
         $this->eventManager->dispatch(
@@ -45,13 +41,6 @@ class DataProvider
         );
 
         return $collection;
-    }
-
-    public function getAttributeList(): array
-    {
-        $collection = $this->attributeCollectionFactory->create();
-        $collection->addFieldToFilter('is_used_for_promo_rules', 1);
-        return $collection->getColumnValues('attribute_code');
     }
 
     public function getBatchSize(): int

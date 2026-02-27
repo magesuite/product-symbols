@@ -37,7 +37,7 @@ class Full implements \Magento\Framework\Indexer\DimensionalIndexerInterface
         $userFunctions = [];
 
         foreach ($this->dimensionProvider->getIterator() as $dimension) {
-            $userFunctions[] = function () use ($dimension) {
+            $userFunctions[] = function () use ($dimension): void {
                 $this->executeByDimensions($dimension);
             };
         }
@@ -47,22 +47,6 @@ class Full implements \Magento\Framework\Indexer\DimensionalIndexerInterface
 
     public function executeByDimensions(array $dimensions, ?\Traversable $entityIds = null): void
     {
-        $lastProductId = 0;
-
-        while (true) {
-            $collection = $this->dataProvider->getProducts($dimensions, null, $lastProductId);
-
-            if ($collection->count() === 0) {
-                break;
-            }
-
-            $lastProductId = (int)$collection->getLastItem()->getId();
-            $this->buildIndex($dimensions, $collection);
-        }
-    }
-
-    protected function buildIndex(array $dimensions, \Magento\Catalog\Model\ResourceModel\Product\Collection $products): void
-    {
         $storeId = (int) $dimensions[\Magento\Store\Model\StoreDimensionProvider::DIMENSION_NAME]->getValue();
         $symbols = $this->productDataProvider->getSymbolsWithConditions($storeId);
 
@@ -71,32 +55,35 @@ class Full implements \Magento\Framework\Indexer\DimensionalIndexerInterface
             return;
         }
 
-        $toInsertSymbols = [];
+        foreach ($symbols as $symbol) {
+            $this->buildIndexForSymbol($symbol, $dimensions);
+        }
+    }
 
-        foreach ($products as $product) {
-            foreach ($symbols as $symbol) {
-                if (!$symbol->validate($product)) {
-                    continue;
-                }
+    protected function buildIndexForSymbol(\MageSuite\ProductSymbols\Api\Data\SymbolInterface $symbol, array $dimensions): void
+    {
+        $indexData = [];
+        $storeId = (int) $dimensions[\Magento\Store\Model\StoreDimensionProvider::DIMENSION_NAME]->getValue();
+        $symbolId = $symbol->getId();
+        $collection = $this->dataProvider->getProducts($dimensions, $symbol);
+        $ids = $collection->getAllIds();
 
-                $toInsertSymbols[] = [
-                    'product_id' => $product->getId(),
-                    'symbol_id' => $symbol->getId(),
-                    'store_id' => $storeId
-                ];
-            }
+        foreach ($ids as $productId) {
+            $indexData[] = [
+                'product_id' => $productId,
+                'symbol_id' => $symbolId,
+                'store_id' => $storeId
+            ];
         }
 
-        $products->clear();
+        $indexBatches = array_chunk($indexData, $this->dataProvider->getBatchSize());
 
-        if (empty($toInsertSymbols)) {
-            return;
+        foreach ($indexBatches as $batch) {
+            $this->resourceConnection->getConnection()->insertMultiple(
+                $this->tableMaintainer->getMainReplicaTable(),
+                $batch
+            );
         }
-
-        $this->resourceConnection->getConnection()->insertMultiple(
-            $this->tableMaintainer->getMainReplicaTable(),
-            $toInsertSymbols
-        );
     }
 
     protected function switchTables(): void
