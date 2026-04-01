@@ -1,32 +1,27 @@
 <?php
 
+declare(strict_types=1);
+
 namespace MageSuite\ProductSymbols\Controller\Adminhtml\Group;
 
-class Save extends \Magento\Backend\App\Action
+class Save extends \Magento\Backend\App\Action implements \Magento\Framework\App\Action\HttpPostActionInterface
 {
-    const ADMIN_RESOURCE = 'MageSuite_ProductSymbols::group_save';
-
-    protected \Magento\Framework\View\Result\PageFactory $pageFactory;
-    protected \MageSuite\ProductSymbols\Model\Group\Processor\SaveFactory $saveFactory;
-    protected \Magento\Framework\DataObjectFactory $dataObjectFactory;
+    public const ADMIN_RESOURCE = 'MageSuite_ProductSymbols::group_save';
 
     public function __construct(
         \Magento\Backend\App\Action\Context $context,
-        \Magento\Framework\View\Result\PageFactory $pageFactory,
-        \MageSuite\ProductSymbols\Model\Group\Processor\SaveFactory $saveFactory,
-        \Magento\Framework\DataObjectFactory $dataObjectFactory
+        protected \Magento\Framework\View\Result\PageFactory $pageFactory,
+        protected \MageSuite\ProductSymbols\Model\Group\Processor\SaveFactory $saveFactory,
+        protected \Magento\Framework\DataObjectFactory $dataObjectFactory
     ) {
-        $this->pageFactory = $pageFactory;
-        $this->saveFactory = $saveFactory;
-
         parent::__construct($context);
-        $this->dataObjectFactory = $dataObjectFactory;
     }
 
-    public function execute()
+    public function execute(): \Magento\Framework\Controller\ResultInterface
     {
-        $params = $this->_request->getParams();
+        $params = $this->getRequest()->getParams();
         $routeParams = null;
+
         try {
             $group = $this->saveFactory->create()->processSave($params);
             $this->messageManager->addSuccessMessage('Symbols group has been saved');
@@ -36,6 +31,7 @@ class Save extends \Magento\Backend\App\Action
         } catch (\Exception $e) {
             $this->messageManager->addErrorMessage($e->getMessage());
         }
+
         $resultRedirect = $this->resultRedirectFactory->create();
         $url = $this->_url->getUrl('symbol/group/edit', $routeParams);
         $resultRedirect->setPath($url);

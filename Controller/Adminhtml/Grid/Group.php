@@ -4,8 +4,10 @@ declare(strict_types=1);
 
 namespace MageSuite\ProductSymbols\Controller\Adminhtml\Grid;
 
-class Group extends \Magento\Backend\App\Action
+class Group extends \Magento\Backend\App\Action implements \Magento\Framework\App\Action\HttpGetActionInterface
 {
+    public const ADMIN_RESOURCE = 'MageSuite_ProductSymbols::group';
+
     protected ?\Magento\Framework\View\Result\Page $resultPage = null;
 
     public function __construct(
@@ -24,11 +26,6 @@ class Group extends \Magento\Backend\App\Action
         $resultPage->addBreadcrumb(__('Symbol group'), __('Symbol group'));
 
         return $resultPage;
-    }
-
-    protected function _isAllowed() //phpcs:ignore
-    {
-        return true;
     }
 
     public function getResultPage(): \Magento\Framework\View\Result\Page

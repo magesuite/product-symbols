@@ -1,25 +1,21 @@
 <?php
 
+declare(strict_types=1);
+
 namespace MageSuite\ProductSymbols\Controller\Adminhtml\Group;
 
-class Newgroup extends \Magento\Backend\App\Action
+class Newgroup extends \Magento\Backend\App\Action implements \Magento\Framework\App\Action\HttpGetActionInterface
 {
-    const ADMIN_RESOURCE = 'MageSuite_ProductSymbols::group_edit';
-
-    /**
-     * @var \Magento\Framework\View\Result\PageFactory
-     */
-    protected $resultForwardFactory;
+    public const ADMIN_RESOURCE = 'MageSuite_ProductSymbols::group_edit';
 
     public function __construct(
         \Magento\Backend\App\Action\Context $context,
-        \Magento\Backend\Model\View\Result\ForwardFactory $resultForwardFactory
+        protected \Magento\Backend\Model\View\Result\ForwardFactory $resultForwardFactory
     ) {
-        $this->resultForwardFactory = $resultForwardFactory;
         parent::__construct($context);
     }
 
-    public function execute()
+    public function execute(): \Magento\Framework\Controller\ResultInterface
     {
         /** @var \Magento\Backend\Model\View\Result\Forward $resultForward */
         $resultForward = $this->resultForwardFactory->create();
