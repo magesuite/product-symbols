@@ -47,9 +47,13 @@ class CmsBlockList implements \Magento\Framework\View\Element\Block\ArgumentInte
         $collection = $this->collectionFactory->create()
             ->addStoreFilter($store)
             ->addFieldToFilter('identifier', ['in' => $blockIds]);
-        $blockList = implode("','", $blockIds);
+        $connection = $collection->getConnection();
+        $escapedBlockIds = array_map(function ($id) use ($connection) {
+            return $connection->quote($id);
+        }, $blockIds);
+        $blockList = implode(',', $escapedBlockIds);
         $collection->getSelect()
-            ->order(new \Zend_Db_Expr("FIELD(main_table.identifier,'$blockList')"));
+            ->order(new \Zend_Db_Expr("FIELD(main_table.identifier, $blockList)"));
 
         foreach ($collection as $block) {
             try {
