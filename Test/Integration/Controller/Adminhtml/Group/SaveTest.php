@@ -13,6 +13,7 @@ class SaveTest extends \Magento\TestFramework\TestCase\AbstractBackendController
     protected ?\MageSuite\ProductSymbols\Api\GroupRepositoryInterface $groupRepositoryInterface;
     protected ?\MageSuite\ProductSymbols\Model\GroupFactory $groupFactory;
     protected $uri = 'backend/symbol/group/save'; // phpcs:ignore
+    protected $httpMethod = 'POST';
     protected $resource = \MageSuite\ProductSymbols\Controller\Adminhtml\Group\Save::ADMIN_RESOURCE; // phpcs:ignore
 
     protected function setUp(): void
@@ -73,7 +74,9 @@ class SaveTest extends \Magento\TestFramework\TestCase\AbstractBackendController
 
     protected function saveGroup(string $name, string $code, bool $isSuccessExpected = true): void
     {
-        $this->getRequest()->setPostValue([
+        $request = $this->getRequest();
+        $request->setMethod('POST');
+        $request->setPostValue([
             'group_name' => $name,
             'group_code' => $code
         ]);
@@ -108,7 +111,9 @@ class SaveTest extends \Magento\TestFramework\TestCase\AbstractBackendController
             'ignore_product_assignment' => 1
         ];
 
-        $this->getRequest()->setPostValue($editData);
+        $request = $this->getRequest();
+        $request->setMethod('POST');
+        $request->setPostValue($editData);
         $this->dispatch('backend/symbol/group/save');
 
         $group = $this->groupRepositoryInterface->getById($group->getEntityId());
