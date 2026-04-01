@@ -6,6 +6,8 @@ namespace MageSuite\ProductSymbols\Controller\Adminhtml\Grid;
 
 class Symbol extends \Magento\Backend\App\Action
 {
+    public const ADMIN_RESOURCE = 'MageSuite_ProductSymbols::symbol';
+
     protected ?\Magento\Framework\View\Result\Page $resultPage = null;
 
     public function __construct(
@@ -24,11 +26,6 @@ class Symbol extends \Magento\Backend\App\Action
         $resultPage->addBreadcrumb(__('Symbol'), __('Symbol'));
 
         return $resultPage;
-    }
-
-    protected function _isAllowed() //phpcs:ignore
-    {
-        return true;
     }
 
     public function getResultPage(): \Magento\Framework\View\Result\Page
