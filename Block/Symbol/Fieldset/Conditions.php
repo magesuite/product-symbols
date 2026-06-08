@@ -84,18 +84,19 @@ class Conditions extends \Magento\Backend\Block\Widget\Form\Generic
             ->setRenderer($this->conditions);
 
         $form->setValues($symbol->getData());
-        $this->setConditionFormName($symbol->getConditions(), $formName);
+        $this->setConditionFormName($symbol->getConditions(), $formName, $conditionsFieldSetId);
 
         return $form;
     }
 
-    protected function setConditionFormName(\Magento\Rule\Model\Condition\AbstractCondition $conditions, $formName)
+    protected function setConditionFormName(\Magento\Rule\Model\Condition\AbstractCondition $conditions, string $formName, string $jsFormName): void
     {
         $conditions->setFormName($formName);
+        $conditions->setJsFormObject($jsFormName);
 
         if ($conditions->getConditions() && is_array($conditions->getConditions())) {
             foreach ($conditions->getConditions() as $condition) {
-                $this->setConditionFormName($condition, $formName);
+                $this->setConditionFormName($condition, $formName, $jsFormName);
             }
         }
     }
