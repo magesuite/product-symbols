@@ -42,12 +42,12 @@ class SymbolToProduct extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * @dataProvider getSymbolsDataProvider
      * @magentoDbIsolation enabled
      * @magentoAppIsolation enabled
      * @magentoDataFixture MageSuite_ProductSymbols::Test/Integration/_files/symbols.php
      * @magentoDataFixture MageSuite_ProductSymbols::Test/Integration/_files/product_with_test_attribute.php
      */
+    #[\PHPUnit\Framework\Attributes\DataProvider('getSymbolsDataProvider')]
     public function testItDoesPutProductIntoIndexWhenConditionsMatch(?string $store, array $expectedSymbolIds): void
     {
         $storeId = (int) $this->storeManager->getStore($store)->getId();
